@@ -9,6 +9,17 @@ package com.utils
 
 	public class TouchUtils
 	{
+		
+		public function oneTouchOnTag(display:DisplayObject):void
+		{
+			
+		}
+		
+		public function twoTouchOnTag(display:DisplayObject):void
+		{
+			
+		}
+		
 		public function TouchUtils()
 		{
 			
