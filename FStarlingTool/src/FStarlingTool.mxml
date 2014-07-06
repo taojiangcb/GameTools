@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   showStatusBar="false" minWidth="1024" minHeight="768" 
+					   maxWidth="2096" height="1280" applicationComplete="appInit">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			public function appInit():void
+			{
+				
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:statusBar>
+		<s:HGroup width="100%" gap="5" height="100%">
+			<s:HGroup>
+				<s:Label text="文件数量" id="txtFileNum"/>
+			</s:HGroup>
+			<s:Group>
+				<mx:ProgressBar id="progressBar" width="200" right="5"/>	
+			</s:Group>
+		</s:HGroup>
+	</s:statusBar>
+</s:WindowedApplication>
