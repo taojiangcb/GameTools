@@ -3,6 +3,9 @@
   <includeClasses>
     <classEntry path="com.utils.TouchUtils"/>
     <classEntry path="com.utils.Utils"/>
+    <classEntry path="com.IDisable"/>
+    <classEntry path="com.uiControls.UIControler"/>
+    <classEntry path="com.uiControls.UIConstant"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
