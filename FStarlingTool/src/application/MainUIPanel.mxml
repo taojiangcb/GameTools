@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="150">
+	<s:Rect width="100%" height="100%">
+		<s:fill>
+			<mx:SolidColor color="0xCCCCCC"/>
+		</s:fill>
+	</s:Rect>
+	<fx:Declarations>
+	</fx:Declarations>
+	<s:VGroup left="10" right="10" top="10" width="100%">
+		<s:HGroup width="100%" height="100%" >
+			<s:Button label="选择swf" id="btnFileSelect"/>
+			<s:Button label="刷新" id="btnFileRefresh"/>
+			<mx:Spacer height="100%"/>
+			<s:Button label="atf导出" id="btnAtfExport"/>
+			<s:Button label="字体嵌入" id="btnFontEmbed"/>
+			<mx:Spacer height="100%"/>
+			<s:Button label="工具教程" id="Course"/>
+		</s:HGroup>
+		<mx:Spacer width="100%"/>
+		<s:HGroup width="100%" verticalAlign="middle">
+			<s:HGroup verticalAlign="middle" horizontalAlign="left">
+				<s:Label text="image:"/>
+				<s:DropDownList id="imageDownList"/>
+			</s:HGroup>
+			<s:HGroup verticalAlign="middle" horizontalAlign="left">
+				<s:Label text="scale9image:"/>
+				<s:DropDownList id="s9DownList"/>
+			</s:HGroup>
+			<s:HGroup verticalAlign="middle" horizontalAlign="left">
+				<s:Label text="shapeImage:"/>
+				<s:DropDownList id="shapeDownList"/>
+			</s:HGroup>
+			<s:HGroup verticalAlign="middle" horizontalAlign="left">
+				<s:Label text="swfSprite:"/>
+				<s:DropDownList id="sprDownList"/>
+			</s:HGroup>
+			<s:HGroup verticalAlign="middle" horizontalAlign="left">
+				<s:Label text="swfMovie:"/>
+				<s:DropDownList id="movieDownList"/>
+			</s:HGroup>
+			<s:HGroup verticalAlign="middle" horizontalAlign="left">
+				<s:Label text="swfQuadBatch:"/>
+				<s:DropDownList id="qbDownList"/>
+			</s:HGroup>
+		</s:HGroup>
+		<s:HGroup width="100%" verticalAlign="middle">
+			<s:HGroup verticalAlign="middle" horizontalAlign="left">
+				<s:Label text="compoents:"/>
+				<s:DropDownList id="compsDownList"/>
+			</s:HGroup>
+			<s:HGroup verticalAlign="middle" horizontalAlign="left">
+				<s:Label text="buttons:"/>
+				<s:DropDownList id="btnDownList"/>
+			</s:HGroup>
+		</s:HGroup>
+		<mx:Spacer width="100%" height="10"/>
+		<s:HGroup width="100%" verticalAlign="middle">
+			<s:HGroup verticalAlign="middle">
+				<s:Label text="背景颜色:"/>
+				<mx:ColorPicker id="colorSelect"/>
+			</s:HGroup>
+			<s:HGroup verticalAlign="middle">
+				<s:Label text="swf帧率:"/>
+				<mx:Slider maximum="60" minimum="0" snapInterval="1" labels="{[10,20,30,40,50,60]}" labelOffset="5"/>
+			</s:HGroup>
+		</s:HGroup>
+	</s:VGroup>
+</s:Group>

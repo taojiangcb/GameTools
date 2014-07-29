@@ -5,7 +5,10 @@
 #################
 ## Eclipse
 #################
-
+bin-debug
+html-template
+settings
+*.flexLibProperties
 *.pydevproject
 .project
 .metadata

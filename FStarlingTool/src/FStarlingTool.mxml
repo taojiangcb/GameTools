@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
 					   xmlns:s="library://ns.adobe.com/flex/spark"
-					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   showStatusBar="false" minWidth="1024" minHeight="768" 
-					   maxWidth="2096" height="1280" applicationComplete="appInit">
+					   xmlns:mx="library://ns.adobe.com/flex/mx" backgroundColor="0x999999"
+					   showStatusBar="false" minWidth="1024" minHeight="600" 
+					   maxWidth="2096" maxHeight="1280" applicationComplete="appInit()">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		s|WindowedApplication
+		{
+			backgroundColor: #333333;
+			backgroundAlpha: 1;
+			resizeAffordanceWidth: 6;
+			fontSize:12;
+			fontFamily:"宋体";
+		}
+	</fx:Style>
 	<fx:Script>
 		<![CDATA[
+			import spark.skins.spark.WindowedApplicationSkin;
+			import application.AppUI;
+			import gframeWork.JT_FrameWork;
+			import gframeWork.uiController.JT_UserInterfaceManager;
+			
+			private var appUI:AppUI;
 			
 			public function appInit():void
 			{
-				
+				JT_FrameWork.getInstance().setLayout(this,this,this);
+				appUI = new AppUI();
+				JT_UserInterfaceManager.open(AppUI.APP_UI_MAIN);
 			}
-			
 		]]>
 	</fx:Script>
-	
-	<s:statusBar>
-		<s:HGroup width="100%" gap="5" height="100%">
-			<s:HGroup>
-				<s:Label text="文件数量" id="txtFileNum"/>
-			</s:HGroup>
-			<s:Group>
-				<mx:ProgressBar id="progressBar" width="200" right="5"/>	
-			</s:Group>
-		</s:HGroup>
-	</s:statusBar>
 </s:WindowedApplication>

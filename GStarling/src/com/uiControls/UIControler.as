@@ -15,7 +15,7 @@ package com.uiControls
 		public var uiState:int = UIConstant.DEFAULT;			//状态
 		public var gcDelayTime:int = UIConstant.GC_TIME;		//gc时间 0表示永不gc
 		
-		private var openData:Object = null						//开启的时候传入的参数
+		private var openData:Object = null	;					//开启的时候传入的参数
 		private var uiContent:DisplayObject;					//ui的内显示内容
 			
 		public function UIControler()
@@ -27,13 +27,14 @@ package com.uiControls
 		 * 父级显示的容器 
 		 * @return 
 		 */		
-		public function get featherSpace():DisplayObjectContainer
+		public function get fatherSpace():DisplayObjectContainer
 		{
 			return Starling.current.stage;	
 		}
 		
 		public function dispose():void
 		{
+			
 		}
 	}
 }
