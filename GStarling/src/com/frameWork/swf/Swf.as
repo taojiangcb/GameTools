@@ -1,4 +1,4 @@
-package lzm.starling.swf
+package com.frameWork.swf
 {
 	import com.coffeebean.controls.components.MovieBatch;
 	import com.coffeebean.swf.typeData.ImgData;

@@ -11,6 +11,8 @@
 package com.frameWork.swf.components
 {
 	
+	import com.frameWork.swf.display.SwfQuadBatch;
+	
 	import flash.display.BitmapData;
 	import flash.display.StageQuality;
 	import flash.display3D.Context3DTextureFormat;
@@ -21,8 +23,6 @@ package com.frameWork.swf.components
 	import flash.text.AntiAliasType;
 	import flash.text.TextFormat;
 	import flash.utils.Dictionary;
-	
-	import lzm.starling.swf.display.SwfQuadBatch;
 	
 	import starling.core.RenderSupport;
 	import starling.core.Starling;

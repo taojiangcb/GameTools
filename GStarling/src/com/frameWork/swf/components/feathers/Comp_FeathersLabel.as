@@ -1,10 +1,10 @@
 package com.frameWork.swf.components.feathers
 {
 	
-	import feathers.controls.Label;
+	import com.frameWork.swf.components.ISwfComponent;
+	import com.frameWork.swf.display.SwfSprite;
 	
-	import lzm.starling.swf.components.ISwfComponent;
-	import lzm.starling.swf.display.SwfSprite;
+	import feathers.controls.Label;
 	
 	import starling.display.DisplayObject;
 	import starling.text.TextField;

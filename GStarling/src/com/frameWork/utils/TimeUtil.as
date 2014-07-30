@@ -1,4 +1,4 @@
-package lzm.util
+package com.frameWork.utils
 {
 	import starling.utils.formatString;
 

@@ -1,13 +1,13 @@
 package com.frameWork.swf.components
 {
-	import lzm.starling.swf.components.feathers.Comp_BitmapField;
-	import lzm.starling.swf.components.feathers.Comp_convert_solder_btn;
-	import lzm.starling.swf.components.feathers.FeathersButton;
-	import lzm.starling.swf.components.feathers.FeathersCheck;
-	import lzm.starling.swf.components.feathers.FeathersProgressBar;
-	import lzm.starling.swf.components.feathers.FeathersTextInput;
-	import lzm.starling.swf.components.feathers.comp_test_btn_1;
-	import lzm.starling.swf.components.feathers.comp_test_number_input;
+	import com.frameWork.swf.components.feathers.Comp_BitmapField;
+	import com.frameWork.swf.components.feathers.Comp_convert_solder_btn;
+	import com.frameWork.swf.components.feathers.FeathersButton;
+	import com.frameWork.swf.components.feathers.FeathersCheck;
+	import com.frameWork.swf.components.feathers.FeathersProgressBar;
+	import com.frameWork.swf.components.feathers.FeathersTextInput;
+	import com.frameWork.swf.components.feathers.comp_test_btn_1;
+	import com.frameWork.swf.components.feathers.comp_test_number_input;
 
 	/**
 	 * 组件配置 

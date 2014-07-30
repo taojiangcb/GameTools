@@ -1,14 +1,14 @@
 package com.frameWork.swf.components.feathers
 {
+	import com.frameWork.swf.components.ISwfComponent;
+	import com.frameWork.swf.display.SwfSprite;
+	
 	import flash.text.TextFormat;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Check;
 	import feathers.display.Scale9Image;
 	import feathers.skins.SmartDisplayObjectStateValueSelector;
-	
-	import lzm.starling.swf.components.ISwfComponent;
-	import lzm.starling.swf.display.SwfSprite;
 	
 	import starling.display.Image;
 	import starling.text.TextField;

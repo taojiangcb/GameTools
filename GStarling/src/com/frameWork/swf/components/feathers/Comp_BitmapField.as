@@ -1,8 +1,9 @@
 package com.frameWork.swf.components.feathers
 {
-	import lzm.starling.swf.components.BitmapTextField;
-	import lzm.starling.swf.components.ISwfComponent;
-	import lzm.starling.swf.display.SwfSprite;
+	
+	import com.frameWork.swf.components.BitmapTextField;
+	import com.frameWork.swf.components.ISwfComponent;
+	import com.frameWork.swf.display.SwfSprite;
 	
 	import starling.text.TextField;
 	

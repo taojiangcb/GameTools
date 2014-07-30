@@ -1,5 +1,10 @@
 package com.frameWork.swf
 {
+	import com.frameWork.swf.display.ShapeImage;
+	import com.frameWork.swf.display.SwfMovieClip;
+	import com.frameWork.swf.display.SwfSprite;
+	import com.frameWork.uiComponent.Button;
+	
 	import flash.utils.Dictionary;
 	
 	import starling.display.DisplayObject;

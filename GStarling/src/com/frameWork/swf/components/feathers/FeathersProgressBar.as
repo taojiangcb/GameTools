@@ -1,9 +1,9 @@
 package com.frameWork.swf.components.feathers
 {
-	import feathers.controls.ProgressBar;
+	import com.frameWork.swf.components.ISwfComponent;
+	import com.frameWork.swf.display.SwfSprite;
 	
-	import lzm.starling.swf.components.ISwfComponent;
-	import lzm.starling.swf.display.SwfSprite;
+	import feathers.controls.ProgressBar;
 	
 	import starling.display.DisplayObject;
 	

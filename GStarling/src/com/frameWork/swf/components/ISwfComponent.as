@@ -1,6 +1,6 @@
 package com.frameWork.swf.components
 {
-	import lzm.starling.swf.display.SwfSprite;
+	import com.frameWork.swf.display.SwfSprite;
 
 	public interface ISwfComponent
 	{

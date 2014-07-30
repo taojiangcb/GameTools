@@ -3,7 +3,7 @@ package com.frameWork.swf.display
 	import com.coffeebean.swf.typeData.FrameChildData;
 	import com.coffeebean.swf.typeData.FrameLabelData;
 	import com.coffeebean.swf.typeData.SpriteData;
-	
+	import com.frameWork.swf.Swf;
 	
 	import starling.display.DisplayObject;
 	import starling.events.Event;
