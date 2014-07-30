@@ -9,6 +9,7 @@
 	</fx:Declarations>
 	<fx:Style>
 		@namespace s "library://ns.adobe.com/flex/spark";
+		
 		@namespace mx "library://ns.adobe.com/flex/mx";
 		s|WindowedApplication
 		{
@@ -21,7 +22,6 @@
 	</fx:Style>
 	<fx:Script>
 		<![CDATA[
-			import spark.skins.spark.WindowedApplicationSkin;
 			import application.AppUI;
 			import gframeWork.JT_FrameWork;
 			import gframeWork.uiController.JT_UserInterfaceManager;
