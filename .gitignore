@@ -5,7 +5,10 @@
 #################
 ## Eclipse
 #################
-
+bin-debug
+html-template
+settings
+*.flexLibProperties
 *.pydevproject
 .project
 .metadata
@@ -218,3 +221,5 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 
+
+GStarling/src/com/frameWork/uiControls/UIControler.as

@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
-  <includeClasses>
-    <classEntry path="com.utils.TouchUtils"/>
-    <classEntry path="com.utils.Utils"/>
-    <classEntry path="com.IDisable"/>
-    <classEntry path="com.uiControls.UIControler"/>
-    <classEntry path="com.uiControls.UIConstant"/>
-  </includeClasses>
+  <includeClasses/>
   <includeResources/>
   <namespaceManifests/>
 </flexLibProperties>
