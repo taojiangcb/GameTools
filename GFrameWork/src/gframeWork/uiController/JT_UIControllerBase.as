@@ -6,8 +6,6 @@ package gframeWork.uiController
 	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
-	import flash.system.Capabilities;
-	import flash.system.System;
 	import flash.utils.clearTimeout;
 	import flash.utils.setTimeout;
 	
@@ -25,9 +23,7 @@ package gframeWork.uiController
 	
 	import spark.components.DataGrid;
 	import spark.components.SkinnableContainer;
-	import spark.components.SkinnableDataContainer;
 	import spark.components.supportClasses.SkinnableComponent;
-	import spark.components.supportClasses.SkinnableContainerBase;
 	
 	use namespace JT_internal;
 
@@ -316,6 +312,7 @@ package gframeWork.uiController
 		 */		
 		private function destoryGUI(child:DisplayObject):void
 		{
+			var elementContent:IVisualElementContainer;
 			if(child)
 			{
 				var displayObject:DisplayObject = null;
@@ -330,7 +327,7 @@ package gframeWork.uiController
 				
 				if(child is SkinnableContainer)
 				{
-					var elementContent:IVisualElementContainer = IVisualElementContainer(child);
+					elementContent = IVisualElementContainer(child);
 					while(elementContent.numElements > 0)
 					{
 						displayObject = elementContent.getElementAt(0) as DisplayObject; 
@@ -371,7 +368,7 @@ package gframeWork.uiController
 				}
 				else if(child is IVisualElementContainer)
 				{
-					var elementContent:IVisualElementContainer = IVisualElementContainer(child);
+					elementContent = IVisualElementContainer(child);
 					while(elementContent.numElements > 0)
 					{
 						displayObject = elementContent.getElementAt(0) as DisplayObject; 

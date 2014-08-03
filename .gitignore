@@ -221,5 +221,8 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 
+GStarling/bin/GStarling.swc
 
-GStarling/src/com/frameWork/uiControls/UIControler.as
+FStarlingTool/bin-debug/FStarlingTool.swf
+
+SplitTexture/bin-debug/SplitTexture.swf
