@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--主对象容器，拖拽功能-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" top="150" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%"
+		 height="100%" xmlns:ui="application.ui.*" mouseDown="group1_clickHandler(event)" 
+		 creationComplete="group1_creationCompleteHandler(event)" xmlns:comps="application.comps.*">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Scroller width="100%" height="100%">
+		<s:Group width="100%" height="100%">
+			<s:SkinnableContainer width="100%" height="100%">
+				<!--容器对像-->
+				<comps:RootStage id="childRoot"/>
+			</s:SkinnableContainer>
+		</s:Group>
+	</s:Scroller>
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				foucsLocal();
+				stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler,false,0,true);
+			}
+			
+			private function foucsLocal():void
+			{
+				childRoot.x = (width - childRoot.width) / 2;
+				childRoot.y = (height - childRoot.height) / 2;
+			}
+			
+			protected function group1_clickHandler(event:MouseEvent):void
+			{
+				var pt:Point = new Point(event.localX,event.localY);
+				var toGlobal:Point = localToGlobal(pt);
+				var toContent:Point = childRoot.globalToContent(toGlobal);
+				trace(toContent);
+				childRoot.startDrag(false,new Rectangle(-childRoot.width + width,-childRoot.height + height,childRoot.width - width,childRoot.height - height));
+			}
+			
+			protected function mouseUpHandler(event:MouseEvent):void
+			{
+				childRoot.stopDrag();
+			}
+		]]>
+	</fx:Script>
+</s:Group>
