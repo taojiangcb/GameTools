@@ -1,4 +1,4 @@
-package com.frameWork.utils
+package gframeWork.utils
 {
 	import flash.events.NetStatusEvent;
 	import flash.net.SharedObject;
