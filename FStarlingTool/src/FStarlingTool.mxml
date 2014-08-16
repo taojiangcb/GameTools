@@ -23,16 +23,17 @@
 	<fx:Script>
 		<![CDATA[
 			import application.AppUI;
+			
 			import gframeWork.JT_FrameWork;
 			import gframeWork.uiController.JT_UserInterfaceManager;
-			
 			private var appUI:AppUI;
-			
 			public function appInit():void
 			{
 				JT_FrameWork.getInstance().setLayout(this,this,this);
 				appUI = new AppUI();
 				JT_UserInterfaceManager.open(AppUI.APP_UI_MAIN);
+				JT_UserInterfaceManager.open(AppUI.APP_ROOT_PANE);
+				
 			}
 		]]>
 	</fx:Script>

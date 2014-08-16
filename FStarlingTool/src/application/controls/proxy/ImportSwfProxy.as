@@ -1,5 +1,6 @@
-package application.controls
+package application.controls.proxy
 {
+	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.filesystem.File;
@@ -8,6 +9,10 @@ package application.controls
 	import flash.media.Video;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
+	import flash.net.URLRequest;
+	import flash.system.ApplicationDomain;
+	import flash.system.LoaderContext;
+	import flash.utils.ByteArray;
 	
 	import application.AppUI;
 	import application.ui.MainUIPanel;
@@ -18,15 +23,14 @@ package application.controls
 	/**
 	 * 导入swf文件的相关处理,选择文件，刷新当前文件
 	 * @author JiangTao
-	 * 
 	 */	
 	public class ImportSwfProxy implements JT_IDisposable
 	{
-		
 		private const SWF:String = "*.swf";
-		
+		/*文件*/
 		private var file:File;
-		private var fileStream:FileStream;
+		//文件加载
+		private var fileLoad:Loader;		
 		
 		public function ImportSwfProxy()
 		{
@@ -46,6 +50,10 @@ package application.controls
 			file.browseForOpen("选择一个swf文件",[new FileFilter(SWF,SWF)]);
 		}
 		
+		/**
+		 * 刷新按钮处理 
+		 * @param event
+		 */		
 		private function refreshClick(event:MouseEvent):void
 		{
 			
@@ -53,10 +61,13 @@ package application.controls
 		
 		private function fileSelectHandler(event:Event):void
 		{
-			trace(file.url);
-			trace(file.nativePath);
-			if(!fileStream) fileStream = new FileStream();
-			fileStream.(file,FileMode.READ);
+			var loadComple:Function = function(event:Event):void
+			{
+				fileLoad.contentLoaderInfo.removeEventListener(Event.COMPLETE,loadComple);
+			};
+			if(!fileLoad)  fileLoad = new Loader();
+			fileLoad.contentLoaderInfo.addEventListener(Event.COMPLETE,loadComple);
+			fileLoad.load(new URLRequest(file.url));
 		} 
 		
 		private function get gui():MainUIPanel

@@ -8,6 +8,7 @@ package application.controls
 	import application.ui.MainUIPanel;
 	
 	import gframeWork.uiController.JT_MainUIControllerBase;
+	import application.controls.proxy.ImportSwfProxy;
 	
 	public class MainUIControler extends JT_MainUIControllerBase
 	{
@@ -27,6 +28,7 @@ package application.controls
 		
 		private function listener():void
 		{
+			
 		}
 		
 		public function get gui():MainUIPanel

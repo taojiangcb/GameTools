@@ -1,17 +1,26 @@
 package application
 {
+	import application.controls.MainUIControler;
+	import application.controls.RootUIPanelControler;
+	import application.ui.MainUIPanel;
+	import application.ui.RootStateUIPanel;
+	import application.comps.RootStage;
+	
 	import gframeWork.JT_FrameWork;
 	import gframeWork.uiController.JT_UserInterfaceManager;
-	import application.controls.MainUIControler;
-	import application.ui.MainUIPanel;
 
 	public class AppUI
 	{
-		public static const APP_UI_MAIN:int = 0;
+		/**
+		 * 上面的菜单区 
+		 */		
+		public static const APP_UI_MAIN:int = 1;
+		public static const APP_ROOT_PANE:int = 2;
 		
 		public function AppUI()
 		{
 			JT_UserInterfaceManager.registerGUI(APP_UI_MAIN,MainUIPanel,MainUIControler);
+			JT_UserInterfaceManager.registerGUI(APP_ROOT_PANE,RootStateUIPanel,RootUIPanelControler);
 		}
 	}
 }
