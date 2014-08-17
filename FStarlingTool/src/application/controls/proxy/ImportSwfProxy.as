@@ -14,11 +14,18 @@ package application.controls.proxy
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
 	
+	import mx.core.UIComponent;
+	
 	import application.AppUI;
 	import application.ui.MainUIPanel;
 	
+	import assets.Assets;
+	
 	import gframeWork.JT_IDisposable;
 	import gframeWork.uiController.JT_UserInterfaceManager;
+	
+	import utils.SwfUtil;
+	import utils.Util;
 
 	/**
 	 * 导入swf文件的相关处理,选择文件，刷新当前文件
@@ -56,28 +63,49 @@ package application.controls.proxy
 		 */		
 		private function refreshClick(event:MouseEvent):void
 		{
-			
+			onloadSwf();
 		}
 		
-		private function fileSelectHandler(event:Event):void
+		private function onloadSwf():void
 		{
 			var loadComple:Function = function(event:Event):void
 			{
 				fileLoad.contentLoaderInfo.removeEventListener(Event.COMPLETE,loadComple);
+				gui.btnFileRefresh.enabled = true;
+				analysisSWF();
 			};
 			if(!fileLoad)  fileLoad = new Loader();
 			fileLoad.contentLoaderInfo.addEventListener(Event.COMPLETE,loadComple);
 			fileLoad.load(new URLRequest(file.url));
+		}
+		
+		private function fileSelectHandler(event:Event):void
+		{
+			onloadSwf();
 		} 
 		
-		private function get gui():MainUIPanel
+		/**
+		 * 解析swf文件 
+		 */		
+		private function analysisSWF():void
 		{
-			return JT_UserInterfaceManager.getUIByID(AppUI.APP_UI_MAIN).getGui() as MainUIPanel;
+			Util.swfScale = 1;
+			
+			Assets.init();
 		}
 		
 		public function dispose():void
 		{
-			
+			if(fileLoad)
+			{
+				fileLoad.unloadAndStop();
+				fileLoad = null;
+			}
+		}
+		
+		private function get gui():MainUIPanel
+		{
+			return JT_UserInterfaceManager.getUIByID(AppUI.APP_UI_MAIN).getGui() as MainUIPanel;
 		}
 	}
 }
