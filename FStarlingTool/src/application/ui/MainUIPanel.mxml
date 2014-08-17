@@ -12,7 +12,7 @@
 	<s:VGroup left="10" right="10" top="10" width="100%">
 		<s:HGroup width="100%" >
 			<s:Button label="选择swf" id="btnFileSelect"/>
-			<s:Button label="刷新" id="btnFileRefresh"/>
+			<s:Button label="刷新" id="btnFileRefresh" enabled="false"/>
 			<mx:Spacer height="100%"/>
 			<s:Button label="atf导出" id="btnAtfExport"/>
 			<s:Button label="字体嵌入" id="btnFontEmbed"/>

@@ -23,12 +23,18 @@
 	<fx:Script>
 		<![CDATA[
 			import application.AppUI;
+			import application.mediator.AppMediator;
 			
 			import gframeWork.JT_FrameWork;
 			import gframeWork.uiController.JT_UserInterfaceManager;
+			
+			import org.puremvc.as3.patterns.facade.Facade;
+			
 			private var appUI:AppUI;
+			
 			public function appInit():void
 			{
+				Facade.getInstance().registerMediator(new AppMediator(AppMediator.NAME));
 				JT_FrameWork.getInstance().setLayout(this,this,this);
 				appUI = new AppUI();
 				JT_UserInterfaceManager.open(AppUI.APP_UI_MAIN);
