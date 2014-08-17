@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><!-- saved from url=(0014)about:internet --><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../override.css" type="text/css"><meta name="keywords" content="PopUpMenuButtonBase,flexlib.baseClasses.PopUpMenuButtonBase,accMinHeight,accPreferredHeight,accPreferredWidth,allowThumbOverlap,allowTrackClick,contentHeight,contentWidth,dataDescriptor,dataProvider,dataTipFormatFunction,direction,headerRenderer,historyManagementEnabled,iconField,iconFunction,labelField,labelFunction,labels,liveDragging,maximum,minimum,popUp,resizeToContent,selectedChild,selectedIndex,showDataTip,showRoot,sliderDataTipClass,sliderThumbClass,snapInterval,thumbCount,thumbStyleFilters,tickInterval,tickValues,tween,tweenContentHeight,tweenContentWidth,tweenNewSelectedIndex,tweenOldSelectedIndex,value,values"><title>flexlib.baseClasses.PopUpMenuButtonBase</title></head><body><script language="javascript" type="text/javascript" src="../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../help.js"></script><script language="javascript" type="text/javascript" src="../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+				asdocTitle = 'PopUpMenuButtonBase - flexlib';
+				var baseRef = '../../';
+				window.onload = configPage;
+			--></script>
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">API Documentation</td><td class="titleTableTopNav" align="right"><a href="../../package-summary.html" onclick="loadClassListFrame('../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../class-summary.html" onclick="loadClassListFrame('../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../all-index-A.html" onclick="loadClassListFrame('../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../index.html?flexlib/baseClasses/PopUpMenuButtonBase.html&amp;flexlib/baseClasses/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">PopUpMenuButtonBase</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#styleSummary">Styles</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PopUpMenuButtonBase"); titleBar_setSubNav(false,true,true,false,false,false,true,false,true,false,false	,false,false,false,false,false);}	
+				-->
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">flexlib.baseClasses</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public  class  PopUpMenuButtonBase</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">PopUpMenuButtonBase  <img src="../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> mx.controls.PopUpButton</td></tr><tr><td class="classHeaderTableLabel">Subclasses</td><td> <a href="../../flexlib/controls/ScrollablePopUpMenuButton.html">ScrollablePopUpMenuButton</a></td></tr></table><p></p><p></p><p></p>
+  PopUpMenuButtonBase is a copy/paste version of the original PopUpMenuButton class in the Flex framework.
+ 
+ 	<p>The only modifications made to this class were to change some properties and
+  methods from private to protected so we can override them in a subclass.</p>
+ 
+               <p>The PopUpMenuButton control creates a PopUpButton control with a main
+  sub-button and a secondary sub-button.
+  Clicking on the secondary (right) sub-button drops down a menu that
+  can be popluated through a <code>dataProvider</code> property. 
+  Unlike the Menu and MenuBar controls, the PopUpMenuButton control 
+  supports only a single-level menu. This means that the menu cannot contain
+  cascading submenus.</p>
+ 
+               <p>The main sub-button of the PopUpMenuButton control can have a 
+     text label, an icon, or both on its face.
+     When a user selects an item from the drop-down menu or clicks 
+     the main button of the PopUpMenuButton control, the control 
+     dispatches an <code>itemClick</code> event.
+     When a user clicks the main button of the 
+     control, the control also dispatches a <code>click</code> event. 
+     You can customize the look of a PopUpMenuButton control.</p>
+               <p>The PopUpMenuButton control has the following sizing 
+     characteristics:</p>
+               <table class="innertable" ><tr><th>Characteristic</th><th>Description</th></tr><tr><td>Default size</td><td>Sufficient to accommodate the label and any icon on 
+               the main button, and the icon on the pop-up button. 
+               The control does not reserve space for the menu.</td></tr><tr><td>Minimum size</td><td>0 pixels.</td></tr><tr><td>Maximum size</td><td>10000 by 10000.</td></tr></table>
+            <p></p><a name="mxmlSyntaxSummary"></a><span class="classHeaderTableLabel">MXML Syntax</span><span id="showMxmlLink" style="display:none"><a href="#mxmlSyntaxSummary" onclick="toggleMXMLOnly();"><img src="../../images/collapsed.gif" title="collapsed" alt="collapsed" class="collapsedImage">Show MXML Syntax</a><br/></span><span id="hideMxmlLink"><a href="#mxmlSyntaxSummary" onclick="toggleMXMLOnly();"><img src="../../images/expanded.gif" title="expanded" alt="expanded" class="expandedImage">Hide MXML Syntax</a></span><div id="mxmlSyntax" class="mxmlSyntax"> 
+  <p>The <code>&lt;mx:PopUpMenuButton&gt;</code> tag inherits all of the tag
+  attributes of its superclass, and adds the following tag attributes:</p>
+  
+  <pre>
+  &lt;mx:PopUpMenuButton
+    <strong>Properties</strong>
+    dataDescriptor="<i>instance of DefaultDataDescriptor</i>"
+    dataProvider="undefined"
+    iconField="icon"
+    iconFunction="undefined"
+    labelField="label"
+    labelFunction="undefined"
+    showRoot="false|true"
+    &nbsp;
+    <strong>Event</strong>
+    change=<i>No default</i>
+  /&gt;
+  </pre>
+   
+   </div><script language="javascript" type="text/javascript"><!--
+								setMXMLOnly();
+								--></script><p><span class="classHeaderTableLabel">See also</span></p><div class="seeAlso">mx.controls.Menu<br/>mx.controls.MenuBar</div><br/><hr></div><a name="propertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Properties</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#dataDescriptor" class="signatureLink">dataDescriptor</a> : IMenuDataDescriptor<div class="summaryTableDescription">
+      The data descriptor accesses and manipulates data in the data provider.</div></td><td class="summaryTableOwnerCol">PopUpMenuButtonBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#dataProvider" class="signatureLink">dataProvider</a> : Object<div class="summaryTableDescription">
+      DataProvider for popUpMenu.</div></td><td class="summaryTableOwnerCol">PopUpMenuButtonBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#iconField" class="signatureLink">iconField</a> : String<div class="summaryTableDescription">
+      Name of the field in the dataProvider Array that contains the icon to
+      show for each menu item.</div></td><td class="summaryTableOwnerCol">PopUpMenuButtonBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#iconFunction" class="signatureLink">iconFunction</a> : Function<div class="summaryTableDescription">
+      A function that determines the icon to display for each menu item.</div></td><td class="summaryTableOwnerCol">PopUpMenuButtonBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#labelField" class="signatureLink">labelField</a> : String<div class="summaryTableDescription">
+      Name of the field in the dataProvider Array that contains the text to
+      show for each menu item.</div></td><td class="summaryTableOwnerCol">PopUpMenuButtonBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#labelFunction" class="signatureLink">labelFunction</a> : Function<div class="summaryTableDescription">
+      A function that determines the text to display for each menu item.</div></td><td class="summaryTableOwnerCol">PopUpMenuButtonBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#popUp" class="signatureLink">popUp</a> : IUIComponent<div class="summaryTableDescription">[override] [write-only] 
+      A reference to the pop-up Menu object.</div></td><td class="summaryTableOwnerCol">PopUpMenuButtonBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#showRoot" class="signatureLink">showRoot</a> : Boolean<div class="summaryTableDescription">
+      Specifies whether to display the top-level node or nodes of the data provider.</div></td><td class="summaryTableOwnerCol">PopUpMenuButtonBase</td></tr></table></div><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#PopUpMenuButtonBase()" class="signatureLink">PopUpMenuButtonBase</a>()</div><div class="summaryTableDescription">
+      Constructor.</div></td><td class="summaryTableOwnerCol">PopUpMenuButtonBase</td></tr></table></div><a name="eventSummary"></a><div class="summarySection"><div class="summaryTableTitle">Events</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableEvent"><tr><th>&nbsp;</th><th colspan="2">Event</th><th> Summary </th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#event:itemClick" class="signatureLink">itemClick</a></div></td><td class="summaryTableDescription summaryTableCol">Dispatched when a user selects an item from the pop-up menu.</td><td class="summaryTableOwnerCol">PopUpMenuButtonBase</td></tr></table></div><a name="styleSummary"></a><div class="summarySection"><div class="summaryTableTitle">Styles</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableStyle"><tr><th>&nbsp;</th><th colspan="2">Style</th><th> Description </th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:popUpStyleName"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">popUpStyleName</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>String&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+  The name of a CSS style declaration used by the dropdown menu.  
+  This property allows you to control the appearance of the dropdown menu.
+  The default value sets the <code>fontWeight</code> to <code>normal</code> and 
+  the <code>textAlign</code> to <code>left</code>.
+    The default value is<code> "popUpMenu"</code>.</td><td class="summaryTableOwnerCol">PopUpMenuButtonBase</td></tr></table></div><script language="javascript" type="text/javascript"><!--
+										showHideInherited();
+										--></script><div class="MainContent"><div class="detailSectionHeader">Property Detail</div><a name="propertyDetail"></a><a name="dataDescriptor"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">dataDescriptor</td><td class="detailHeaderType">property</td></tr></table><div class="detailBody"><code>dataDescriptor:IMenuDataDescriptor</code><p></p><p></p><p>
+      The data descriptor accesses and manipulates data in the data provider.
+      <p>When you specify this property as an attribute in MXML, you must
+      use a reference to the data descriptor, not the string name of the
+      descriptor. Use the following format for the property:</p>
+           <pre>&lt;mx:PopUpMenuButton id="menubar" dataDescriptor="{new MyCustomDataDescriptor()}"/></pre>
+           <p>Alternatively, you can specify the property in MXML as a nested
+      subtag, as the following example shows:</p>
+           <pre>&lt;mx:PopUpMenuButton>
+      &lt;mx:dataDescriptor>
+         &lt;myCustomDataDescriptor>
+      &lt;/mx:dataDescriptor>
+      ...</pre>
+           <p>The default value is an internal instance of the
+      DefaultDataDescriptor class.</p>
+     </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get dataDescriptor():IMenuDataDescriptor</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set dataDescriptor(value:IMenuDataDescriptor):void</code><br/></div><a name="propertyDetail"></a><a name="dataProvider"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">dataProvider</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>dataProvider:Object</code><p></p><p></p><p>
+      DataProvider for popUpMenu.
+           </p><p> The default value is <code>null</code>.</p><p>This property can be used as the source for data binding.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get dataProvider():Object</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set dataProvider(value:Object):void</code><br/></div><a name="propertyDetail"></a><a name="iconField"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">iconField</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>iconField:String</code><p></p><p></p><p>
+      Name of the field in the <code>dataProvider</code> Array that contains the icon to
+      show for each menu item.
+      The <code>iconFunction</code> property, if set, overrides this property.
+     
+      <p>The renderers will look in the data provider object for a property of 
+      the name supplied as the iconField.  If the value of the property is a 
+      Class, it will instantiate that class and expect it to be an instance 
+      of an IFlexDisplayObject. If the value of the property is a String, 
+      it will look to see if a Class exists with that name in the application, 
+      and if it can't find one, it will also look for a property on the 
+      document with that name and expect that property to map to a Class.</p>
+     
+      If the data provider is an E4X XML object, you must set this property
+      explicitly; for example, use @icon to specify the <code>icon</code> attribute.
+           </p><p> The default value is <code>"icon"</code>.</p><p>This property can be used as the source for data binding.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get iconField():String</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set iconField(value:String):void</code><br/></div><a name="propertyDetail"></a><a name="iconFunction"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">iconFunction</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>iconFunction:Function</code><p></p><p></p><p>
+      A function that determines the icon to display for each menu item.
+      If you omit this property, Flex uses the contents of the field or attribute
+      determined by the <code>iconField</code> property.
+      If you specify this property, Flex ignores any <code>iconField</code>
+      property value.
+           By default the menu does not try to display icons with the text 
+      in the rows.  However, by specifying an icon function, you can specify 
+      a Class for a graphic that will be created and displayed as an icon 
+      in the row. 
+           <p>The iconFunction takes a single argument which is the item
+      in the data provider and returns a Class.</p>
+     
+      
+           </p><p> The default value is <code>null</code>.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get iconFunction():Function</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set iconFunction(value:Function):void</code><br/></div><a name="propertyDetail"></a><a name="labelField"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">labelField</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>labelField:String</code><p></p><p></p><p>
+      Name of the field in the <code>dataProvider</code> Array that contains the text to
+      show for each menu item.
+      The <code>labelFunction</code> property, if set, overrides this property.
+      If the data provider is an Array of Strings, Flex uses each String
+      value as the label.
+      If the data provider is an E4X XML object, you must set this property
+      explicitly; for example, use @label to specify the <code>label</code> attribute.
+           </p><p> The default value is <code>"label"</code>.</p><p>This property can be used as the source for data binding.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get labelField():String</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set labelField(value:String):void</code><br/></div><a name="propertyDetail"></a><a name="labelFunction"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">labelFunction</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>labelFunction:Function</code><p></p><p></p><p>
+      A function that determines the text to display for each menu item.
+      If you omit this property, Flex uses the contents of the field or attribute
+      determined by the <code>labelField</code> property.
+      If you specify this property, Flex ignores any <code>labelField</code>
+      property value.
+           <p>If you specify this property, the label function must find the
+      appropriate field or fields and return a displayable string.
+      The <code>labelFunction</code> property is good for handling formatting
+      and localization.</p>
+           <p>The label function must take a single argument which is the item
+      in the dataProvider and return a String.</p>
+     
+      
+           </p><p> The default value is <code>null</code>.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get labelFunction():Function</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set labelFunction(value:Function):void</code><br/></div><a name="propertyDetail"></a><a name="popUp"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">popUp</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>popUp:IUIComponent</code>&nbsp;&nbsp;[write-only] [override] <p></p><p></p><p>
+      A reference to the pop-up Menu object.
+           <p>This property is read-only, and setting it has no effect.
+      Set the <code>dataProvider</code> property, instead.
+      (The write-only indicator appears in the syntax summary because the
+      property in the superclass is read-write and this class overrides
+      the setter with an empty implementation.)</p>
+     </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set popUp(value:IUIComponent):void</code><br/></div><a name="propertyDetail"></a><a name="showRoot"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">showRoot</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>showRoot:Boolean</code><p></p><p></p><p>
+      Specifies whether to display the top-level node or nodes of the data provider.
+           If this is set to <code>false</code>, the control displays
+      only descendants of the first top-level node.
+      Any other top-level nodes are ignored.
+      You normally set this property to <code>false</code> for
+      E4X format XML data providers, where the top-level node is the document
+      object.
+           </p><p> The default value is <code>true</code>.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get showRoot():Boolean</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set showRoot(value:Boolean):void</code><br/></div><a name="constructorDetail"></a><div class="detailSectionHeader">Constructor Detail</div><a name="PopUpMenuButtonBase()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">PopUpMenuButtonBase</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">Constructor</td></tr></table><div class="detailBody"><code>public function PopUpMenuButtonBase()</code><p></p><p>
+      Constructor.
+     </p></div><div class="detailSectionHeader"> Event Detail </div><a name="event:itemClick"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">itemClick</td><td class="detailHeaderType"> Event </td></tr></table><div class="detailBody"><span class="label">Event Object Type: </span><code>mx.events.MenuEvent</code><br/><span class="label">MenuEvent.type property = </span><code>mx.events.MenuEvent.ITEM_CLICK</code><br/><p></p><p></p><p>
+  Dispatched when a user selects an item from the pop-up menu.
+   </p></div><br/><br/><hr><br/><p></p><center class="copyright"><footer></footer><br/>Sun Mar 28 2010, 07:49 PM -07:00  </center></div></body></html><!--<br/>Sun Mar 28 2010, 07:49 PM -07:00  -->

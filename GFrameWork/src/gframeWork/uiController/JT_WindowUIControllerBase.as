@@ -33,7 +33,6 @@ package gframeWork.uiController
 	import mx.core.IVisualElement;
 	import mx.core.IVisualElementContainer;
 	import mx.core.UIComponent;
-	import mx.effects.easing.Linear;
 	import mx.events.FlexEvent;
 	
 	use namespace JT_internal;

@@ -166,7 +166,6 @@ import gframeWork.uiController.JT_WindowUIControllerBase;
 
 import mx.core.IVisualElementContainer;
 import mx.core.UIComponent;
-import mx.effects.easing.Linear;
 
 import spark.primitives.Line;
 

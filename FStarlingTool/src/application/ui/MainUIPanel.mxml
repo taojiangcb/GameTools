@@ -2,13 +2,13 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="150">
+	<fx:Declarations>
+	</fx:Declarations>
 	<s:Rect width="100%" height="100%">
 		<s:fill>
 			<mx:SolidColor color="0xCCCCCC"/>
 		</s:fill>
 	</s:Rect>
-	<fx:Declarations>
-	</fx:Declarations>
 	<s:VGroup left="10" right="10" top="10" width="100%">
 		<s:HGroup width="100%" >
 			<s:Button label="选择swf" id="btnFileSelect"/>

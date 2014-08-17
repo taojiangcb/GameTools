@@ -1,0 +1,376 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><!-- saved from url=(0014)about:internet --><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../override.css" type="text/css"><meta name="keywords" content="SliderBase,flexlib.baseClasses.SliderBase,accMinHeight,accPreferredHeight,accPreferredWidth,allowThumbOverlap,allowTrackClick,contentHeight,contentWidth,dataDescriptor,dataProvider,dataTipFormatFunction,direction,headerRenderer,historyManagementEnabled,iconField,iconFunction,labelField,labelFunction,labels,liveDragging,maximum,minimum,popUp,resizeToContent,selectedChild,selectedIndex,showDataTip,showRoot,sliderDataTipClass,sliderThumbClass,snapInterval,thumbCount,thumbStyleFilters,tickInterval,tickValues,tween,tweenContentHeight,tweenContentWidth,tweenNewSelectedIndex,tweenOldSelectedIndex,value,values,getHeaderAt,getThumbAt,loadState,measure,saveState,setThumbValueAt,updateDisplayList"><title>flexlib.baseClasses.SliderBase</title></head><body><script language="javascript" type="text/javascript" src="../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../help.js"></script><script language="javascript" type="text/javascript" src="../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+				asdocTitle = 'SliderBase - flexlib';
+				var baseRef = '../../';
+				window.onload = configPage;
+			--></script>
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">API Documentation</td><td class="titleTableTopNav" align="right"><a href="../../package-summary.html" onclick="loadClassListFrame('../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../class-summary.html" onclick="loadClassListFrame('../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../all-index-A.html" onclick="loadClassListFrame('../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../index.html?flexlib/baseClasses/SliderBase.html&amp;flexlib/baseClasses/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">SliderBase</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#styleSummary">Styles</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("SliderBase"); titleBar_setSubNav(false,true,true,false,false,false,true,false,true,false,false	,false,false,false,false,false);}	
+				-->
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">flexlib.baseClasses</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public  class  SliderBase</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">SliderBase  <img src="../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> mx.core.UIComponent</td></tr><tr><td class="classHeaderTableLabel">Subclasses</td><td> <a href="../../flexlib/controls/sliderClasses/ExtendedSlider.html">ExtendedSlider</a></td></tr></table><p></p><p></p><p></p>
+    SliderBase is a copy/paste version of the original Slider class in the Flex framework.
+      	<p>The only modifications made to this class were to change some properties and
+    methods from private to protected so we can override them in a subclass.</p>
+       The Slider class is the base class for the Flex slider controls.
+    The slider controls let users select a value by moving a slider thumb
+    between the end points of the slider
+    track. The current value of the slider is determined by
+    the relative location of the thumb between the
+    end points of the slider, corresponding to the slider's minimum and maximum values.
+    The Slider class is subclassed by HSlider and VSlider.
+       <p></p><a name="mxmlSyntaxSummary"></a><span class="classHeaderTableLabel">MXML Syntax</span><span id="showMxmlLink" style="display:none"><a href="#mxmlSyntaxSummary" onclick="toggleMXMLOnly();"><img src="../../images/collapsed.gif" title="collapsed" alt="collapsed" class="collapsedImage">Show MXML Syntax</a><br/></span><span id="hideMxmlLink"><a href="#mxmlSyntaxSummary" onclick="toggleMXMLOnly();"><img src="../../images/expanded.gif" title="expanded" alt="expanded" class="expandedImage">Hide MXML Syntax</a></span><div id="mxmlSyntax" class="mxmlSyntax">    <p>The Slider class cannot be used as an MXML tag. Use the <code>&lt;mx:HSlider&gt;</code>
+    and <code>&lt;mx:VSlider&gt;</code> tags instead. However, the Slider class does define tag
+    attributes used by the <code>&lt;mx:HSlider&gt;</code> and <code>&lt;mx:VSlider&gt;</code> tags. </p>
+       <p>The Slider class inherits all of the tag attributes
+    of its superclass, and adds the following tag attributes:</p>
+       <pre>
+    &lt;mx:<i>tagname</i>
+      <strong>Properties</strong>
+      allowThumbOverlap="false|true"
+      allowTrackClick="true|false"
+      dataTipFormatFunction="undefined"
+      direction="horizontal|vertical"
+      labels="undefined"
+      liveDragging="false|true"
+      maximum="10"
+      minimum="0"
+      showDataTip="true|false"
+      sliderDataTipClass="sliderDataTip"
+      sliderThumbClass="SliderThumb"
+      snapInterval="0"
+      thumbCount="1"
+      tickInterval="0"
+      tickValues="undefined"
+      value="<i>The value of the minimum property.</i>"
+         <strong>Styles</strong>
+      borderColor="0x919999"
+      dataTipOffset="16"
+      dataTipPrecision="2"
+      dataTipStyleName="undefined"
+      fillAlphas="[0.6, 0.4, 0.75, 0.65]"
+      fillColors="[0xFFFFFF, 0xCCCCCC, 0xFFFFFF, 0xEEEEEE;]"
+      labelOffset="-10"
+      labelStyleName="undefined"
+      showTrackHighlight="false"
+      slideDuration="300"
+      slideEasingFunction="undefined"
+      thumbDisabledSkin="SliderThumbSkin"
+      thumbDownSkin="SliderThumbSkin"
+      thumbOffset="0"
+      thumbOverSkin="SliderThumbSkin"
+      thumbUpSkin="SliderThumbSkin"
+      tickColor="0x6F7777"
+      tickLength="3"
+      tickOffset="-6"
+      tickThickness="1"
+      trackColors="[ 0xEEEEEE, 0xFFFFFF ]"
+      tracHighlightSkin="SliderHighlightSkin"
+      trackMargin="undefined"
+      trackSkin="SliderTrackSkin"
+         <strong>Events</strong>
+      change="<i>No default</i>"
+      thumbDrag="<i>No default</i>"
+      thumbPress="<i>No default</i>"
+      thumbRelease="<i>No default</i>"
+    /&gt;
+    </pre>
+   </div><script language="javascript" type="text/javascript"><!--
+								setMXMLOnly();
+								--></script><br/><hr></div><a name="propertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Properties</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#allowThumbOverlap" class="signatureLink">allowThumbOverlap</a> : Boolean = false<div class="summaryTableDescription">
+      If set to false, then each thumb can only be moved to the edge of
+      the adjacent thumb.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#allowTrackClick" class="signatureLink">allowTrackClick</a> : Boolean = true<div class="summaryTableDescription">
+      Specifies whether clicking on the track will move the slider thumb.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#dataTipFormatFunction" class="signatureLink">dataTipFormatFunction</a> : Function<div class="summaryTableDescription">
+      Callback function that formats the data tip text.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#direction" class="signatureLink">direction</a> : String<div class="summaryTableDescription">
+      The orientation of the slider control.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#labels" class="signatureLink">labels</a> : Array<div class="summaryTableDescription">
+      An array of strings used for the slider labels.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#liveDragging" class="signatureLink">liveDragging</a> : Boolean = false<div class="summaryTableDescription">
+      Specifies whether live dragging is enabled for the slider.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#maximum" class="signatureLink">maximum</a> : Number<div class="summaryTableDescription">
+      The maximum allowed value on the slider.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#minimum" class="signatureLink">minimum</a> : Number<div class="summaryTableDescription">
+      The minimum allowed value on the slider control.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#showDataTip" class="signatureLink">showDataTip</a> : Boolean = true<div class="summaryTableDescription">
+      If set to true, show a data tip during user interaction
+      containing the current value of the slider.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#sliderDataTipClass" class="signatureLink">sliderDataTipClass</a> : Class<div class="summaryTableDescription">
+      A reference to the class to use for the data tip.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#sliderThumbClass" class="signatureLink">sliderThumbClass</a> : Class<div class="summaryTableDescription">
+      A reference to the class to use for each thumb.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#snapInterval" class="signatureLink">snapInterval</a> : Number<div class="summaryTableDescription">
+      Specifies the increment value of the slider thumb
+      as the user moves the thumb.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#thumbCount" class="signatureLink">thumbCount</a> : int<div class="summaryTableDescription">
+      The number of thumbs allowed on the slider.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#tickInterval" class="signatureLink">tickInterval</a> : Number<div class="summaryTableDescription">
+      The spacing of the tick marks relative to the maximum value
+      of the control.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#tickValues" class="signatureLink">tickValues</a> : Array<div class="summaryTableDescription">
+      The positions of the tick marks on the slider.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#value" class="signatureLink">value</a> : Number<div class="summaryTableDescription">
+      Contains the position of the thumb, and is a number between the
+      minimum and maximum properties.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#values" class="signatureLink">values</a> : Array<div class="summaryTableDescription">
+      An array of values for each thumb when thumbCount
+      is greater than 1.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr></table></div><a name="protectedPropertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Protected Properties</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProtectedProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#thumbStyleFilters" class="signatureLink">thumbStyleFilters</a> : Object<div class="summaryTableDescription">[read-only] 
+      Set of styles to pass from the Slider to the thumbs.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr></table></div><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#SliderBase()" class="signatureLink">SliderBase</a>()</div><div class="summaryTableDescription">
+      Constructor.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getThumbAt()" class="signatureLink">getThumbAt</a>(index:int):<a href="../../flexlib/controls/sliderClasses/SliderThumb.html">SliderThumb</a></div><div class="summaryTableDescription">
+      Returns the thumb object at the given index.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#setThumbValueAt()" class="signatureLink">setThumbValueAt</a>(index:int, value:Number):void</div><div class="summaryTableDescription">
+      This method sets the value of a slider thumb, and updates the display.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr></table></div><a name="protectedMethodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Protected Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProtectedMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#measure()" class="signatureLink">measure</a>():void</div><div class="summaryTableDescription">[override] 
+      Calculates the amount of space that the component takes up.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#updateDisplayList()" class="signatureLink">updateDisplayList</a>(unscaledWidth:Number, unscaledHeight:Number):void</div><div class="summaryTableDescription">[override] 
+      Positions the elements of the control.</div></td><td class="summaryTableOwnerCol">SliderBase</td></tr></table></div><a name="eventSummary"></a><div class="summarySection"><div class="summaryTableTitle">Events</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableEvent"><tr><th>&nbsp;</th><th colspan="2">Event</th><th> Summary </th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#event:change" class="signatureLink">change</a></div></td><td class="summaryTableDescription summaryTableCol">Dispatched when the slider changes value due to mouse or keyboard interaction.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#event:thumbDrag" class="signatureLink">thumbDrag</a></div></td><td class="summaryTableDescription summaryTableCol">Dispatched when the slider's thumb is pressed and then moved by the mouse.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#event:thumbPress" class="signatureLink">thumbPress</a></div></td><td class="summaryTableDescription summaryTableCol">Dispatched when the slider's thumb is pressed, meaning the user presses the mouse button over the thumb.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#event:thumbRelease" class="signatureLink">thumbRelease</a></div></td><td class="summaryTableDescription summaryTableCol">Dispatched when the slider's thumb is released, meaning the user releases the mouse button after a thumbPress event.</td><td class="summaryTableOwnerCol">SliderBase</td></tr></table></div><a name="styleSummary"></a><div class="summarySection"><div class="summaryTableTitle">Styles</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableStyle"><tr><th>&nbsp;</th><th colspan="2">Style</th><th> Description </th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:borderColor"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">borderColor</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>uint&nbsp;<span class="label">Format: </span>Color&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The color of the black section of the border.
+        The default value is<code> 0x919999</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:dataTipOffset"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">dataTipOffset</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Number&nbsp;<span class="label">Format: </span>Length&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The offset, in pixels, of the data tip relative to the thumb.
+    Used in combination with the <code>dataTipPlacement</code>
+    style property of the HSlider and VSlider controls.
+        The default value is<code> 16</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:dataTipPrecision"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">dataTipPrecision</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>int&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    Number of decimal places to use for the data tip text.
+    A value of 0 means to round all values to an integer.
+        The default value is<code> 2</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:dataTipStyleName"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">dataTipStyleName</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>String&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The name of the style declaration to use for the data tip.
+        The default value is<code> undefined</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:invertThumbDirection"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">invertThumbDirection</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Boolean&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    Invert the direction of the thumbs.
+    If <code>true</code>, the thumbs will be flipped.
+        The default value is<code> false</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:labelOffset"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">labelOffset</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Number&nbsp;<span class="label">Format: </span>Length&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The y-position offset (if direction is horizontal)
+    or x-position offset (if direction is vertical)
+    of the labels relative to the track.
+        The default value is<code> -10</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:labelStyleName"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">labelStyleName</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>String&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The name of the style to use for the slider label.
+        The default value is<code> undefined</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:showTrackHighlight"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">showTrackHighlight</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Boolean&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    Specifies whether to enable track highlighting between thumbs
+    (or a single thumb and the beginning of the track).
+        The default value is<code> false</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:slideDuration"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">slideDuration</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Number&nbsp;<span class="label">Format: </span>Time&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    Duration in milliseconds for the sliding animation
+    when you click on the track to move a thumb.
+        The default value is<code> 300</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:slideEasingFunction"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">slideEasingFunction</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Function&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    Tweening function used by the sliding animation
+    when you click on the track to move a thumb.
+        The default value is<code> undefined</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:thumbDisabledSkin"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">thumbDisabledSkin</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Class&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The skin for the slider thumb disabled state.
+        The default value is<code> SliderThumbSkin</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:thumbDownSkin"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">thumbDownSkin</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Class&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The skin for the slider thumb down state.
+        The default value is<code> SliderThumbSkin</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:thumbOffset"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">thumbOffset</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Number&nbsp;<span class="label">Format: </span>Length&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The y-position offset (if direction is horizontal)
+    or x-position offset (if direction is vertical)
+    of the thumb relative to the track.
+        The default value is<code> 0</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:thumbOverSkin"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">thumbOverSkin</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Class&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The skin for the slider thumb over state.
+        The default value is<code> SliderThumbSkin</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:thumbSkin"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">thumbSkin</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Class&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The default skin for the slider thumb.
+        The default value is<code> SliderThumbSkin</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:thumbUpSkin"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">thumbUpSkin</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Class&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The skin for the slider thumb up state.
+        The default value is<code> SliderThumbSkin</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:tickColor"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">tickColor</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>uint&nbsp;<span class="label">Format: </span>Color&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The color of the tick marks.
+    Can be a hex color value or the string name of a known color.
+        The default value is<code> 0x6F7777.</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:tickLength"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">tickLength</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Number&nbsp;<span class="label">Format: </span>Length&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The length in pixels of the tick marks.
+    If <code>direction</code> is <code>Direction.HORIZONTAL</code>,
+    then adjust the height of the tick marks.
+    If <code>direction</code> is <code>Direction.VERTICAL</code>,
+    then adjust the width.
+        The default value is<code> 3</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:tickOffset"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">tickOffset</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Number&nbsp;<span class="label">Format: </span>Length&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The y-position offset (if direction is horizontal)
+    or x-position offset (if direction is vertical)
+    of the tick marks relative to the track.
+        The default value is<code> -6</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:tickThickness"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">tickThickness</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Number&nbsp;<span class="label">Format: </span>Length&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The thickness in pixels of the tick marks.
+    If direction is horizontal,
+    then adjust the width of the tick marks.
+    If direction is vertical,
+    then adjust the height.
+        The default value is<code> 1</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:trackColors"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">trackColors</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Array&nbsp;<span class="label">Format: </span>Color&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The colors of the track, as an array of two colors.
+    You can use the same color twice for a solid track color.
+       <p>You use this property along with the <code>fillAlphas</code>
+    property. Typically you set <code>fillAlphas</code> to [ 1.0, 1.0 ]
+    when setting <code>trackColors</code>.</p>
+                      The default value is<code> [ 0xE7E7E7, 0xE7E7E7 ]</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:trackHighlightSkin"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">trackHighlightSkin</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Class&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The skin for the slider track when it is selected.
+   </td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:trackMargin"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">trackMargin</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Number&nbsp;<span class="label">Format: </span>Length&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The size of the track margins, in pixels.
+    If <code>undefined</code>, then the track margins will be determined
+    by the length of the first and last labels.
+    If given a value, Flex attempts to fit the labels in the available space.
+        The default value is<code> undefined</code>.</td><td class="summaryTableOwnerCol">SliderBase</td></tr><tr class=""><td class="summaryTablePaddingCol"><a name="style:trackSkin"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><span class="signatureLink">trackSkin</span></div></td><td class="summaryTableDescription"><span class="label">Type: </span>Class&nbsp;<span class="label">CSS Inheritance: </span>no<br/>
+    The skin for the slider track.
+   </td><td class="summaryTableOwnerCol">SliderBase</td></tr></table></div><script language="javascript" type="text/javascript"><!--
+										showHideInherited();
+										--></script><div class="MainContent"><div class="detailSectionHeader">Property Detail</div><a name="propertyDetail"></a><a name="allowThumbOverlap"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">allowThumbOverlap</td><td class="detailHeaderType">property</td></tr></table><div class="detailBody"><code>public var allowThumbOverlap:Boolean = false</code><p></p><p></p><p>
+      If set to <code>false</code>, then each thumb can only be moved to the edge of
+      the adjacent thumb.
+      If <code>true</code>, then each thumb can be moved to any position on the track.
+           </p><p> The default value is <code>false</code>.</p></div><a name="propertyDetail"></a><a name="allowTrackClick"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">allowTrackClick</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public var allowTrackClick:Boolean = true</code><p></p><p></p><p>
+      Specifies whether clicking on the track will move the slider thumb.
+           </p><p> The default value is <code>true</code>.</p></div><a name="propertyDetail"></a><a name="dataTipFormatFunction"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">dataTipFormatFunction</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>dataTipFormatFunction:Function</code><p></p><p></p><p>
+      Callback function that formats the data tip text.
+      The function takes a single Number as an argument
+      and returns a formatted String.
+           <p>The function has the following signature:</p>
+      <pre>
+      funcName(value:Number):String
+      </pre>
+           <p>The following example prefixes the data tip text with a dollar sign and
+      formats the text using the <code>dataTipPrecision</code>
+      of a Slider Control named 'slide': </p>
+           <pre>
+      import mx.formatters.NumberBase;
+      function myDataTipFormatter(value:Number):String {
+          var dataFormatter:NumberBase = new NumberBase(".", ",", ".", "");
+          return   "$ " + dataFormatter.formatPrecision(String(value), slide.getStyle("dataTipPrecision"));
+      }
+      </pre>
+           </p><p> The default value is <code>undefined</code>.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get dataTipFormatFunction():Function</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set dataTipFormatFunction(value:Function):void</code><br/></div><a name="propertyDetail"></a><a name="direction"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">direction</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>direction:String</code><p></p><p></p><p>
+      The orientation of the slider control.
+      Valid values in MXML are <code>"horizontal"</code> or <code>"vertical"</code>.
+           <p>In ActionScript, you use the following constants
+      to set this property:
+      <code>SliderDirection.VERTICAL</code> and
+      <code>SliderDirection.HORIZONTAL</code>.</p>
+           The HSlider and VSlider controls set this property for you;
+      do not set it when using those controls.
+           </p><p> The default value is <code>SliderDirection.HORIZONTAL</code>.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get direction():String</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set direction(value:String):void</code><br/><p><span class="label">See also</span></p><div class="seeAlso">mx.controls.sliderClasses.SliderDirection</div></div><a name="propertyDetail"></a><a name="labels"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">labels</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>labels:Array</code><p></p><p></p><p>
+      An array of strings used for the slider labels.
+      Flex positions the labels at the beginning of the track,
+      and spaces them evenly between the beginning of the track
+      and the end of the track.
+           <p>For example, if the array contains three items,
+      the first item is placed at the beginning of the track,
+      the second item in the middle, and the last item
+      at the end of the track.</p>
+           <p>If only one label is specified, it is placed at the
+      beginning of the track.
+      By default, labels are placed above the tick marks
+      (if present) or above  the track.
+      To align the labels with the tick marks, make sure that
+      the number of tick marks is equal to the number of labels.</p>
+           </p><p> The default value is <code>undefined</code>.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get labels():Array</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set labels(value:Array):void</code><br/></div><a name="propertyDetail"></a><a name="liveDragging"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">liveDragging</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public var liveDragging:Boolean = false</code><p></p><p></p><p>
+      Specifies whether live dragging is enabled for the slider.
+      If <code>false</code>, Flex sets the <code>value</code> and
+      <code>values</code> properties and dispatches the <code>change</code>
+      event when the user stops dragging the slider thumb.
+      If <code>true</code>,  Flex sets the <code>value</code> and
+      <code>values</code> properties and dispatches the <code>change</code>
+      event continuously as the user moves the thumb.
+           </p><p> The default value is <code>false</code>.</p></div><a name="propertyDetail"></a><a name="maximum"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">maximum</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>maximum:Number</code><p></p><p></p><p>
+      The maximum allowed value on the slider.
+           </p><p> The default value is <code>10</code>.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get maximum():Number</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set maximum(value:Number):void</code><br/></div><a name="propertyDetail"></a><a name="minimum"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">minimum</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>minimum:Number</code><p></p><p></p><p>
+      The minimum allowed value on the slider control.
+           </p><p> The default value is <code>0</code>.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get minimum():Number</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set minimum(value:Number):void</code><br/></div><a name="propertyDetail"></a><a name="showDataTip"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">showDataTip</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>public var showDataTip:Boolean = true</code><p></p><p></p><p>
+      If set to <code>true</code>, show a data tip during user interaction
+      containing the current value of the slider.
+           </p><p> The default value is <code>true</code>.</p></div><a name="propertyDetail"></a><a name="sliderDataTipClass"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">sliderDataTipClass</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>sliderDataTipClass:Class</code><p></p><p></p><p>
+      A reference to the class to use for the data tip.
+           </p><p> The default value is <code>SliderDataTip</code>.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get sliderDataTipClass():Class</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set sliderDataTipClass(value:Class):void</code><br/></div><a name="propertyDetail"></a><a name="sliderThumbClass"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">sliderThumbClass</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>sliderThumbClass:Class</code><p></p><p></p><p>
+      A reference to the class to use for each thumb.
+           </p><p> The default value is <code>SliderThumb</code>.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get sliderThumbClass():Class</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set sliderThumbClass(value:Class):void</code><br/></div><a name="propertyDetail"></a><a name="snapInterval"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">snapInterval</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>snapInterval:Number</code><p></p><p></p><p>
+      Specifies the increment value of the slider thumb
+      as the user moves the thumb.
+      For example, if <code>snapInterval</code> is 2,
+      the <code>minimum</code> value is 0,
+      and the <code>maximum</code> value is 10,
+      the thumb snaps to the values 0, 2, 4, 6, 8, and 10
+      as the user move the thumb.
+      A value of 0, means that the slider moves continuously
+      between the <code>minimum</code> and <code>maximum</code> values.
+           </p><p> The default value is <code>0</code>.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get snapInterval():Number</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set snapInterval(value:Number):void</code><br/></div><a name="propertyDetail"></a><a name="thumbCount"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">thumbCount</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>thumbCount:int</code><p></p><p></p><p>
+      The number of thumbs allowed on the slider.
+      Possible values are 1 or 2.
+      If set to 1, then the <code>value</code> property contains
+      the current value of the slider.
+      If set to 2, then the <code>values</code> property contains
+      an array of values representing the value for each thumb.
+           </p><p> The default value is <code>1</code>.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get thumbCount():int</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set thumbCount(value:int):void</code><br/></div><a name="propertyDetail"></a><a name="thumbStyleFilters"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">thumbStyleFilters</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>thumbStyleFilters:Object</code>&nbsp;&nbsp;[read-only] <p></p><p></p><p>
+      Set of styles to pass from the Slider to the thumbs.
+      </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;protected function get thumbStyleFilters():Object</code><br/><p><span class="label">See also</span></p><div class="seeAlso">mx.styles.StyleProxy</div></div><a name="propertyDetail"></a><a name="tickInterval"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">tickInterval</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>tickInterval:Number</code><p></p><p></p><p>
+      The spacing of the tick marks relative to the <code>maximum</code> value
+      of the control.
+      Flex displays tick marks whenever you set the <code>tickInterval</code>
+      property to a nonzero value.
+           <p>For example, if <code>tickInterval</code> is 1 and
+      <code>maximum</code> is 10,  then a tick mark is placed at each
+      1/10th interval along the slider.
+      A value of 0 shows no tick marks. If the <code>tickValues</code> property
+      is set to a non-empty Array, then this property is ignored.</p>
+           </p><p> The default value is <code>0</code>.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get tickInterval():Number</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set tickInterval(value:Number):void</code><br/></div><a name="propertyDetail"></a><a name="tickValues"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">tickValues</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>tickValues:Array</code><p></p><p></p><p>
+      The positions of the tick marks on the slider. The positions correspond
+      to the values on the slider and should be between
+      the <code>minimum</code> and <code>maximum</code> values.
+      For example, if the <code>tickValues</code> property
+      is [0, 2.5, 7.5, 10] and <code>maximum</code> is 10, then a tick mark is placed
+      in the following positions along the slider: the beginning of the slider,
+      1/4 of the way in from the left,
+      3/4 of the way in from the left, and at the end of the slider.
+           <p>If this property is set to a non-empty Array, then the <code>tickInterval</code> property
+      is ignored.</p>
+           </p><p> The default value is <code>undefined</code>.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get tickValues():Array</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set tickValues(value:Array):void</code><br/></div><a name="propertyDetail"></a><a name="value"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">value</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>value:Number</code><p></p><p></p><p>
+      Contains the position of the thumb, and is a number between the
+      <code>minimum</code> and <code>maximum</code> properties.
+      Use the <code>value</code> property when <code>thumbCount</code> is 1.
+      When <code>thumbCount</code> is greater than 1, use the
+      <code>values</code> property instead.
+      The default value is equal to the minimum property.
+     </p><p>This property can be used as the source for data binding.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get value():Number</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set value(value:Number):void</code><br/></div><a name="propertyDetail"></a><a name="values"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">values</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>values:Array</code><p></p><p></p><p>
+      An array of values for each thumb when <code>thumbCount</code>
+      is greater than 1.
+     </p><p>This property can be used as the source for data binding.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get values():Array</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set values(value:Array):void</code><br/></div><a name="constructorDetail"></a><div class="detailSectionHeader">Constructor Detail</div><a name="SliderBase()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">SliderBase</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">Constructor</td></tr></table><div class="detailBody"><code>public function SliderBase()</code><p></p><p>
+      Constructor.
+     </p></div><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="getThumbAt()"></a><a name="getThumbAt(int)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getThumbAt</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code> public function getThumbAt(index:int):<a href="../../flexlib/controls/sliderClasses/SliderThumb.html">SliderThumb</a></code><p></p><p></p><p>
+      Returns the thumb object at the given index. Use this method to
+      style and customize individual thumbs in a slider control.
+           </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">index</span>:int</code> &mdash; The zero-based index number of the thumb.
+           </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../flexlib/controls/sliderClasses/SliderThumb.html">SliderThumb</a></code> &mdash; A reference to the SliderThumb object.
+     </td></tr></table></div><a name="measure()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">measure</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>override protected function measure():void</code><p></p><p></p><p>
+      Calculates the amount of space that the component takes up.
+      A horizontal slider control calculates its height by examining
+      the position of its labels, tick marks, and thumbs
+      relative to the track.
+      The height of the control is equivalent to the position
+      of the bottom of the lowest element subtracted
+      from the position of the top of the highest element.
+      The width of a horizontal slider control defaults to 250 pixels.
+      For a vertical slider control, the width and the length
+      measurements are reversed.
+     </p></div><a name="setThumbValueAt()"></a><a name="setThumbValueAt(int,Number)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">setThumbValueAt</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function setThumbValueAt(index:int, value:Number):void</code><p></p><p></p><p>
+      This method sets the value of a slider thumb, and updates the display.
+           </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">index</span>:int</code> &mdash; The zero-based index number of the thumb to set
+      the value of, where a value of 0 corresponds to the first thumb.
+           </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">value</span>:Number</code> &mdash; The value to set the thumb to
+     </td></tr></table></p></div><a name="updateDisplayList()"></a><a name="updateDisplayList(Number,Number)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">updateDisplayList</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void</code><p></p><p></p><p>
+      Positions the elements of the control.
+      The track, thumbs, labels, and tick marks are all positioned
+      and sized by this method.
+      The track is sized based on the length of the labels and on the track margin.
+      If you specify a <code>trackMargin</code>, then the size of the track
+      is equal to the available width minus the <code>trackMargin</code> times 2.
+           <p>Tick marks are spaced at even intervals along the track starting from the beginning of the track. An additional tick mark is placed
+      at the end of the track if one doesn't already exist (if the tick interval isn't a multiple of the maximum value). The tick mark
+      y-position is based on the <code>tickOffset</code>. An offset of 0 places the bottom of the tick at the top of the track. Negative offsets
+      move the ticks upwards while positive offsets move them downward through the track.</p>
+           <p>Labels are positioned at even intervals along the track. The labels are always horizontally centered above their
+      interval position unless the <code>trackMargin</code> setting is too small. If you specify a <code>trackMargin</code>, then the first and last labels will
+      position themselves at the left and right borders of the control. Labels will not crop or resize themselves if they overlap,
+      so be sure to allow enough space for them to fit on the track. The y-position is based on the <code>labelOffset</code> property. An offset of 0
+      places the bottom of the label at the top of the track. Unlike tick marks, the labels can not be positioned to overlap the track.
+      If the offset is a positive number, then the top of the label will be positioned below the bottom of the track.</p>
+           <p>The thumbs are positioned to overlap the track. Their x-position is determined by their value. The y-position is
+      controlled by the <code>thumbOffset</code> property. An offset of 0 places the center of the thumb at the center of the track. A negative
+      offset moves the thumbs upwards while a positive offset moves the thumbs downwards.</p>
+           <p>The placement of the tick marks, labels and thumbs are all independent from each other. They will not attempt to reposition
+      themselves if they overlap.</p>
+           <p>For a vertical slider control, the same rules apply. In the above description, substitute width for height, height for width,
+      left for up or top, right for down or bottom, x-position for y-position, and y-position for x-position.</p>
+           </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">unscaledWidth</span>:Number</code> &mdash; Specifies the width of the component, in pixels,
+      in the component's coordinates, regardless of the value of the
+      <code>scaleX</code> property of the component.
+           </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">unscaledHeight</span>:Number</code> &mdash; Specifies the height of the component, in pixels,
+      in the component's coordinates, regardless of the value of the
+      <code>scaleY</code> property of the component.
+     </td></tr></table></p></div><div class="detailSectionHeader"> Event Detail </div><a name="event:change"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">change</td><td class="detailHeaderType"> Event </td></tr></table><div class="detailBody"><span class="label">Event Object Type: </span><code>mx.events.SliderEvent</code><br/><span class="label">SliderEvent.type property = </span><code>mx.events.SliderEvent.CHANGE</code><br/><p></p><p></p><p>
+    Dispatched when the slider changes value due to mouse or keyboard interaction.
+       <p>If the <code>liveDragging</code> property is <code>true</code>,
+    the event is dispatched continuously as the user moves the thumb.
+    If <code>liveDragging</code> is <code>false</code>,
+    the event is dispatched when the user releases the slider thumb.</p>
+       </p></div><a name="event:thumbDrag"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">thumbDrag</td><td class="detailHeaderType"> Event </td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><span class="label">Event Object Type: </span><code>mx.events.SliderEvent</code><br/><span class="label">SliderEvent.type property = </span><code>mx.events.SliderEvent.THUMB_DRAG</code><br/><p></p><p></p><p>
+    Dispatched when the slider's thumb is pressed and then moved by the mouse.
+    This event is always preceded by a <code>thumbPress</code> event.
+    </p></div><a name="event:thumbPress"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">thumbPress</td><td class="detailHeaderType"> Event </td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><span class="label">Event Object Type: </span><code>mx.events.SliderEvent</code><br/><span class="label">SliderEvent.type property = </span><code>mx.events.SliderEvent.THUMB_PRESS</code><br/><p></p><p></p><p>
+    Dispatched when the slider's thumb is pressed, meaning
+    the user presses the mouse button over the thumb.
+       </p></div><a name="event:thumbRelease"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">thumbRelease</td><td class="detailHeaderType"> Event </td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><span class="label">Event Object Type: </span><code>mx.events.SliderEvent</code><br/><span class="label">SliderEvent.type property = </span><code>mx.events.SliderEvent.THUMB_RELEASE</code><br/><p></p><p></p><p>
+    Dispatched when the slider's thumb is released,
+    meaning the user releases the mouse button after
+    a <code>thumbPress</code> event.
+       </p></div><br/><br/><hr><br/><p></p><center class="copyright"><footer></footer><br/>Sun Mar 28 2010, 07:49 PM -07:00  </center></div></body></html><!--<br/>Sun Mar 28 2010, 07:49 PM -07:00  -->
