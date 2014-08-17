@@ -1,16 +1,17 @@
 package utils
 {
+	import application.comps.RootStage;
+	
+	import assets.Assets;
+	
 	import com.coffeebean.swf.typeData.SpriteData;
+	import com.frameWork.swf.Swf;
 	
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.text.TextField;
 	import flash.utils.getQualifiedClassName;
-	
-	import lzm.starling.swf.Swf;
-	import lzm.starling.swf.tool.Starup;
-	import lzm.starling.swf.tool.asset.Assets;
 
 	/**
 	 * 分解Sprite对像
@@ -21,7 +22,7 @@ package utils
 		public static function getSpriteInfo(clazzName:String,clazz:Class):SpriteData
 		{
 			var mc:MovieClip = new clazz();
-			Starup.tempContent.addChild(mc);
+			RootStage.tempContent.addChild(mc);
 			
 			//当前Sprite的根级其中包含了所有的子级信息
 			var spriteRootData:SpriteData = new SpriteData();
@@ -102,7 +103,7 @@ package utils
 				
 				spriteRootData.spriteChildsData.push(childInfo);
 			}
-			Starup.tempContent.removeChild(mc);
+			RootStage.tempContent.removeChild(mc);
 			return spriteRootData;
 		}
 	}

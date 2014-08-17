@@ -1,5 +1,6 @@
 package utils
 {
+	import com.frameWork.utils.LSOManager;
 	import com.gameabc.ipad.proto.movie.BatchVO;
 	
 	import flash.display.BitmapData;
@@ -14,10 +15,6 @@ package utils
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
 	import flash.utils.setTimeout;
-	
-	import lzm.starling.swf.tool.asset.Assets;
-	import lzm.starling.swf.tool.ui.Loading;
-	import lzm.util.LSOManager;
 	
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
@@ -131,7 +128,7 @@ package utils
 				return;
 			}
 			
-			Loading.instance.text = "Export..." + (_exportCount - _exportFiles.length) + "/" +_exportCount;
+			//Loading.instance.text = "Export..." + (_exportCount - _exportFiles.length) + "/" +_exportCount;
 			
 			setTimeout(
 				function():void

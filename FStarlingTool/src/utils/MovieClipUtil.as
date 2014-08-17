@@ -1,9 +1,14 @@
 package utils
 {
+	import application.comps.RootStage;
+	
+	import assets.Assets;
+	
 	import com.coffeebean.swf.typeData.FrameChildData;
 	import com.coffeebean.swf.typeData.FrameLabelData;
 	import com.coffeebean.swf.typeData.MovieClipData;
 	import com.coffeebean.swf.typeData.SpriteData;
+	import com.frameWork.swf.Swf;
 	import com.netease.protobuf.Int64;
 	
 	import flash.display.DisplayObject;
@@ -12,11 +17,6 @@ package utils
 	import flash.display.Sprite;
 	import flash.text.TextField;
 	import flash.utils.getQualifiedClassName;
-	
-	import lzm.starling.swf.Swf;
-	import lzm.starling.swf.tool.Starup;
-	import lzm.starling.swf.tool.asset.Assets;
-	
 	
 	/**
 	 * movieclip分解
@@ -29,7 +29,7 @@ package utils
 		{
 			var mc:MovieClip = new clazz();
 			
-			Starup.tempContent.addChild(mc);
+			RootStage.tempContent.addChild(mc);
 			
 			//动画数据
 			var movieData:MovieClipData = new MovieClipData();
@@ -186,7 +186,7 @@ package utils
 				}
 			}
 			
-			Starup.tempContent.removeChild(mc);
+			RootStage.tempContent.removeChild(mc);
 			
 			//是否循环
 			movieData.loop = Assets.getTempData(clazzName) == null 

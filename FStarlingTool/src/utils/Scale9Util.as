@@ -1,11 +1,12 @@
 package utils
 {
+	import application.comps.RootStage;
+	
 	import com.coffeebean.swf.typeData.S9ImageData;
 	
 	import flash.display.MovieClip;
 	import flash.geom.Rectangle;
 	
-	import lzm.starling.swf.tool.Starup;
 
 	public class Scale9Util
 	{
@@ -15,9 +16,9 @@ package utils
 		public static function getScale9Info(clazz:Class):S9ImageData
 		{
 			var mc:MovieClip = new clazz();
-			Starup.tempContent.addChild(mc);
-			var rect:Rectangle = mc.getBounds(Starup.tempContent);
-			Starup.tempContent.removeChild(mc);
+			RootStage.tempContent.addChild(mc);
+			var rect:Rectangle = mc.getBounds(RootStage.tempContent);
+			RootStage.tempContent.removeChild(mc);
 			
 			var s9Data:S9ImageData = new S9ImageData();
 			s9Data.x = (mc.scale9Grid.x - rect.x) * Util.swfScale;

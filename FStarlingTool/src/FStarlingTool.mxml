@@ -23,15 +23,23 @@
 	<fx:Script>
 		<![CDATA[
 			import application.AppUI;
+			import application.STLConstant;
+			import application.STLRootClass;
+			import application.comps.RootStage;
 			import application.mediator.AppMediator;
+			
+			import com.frameWork.gestures.DragGestures;
 			
 			import gframeWork.JT_FrameWork;
 			import gframeWork.uiController.JT_UserInterfaceManager;
 			
 			import org.puremvc.as3.patterns.facade.Facade;
 			
-			private var appUI:AppUI;
+			import starling.core.Starling;
+			import starling.events.Event;
+			import starling.utils.HAlign;
 			
+			private var appUI:AppUI;
 			public function appInit():void
 			{
 				Facade.getInstance().registerMediator(new AppMediator(AppMediator.NAME));
@@ -39,8 +47,8 @@
 				appUI = new AppUI();
 				JT_UserInterfaceManager.open(AppUI.APP_UI_MAIN);
 				JT_UserInterfaceManager.open(AppUI.APP_ROOT_PANE);
-				
 			}
+			
 		]]>
 	</fx:Script>
 </s:WindowedApplication>

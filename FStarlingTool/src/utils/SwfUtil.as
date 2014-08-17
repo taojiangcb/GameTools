@@ -2,34 +2,17 @@ package utils
 {
 	import com.coffeebean.swf.typeData.SpriteData;
 	import com.coffeebean.swf.typeData.TypeData;
+	import com.frameWork.swf.Swf;
 	
 	import flash.system.ApplicationDomain;
 	import flash.utils.ByteArray;
 	
-	import lzm.starling.swf.Swf;
-
 	/**
 	 * SWF信息，swf文件导出时的主要操作，其中保存这各数类型的资源数据。 
 	 * 
 	 */	
 	public class SwfUtil
 	{
-		
-//		public static var instance:SwfUtil;
-//		
-//		public static function getInstance():SwfUtil
-//		{
-//			if(!instance)
-//			{
-//				instance = new SwfUtil();
-//			}
-//			return instance;
-//		}
-//		
-//		public function SwfUtil():void
-//		{
-//			init();
-//		}
 		
 		//数据
 		public var typeData:TypeData;

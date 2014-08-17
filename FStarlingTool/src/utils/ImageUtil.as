@@ -1,5 +1,7 @@
 package utils
 {
+	import application.comps.RootStage;
+	
 	import com.coffeebean.swf.typeData.ImgData;
 	
 	import flash.display.Bitmap;
@@ -7,7 +9,6 @@ package utils
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
 	
-	import lzm.starling.swf.tool.Starup;
 	
 	/**
 	 * 
@@ -32,9 +33,10 @@ package utils
 			
 			image.scaleX = image.scaleY = scale * Util.swfScale;
 			
-			Starup.tempContent.addChild(image);
+			RootStage.tempContent.addChild(image);
+//			Starup.tempContent.addChild(image);
 			
-			var rect:Rectangle = image.getBounds(Starup.tempContent);
+			var rect:Rectangle = image.getBounds(RootStage.tempContent);
 			rect.width = rect.width < 1 ? 1 : rect.width;
 			rect.height = rect.height < 1 ? 1 : rect.height;
 			image.x = -rect.x;
@@ -50,9 +52,9 @@ package utils
 			rect.height += addHeight;
 			
 			var bitmapdata:BitmapData = new BitmapData(rect.width,rect.height,true,0);
-			bitmapdata.draw(Starup.tempContent);
+			bitmapdata.draw(RootStage.tempContent);
 			
-			Starup.tempContent.removeChild(image);
+			RootStage.tempContent.removeChild(image);
 			
 			return bitmapdata;
 		}
@@ -74,9 +76,9 @@ package utils
 				image = object as DisplayObject;
 			}
 			
-			Starup.tempContent.addChild(image);
-			var rect:Rectangle = image.getBounds(Starup.tempContent);
-			Starup.tempContent.removeChild(image);
+			RootStage.tempContent.addChild(image);
+			var rect:Rectangle = image.getBounds(RootStage.tempContent);
+			RootStage.tempContent.removeChild(image);
 			
 			var exportData:ImgData = new ImgData();
 			exportData.pivotX = Util.formatNumber(-rect.x * Util.swfScale);

@@ -1,16 +1,39 @@
 package application.comps
 {
+	import application.STLConstant;
+	import application.STLRootClass;
+	
+	import com.frameWork.gestures.DragGestures;
+	import com.frameWork.swf.Swf;
+	
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
+	import flash.display.Sprite;
 	import flash.geom.Point;
+	import flash.system.Capabilities;
+	
 	import mx.core.UIComponent;
+	
+	import starling.core.Starling;
+	import starling.events.Event;
+	import starling.utils.HAlign;
 	
 	public class RootStage extends UIComponent
 	{
+		
+		public static var tempContent:Sprite = new Sprite();
 		/**
 		 * 中心点 
 		 */		
 		public var centerPt:Point;
+		
+		
+		public static const STL_WIDTH:int = 2096 * 2;
+		public static const STL_HEIGHT:int = 1280 * 2;
+		
+		private var mStarling:Starling;
+		
+		private var dragGestures:DragGestures;
 		
 		/**
 		 * 主对像容器，十字聚焦点 
@@ -18,8 +41,8 @@ package application.comps
 		public function RootStage()
 		{
 			super();
-			width = 2096 * 2;
-			height = 1280 * 2;
+			width = STL_WIDTH
+			height = STL_HEIGHT;
 			centerPt = new Point(width >> 1,height >> 1);
 		}
 		
@@ -28,6 +51,43 @@ package application.comps
 			super.createChildren();
 			drawLine();
 		}
+		
+		
+		private function initStarling():void
+		{
+			mStarling = new Starling(STLRootClass, stage, null,null,"auto","baseline");
+			mStarling.antiAliasing = 0;
+			mStarling.stage.stageWidth  = RootStage.STL_WIDTH;
+			mStarling.stage.stageHeight = RootStage.STL_HEIGHT;
+			mStarling.simulateMultitouch  = false;
+			mStarling.enableErrorChecking = Capabilities.isDebugger;
+			mStarling.addEventListener(starling.events.Event.ROOT_CREATED,rootCreateComp);
+		}
+		
+		private function rootCreateComp(event:starling.events.Event,app:STLRootClass):void
+		{
+			STLConstant.currnetAppRoot = app;
+			
+			mStarling.removeEventListener(starling.events.Event.ROOT_CREATED, rootCreateComp);
+			mStarling.start();
+			mStarling.showStatsAt(HAlign.LEFT);
+			
+			Swf.init(app);
+			
+			//				lineShape = new Shape();
+			//				app.addChild(lineShape);
+			//				drawLine();
+			
+			//				contentSprite = new Sprite();
+			//				app.addChild(contentSprite);
+			
+			//				Swf.init(contentSprite);
+			
+			//				setTimeout(function():void{
+			//					dragGestures = new DragGestures(app,onDrag);
+			//				},300);
+		}
+		
 		
 		public override function addChild(child:DisplayObject):DisplayObject
 		{

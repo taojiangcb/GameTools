@@ -1,6 +1,11 @@
 package utils
 {
+	import application.comps.RootStage;
+	
+	import assets.Assets;
+	
 	import com.coffeebean.swf.typeData.ImgData;
+	import com.frameWork.swf.Swf;
 	import com.gameabc.ipad.proto.movie.BatchFrameLabelVO;
 	import com.gameabc.ipad.proto.movie.BatchFrameVO;
 	import com.gameabc.ipad.proto.movie.BatchImageVO;
@@ -11,9 +16,6 @@ package utils
 	import flash.display.MovieClip;
 	import flash.utils.getQualifiedClassName;
 	
-	import lzm.starling.swf.Swf;
-	import lzm.starling.swf.tool.Starup;
-	import lzm.starling.swf.tool.asset.Assets;
 
 	public class MovieBatchUtil
 	{
@@ -24,7 +26,7 @@ package utils
 		public static function getMovieBatchInfo(clazzName:String,clazz:Class):BatchVO{
 			var mc:MovieClip = new clazz();
 			
-			Starup.tempContent.addChild(mc);
+			RootStage.tempContent.addChild(mc);
 			
 			//总帧数
 			var frameSize:int = mc.totalFrames;
@@ -58,23 +60,6 @@ package utils
 					}
 					
 					
-//					if(childCount[childName])
-//						childCount[childName] += 1;
-//					else
-//						childCount[childName] = 1;
-//					
-//					if(childs[childName])
-//					{
-//						if((childs[childName] as Array).indexOf(child) == -1)
-//						{
-//							(childs[childName] as Array).push(child);
-//						}
-//					}
-//					else
-//					{
-//						childs[childName] = [child];
-//					}
-					
 					//子级的详细信息
 					childInfo =new BatchImageVO();
 					childInfo.name = childName;
@@ -89,53 +74,10 @@ package utils
 					if(child.scaleY!=1)
 					 childInfo.scaleY = child.scaleY;
 					var skew:Number = MatrixUtil.getSkewX(child.transform.matrix)
-					if(skew!=0)	
-					 childInfo.skewX = skew;
+					if(skew!=0)	childInfo.skewX = skew;
 					skew = MatrixUtil.getSkewY(child.transform.matrix)
-					if(skew!=0)	
-					 childInfo.skewY = skew;
-					if(child.alpha!=1)
-					 childInfo.alpha = child.alpha;
-//						[
-//						childName,
-//						type,
-//						child.x * Util.swfScale,
-//						child.y * Util.swfScale,
-//						child.scaleX,
-//						child.scaleY,
-//						MatrixUtil.getSkewX(child.transform.matrix),
-//						MatrixUtil.getSkewY(child.transform.matrix),
-//						child.alpha
-//					];
-					
-//					//单例唯一的
-//					if(child.name.indexOf("instance") == -1){
-//						childInfo.push(child.name);
-//					}else{
-//						childInfo.push("");
-//					}
-					
-					//使用自对象的下标
-//					childInfo.push((childs[childName] as Array).indexOf(child));
-//					
-//					if(type == Swf.dataKey_Scale9 || type == Swf.dataKey_ShapeImg)
-//					{
-//						childInfo.push(Util.formatNumber(child.width * Util.swfScale));
-//						childInfo.push(Util.formatNumber(child.height * Util.swfScale));
-//					}
-//					else if(type == "text")
-//					{
-//						childInfo.push((child as TextField).width);
-//						childInfo.push((child as TextField).height);
-//						childInfo.push((child as TextField).defaultTextFormat.font);
-//						childInfo.push((child as TextField).defaultTextFormat.color);
-//						childInfo.push((child as TextField).defaultTextFormat.size);
-//						childInfo.push((child as TextField).defaultTextFormat.align);
-//						childInfo.push((child as TextField).defaultTextFormat.italic);
-//						childInfo.push((child as TextField).defaultTextFormat.bold);
-//						childInfo.push((child as TextField).text);
-//					}
-//					
+					if(skew!=0)	childInfo.skewY = skew;
+					if(child.alpha!=1) childInfo.alpha = child.alpha;
 					//加入子级信息
 					childInfos.image.push(childInfo);
 				}
@@ -186,7 +128,7 @@ package utils
 		  movieClipVO.frames = frameInfos;
 		  movieClipVO.scale = Util.swfScale.toString();
 		  movieClipVO.frameLabels = labels;
-		  Starup.tempContent.removeChild(mc);
+		  RootStage.tempContent.removeChild(mc);
 			return movieClipVO;
 //			{
 //				frames:frameInfos,
