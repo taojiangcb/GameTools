@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+/***
+ConfigPane
+创建人：ZЁЯ¤　身高：168cm+；体重：57kg+；已婚（单身美女们没机会了~~）；最爱的运动：睡觉；格言：路见不平，拔腿就跑。QQ：358315553。
+创建时间：2013年07月18日 12:54:17
+简要说明：这家伙很懒什么都没写。
+用法举例：这家伙还是很懒什么都没写。
+*/
+-->
+
+<s:VGroup
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	paddingTop="5"
+>
+	<s:HGroup>
+		<s:Button label="复制到剪贴板" click="copy()" id="copyBtn"/>
+		<s:Button label="另存为" click="saveAs()" width="60"/>
+	</s:HGroup>
+	<mx:TextArea width="200" height="310" id="configTxt" editable="false" wordWrap="false"/>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			private var fr:FileReference;
+			private var timeoutId:int;
+			
+			public function init():void{
+				fr=new FileReference();
+				fr.addEventListener(Event.COMPLETE,saveComplete);
+			}
+			
+			public function update():void{
+				configTxt.text=so.data.particleEmitterConfigXML.toXMLString();
+			}
+			
+			private function copy():void{
+				System.setClipboard(so.data.particleEmitterConfigXML.toXMLString());
+				copyBtn.label="（已复制）";
+				clearTimeout(timeoutId);
+				timeoutId=setTimeout(resetCopyBtn,1000);
+			}
+			private function resetCopyBtn():void{
+				clearTimeout(timeoutId);
+				copyBtn.label="复制到剪贴板";
+			}
+			
+			private function saveAs():void{
+				fr.save('<?xml version="1.0" encoding="utf-8"?>\n'+so.data.particleEmitterConfigXML.toXMLString(),so.data.saveConfigName||"particle.pex");
+			}
+			private function saveComplete(...args):void{
+				so.data.saveConfigName=fr.name;
+			}
+			
+		]]>
+	</fx:Script>
+</s:VGroup>

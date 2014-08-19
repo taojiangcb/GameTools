@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+/***
+SettingPane
+创建人：ZЁЯ¤　身高：168cm+；体重：57kg+；已婚（单身美女们没机会了~~）；最爱的运动：睡觉；格言：路见不平，拔腿就跑。QQ：358315553。
+创建时间：2013年07月18日 13:48:05
+简要说明：这家伙很懒什么都没写。
+用法举例：这家伙还是很懒什么都没写。
+*/
+-->
+
+<s:HGroup
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	paddingTop="5"
+>
+	<mx:ComboBox id="cb" change="change()" rowCount="20" width="160"/>
+	<s:Button label="删除" width="60" click="removeCurr()" id="removeBtn"/>
+	<s:Button label="保存当前" click="saveCurr()"/>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+			
+			private var onChange:Function;
+			
+			private var saveSettingPrompt:SaveSettingPrompt;
+			
+			public function init(_onChange:Function):void{
+				updateItems();
+				onChange=_onChange;
+				saveSettingPrompt=new SaveSettingPrompt();
+			}
+			private function updateItems():void{
+				var dataProvider:Array=new Array();
+				for each(var settingXML:XML in optionsXML.settings[0].setting){
+					dataProvider.push({label:settingXML.@name.toString(),isDefault:true,data:settingXML});
+				}
+				if(so.data.customSettingArr){
+					for each(settingXML in so.data.customSettingArr){
+						dataProvider.push({label:settingXML.@name.toString(),isDefault:false,data:settingXML});
+					}
+				}else{
+					so.data.customSettingArr=new Array();
+				}
+				//dataProvider.sortOn("label",Array.CASEINSENSITIVE);
+				cb.dataProvider=dataProvider;
+				select();
+				update();
+			}
+			private function select():void{
+				if(so.data.setting){
+					for each(var item:Object in cb.dataProvider){
+						if(so.data.setting==item.label){
+							cb.selectedItem=item;
+							break;
+						}
+					}
+				}
+			}
+			private function update():void{
+				so.data.setting=cb.selectedItem.label;
+				so.data.texture=cb.selectedItem.data.@texture.toString();
+				so.data.particleEmitterConfigXML=cb.selectedItem.data.particleEmitterConfig[0];
+				so.data.emitterX=Number(cb.selectedItem.data.@emitterX.toString());
+				so.data.emitterY=Number(cb.selectedItem.data.@emitterY.toString());
+				if(cb.selectedItem.isDefault){
+					removeBtn.enabled=false;
+				}else{
+					removeBtn.enabled=true;
+				}
+			}
+			private function change():void{
+				update();
+				if(onChange==null){
+				}else{
+					onChange();
+				}
+			}
+			
+			private function removeCurr():void{
+				Alert.show("确认删除“"+so.data.setting+"”？","确认删除",Alert.YES|Alert.NO,null,confirmRemoveCurr);
+			}
+			private function confirmRemoveCurr(event:CloseEvent):void{
+				if(event.detail==Alert.YES){
+					var i:int=-1;
+					for each(var settingXML:XML in so.data.customSettingArr){
+						i++;
+						if(so.data.setting==settingXML.@name.toString()){
+							so.data.customSettingArr.splice(i,1);
+							so.data.setting="默认";
+							updateItems();
+							change();
+							break;
+						}
+					}
+				}
+			}
+			private function saveCurr():void{
+				PopUpManager.addPopUp(saveSettingPrompt,root,true);
+				saveSettingPrompt.show(cb.dataProvider.source,confirmSaveCurr);
+			}
+			private function confirmSaveCurr(settingName:String):void{
+				var newSettingXML:XML=<setting name={settingName} texture={so.data.texture} emitterX={so.data.emitterX} emitterY={so.data.emitterY}/>;
+				so.data.setting=settingName;
+				newSettingXML.appendChild(so.data.particleEmitterConfigXML);
+				var i:int=-1;
+				for each(var settingXML:XML in so.data.customSettingArr){
+					i++;
+					if(so.data.setting==settingName){
+						//替换
+						so.data.customSettingArr[i]=newSettingXML;
+						newSettingXML=null;
+						break;
+					}
+				}
+				if(newSettingXML){
+					//新增
+					so.data.customSettingArr.push(newSettingXML);
+				}
+				so.flush();
+				updateItems();
+			}
+			
+		]]>
+	</fx:Script>
+</s:HGroup>

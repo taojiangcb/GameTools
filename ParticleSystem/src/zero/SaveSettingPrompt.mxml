@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+/***
+SaveSettingPrompt
+创建人：ZЁЯ¤　身高：168cm+；体重：57kg+；已婚（单身美女们没机会了~~）；最爱的运动：睡觉；格言：路见不平，拔腿就跑。QQ：358315553。
+创建时间：2013年07月18日 15:46:35
+简要说明：这家伙很懒什么都没写。
+用法举例：这家伙还是很懒什么都没写。
+*/
+-->
+
+<s:TitleWindow
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	title="保存预设"
+	close="removeThis()"
+>
+	<s:VGroup left="5" right="5" top="5" bottom="5" horizontalAlign="center">
+		<mx:TextInput width="200" id="nameTxt" textAlign="center"/>
+		<s:HGroup>
+			<s:Button label="确定" width="60" click="confirm()"/>
+			<s:Button label="取消" width="60" click="removeThis()"/>
+		</s:HGroup>
+	</s:VGroup>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+			
+			private var dataProvider:Array;
+			private var onConfirm:Function;
+			
+			public function show(_dataProvider:Array,_onConfirm:Function):void{
+				dataProvider=_dataProvider;
+				onConfirm=_onConfirm;
+				this.x=(stage.stageWidth-this.width)/2;
+				this.y=(stage.stageHeight-this.height)/2;
+				nameTxt.text=so.data.setting;
+			}
+			private function removeThis():void{
+				PopUpManager.removePopUp(this);
+			}
+			private function confirm():void{
+				var settingName:String=nameTxt.text.replace(/^\s*|\s*$/g,"");
+				for each(var item:Object in dataProvider){
+					if(item.data.@name.toString()==settingName){
+						if(item.isDefault){
+							Alert.show("“"+settingName+"”为系统自带预设，不可以替换。","不可以替换",Alert.OK);
+						}else{
+							Alert.show("“"+settingName+"”已存在，确认替换？","确认替换",Alert.YES|Alert.NO,null,confirmReplace);
+						}
+						return;
+					}
+				}
+				_confirm();
+			}
+			private function confirmReplace(event:CloseEvent):void{
+				if(event.detail==Alert.YES){
+					_confirm();
+				}
+			}
+			private function _confirm():void{
+				if(onConfirm==null){
+				}else{
+					onConfirm(nameTxt.text.replace(/^\s*|\s*$/g,""));
+				}
+				removeThis();
+			}
+			
+		]]>
+	</fx:Script>
+</s:TitleWindow>

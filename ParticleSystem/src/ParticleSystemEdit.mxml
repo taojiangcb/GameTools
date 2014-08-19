@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   applicationComplete="applicationComplete()"
+					   backgroundAlpha="0" showStatusBar="false" 
+					   width="1200" height="500"
+					   xmlns:mx="library://ns.adobe.com/flex/mx">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	
+	<s:HGroup x="5" y="5" gap="5">
+		<s:Group width="300" height="490">
+			<s:BorderContainer id="mouseArea" width="100%" height="100%" backgroundAlpha="0">
+				<s:Label text="Starling粒子系统工具 V1.0.0 by ZЁЯ¤" x="5" y="5" alpha="0.5" id="creditTxt"/>
+				<s:Label text="按住可拖动" color="0x0000ff" horizontalCenter="0" verticalCenter="0"/>
+			</s:BorderContainer>
+			<mx:ColorPicker right="5" bottom="5" id="bgColorCp" change="changeBgColorCp()"/>
+		</s:Group>
+		<s:BorderContainer backgroundAlpha="0.7" height="490">
+			<s:HGroup id="itemArea" x="5" y="5" paddingLeft="0" paddingTop="0" paddingRight="0" paddingBottom="0"/>
+		</s:BorderContainer>
+	</s:HGroup>
+	
+	<fx:Script>
+		<![CDATA[
+			import spark.components.VGroup;
+			
+			import zero.*;
+			import zero.bars.*;
+			import zero.images.*;
+			
+			private var optionsXMLLoader:URLLoader;
+			
+			private var currLoadImageId:int;
+			private var imageDataLoader:URLLoader;
+			private var imageLoader:Loader;
+			
+			private var selectsAndItems:Dictionary;
+			private var items:Array;
+			
+			private var connectPane:ConnectPane;
+			private var settingPane:SettingPane;
+			private var texturePane:TexturePane;
+			private var configPane:ConfigPane;
+			
+			private function applicationComplete():void{
+				optionsXMLLoader=new URLLoader();
+				optionsXMLLoader.addEventListener(Event.COMPLETE,loadOptionsComplete);
+				optionsXMLLoader.addEventListener(IOErrorEvent.IO_ERROR,loadOptionsError);
+				optionsXMLLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR,loadOptionsError);
+				optionsXMLLoader.load(new URLRequest("options.xml"));
+			}
+			private function loadOptionsComplete(...args):void{
+				//trace("loadOptionsComplete");
+				optionsXML=new XML(optionsXMLLoader.data);
+				optionsXMLLoader.removeEventListener(Event.COMPLETE,loadOptionsComplete);
+				optionsXMLLoader.removeEventListener(IOErrorEvent.IO_ERROR,loadOptionsError);
+				optionsXMLLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR,loadOptionsError);
+				optionsXMLLoader=null;
+				loadImages();
+			}
+			private function loadOptionsError(...args):void{
+				//trace("loadOptionsError");
+				optionsXMLLoader.removeEventListener(Event.COMPLETE,loadOptionsComplete);
+				optionsXMLLoader.removeEventListener(IOErrorEvent.IO_ERROR,loadOptionsError);
+				optionsXMLLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR,loadOptionsError);
+				optionsXMLLoader=null;
+				loadImages();
+			}
+			
+			private function loadImages():void{
+				imageDataLoader=new URLLoader();
+				imageDataLoader.dataFormat=URLLoaderDataFormat.BINARY;
+				imageDataLoader.addEventListener(Event.COMPLETE,loadImageDataComplete);
+				imageDataLoader.addEventListener(IOErrorEvent.IO_ERROR,loadImageDataError);
+				imageDataLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR,loadImageDataError);
+				imageLoader=new Loader();
+				imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,loadImageComplete);
+				currLoadImageId=-1;
+				loadNextImage();
+			}
+			private function loadNextImage():void{
+				if(++currLoadImageId>=optionsXML.images[0].image.length()){
+					imageDataLoader.removeEventListener(Event.COMPLETE,loadImageDataComplete);
+					imageDataLoader.removeEventListener(IOErrorEvent.IO_ERROR,loadImageDataError);
+					imageDataLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR,loadImageDataError);
+					imageDataLoader=null;
+					imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE,loadImageComplete);
+					imageLoader=null
+					if(imageArr.length){
+						init();
+					}else{
+						imageLoader=new Loader();
+						imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,loadDefaultImageComplete);
+						imageArr.push([<image cn="圆形" src="image/circle.png"/>,null,new CircleBmpData()]);
+						imageArr.push([<image cn="星形" src="image/star.png"/>,null,new StarBmpData()]);
+						imageArr.push([<image cn="斑点" src="image/blob.png"/>,null,new BlobBmpData()]);
+						imageArr.push([<image cn="心形" src="image/heart.png"/>,null,new HeartBmpData()]);
+						imageArr.push([<image cn="文字" src="image/text.png"/>,null,new TextBmpData()]);
+						currLoadImageId=-1;
+						loadNextDefaultImage();
+					}
+					return;
+				}
+				imageDataLoader.load(new URLRequest(optionsXML.images[0].image[currLoadImageId].@src.toString()));
+			}
+			private function loadImageDataComplete(...args):void{
+				//trace("loadImageDataComplete");
+				imageLoader.loadBytes(imageDataLoader.data);
+			}
+			private function loadImageComplete(...args):void{
+				//trace("loadImageComplete");
+				imageArr.push([optionsXML.images[0].image[currLoadImageId],(imageLoader.content as Bitmap).bitmapData,imageDataLoader.data]);
+				loadNextImage();
+			}
+			private function loadImageDataError(...args):void{
+				//trace("loadImageDataError");
+				loadNextImage();
+			}
+			private function loadNextDefaultImage():void{
+				if(++currLoadImageId>=imageArr.length){
+					imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE,loadImageComplete);
+					imageLoader=null;
+					init();
+					return;
+				}
+				imageLoader.loadBytes(imageArr[currLoadImageId][2]);
+			}
+			private function loadDefaultImageComplete(...args):void{
+				//trace("loadDefaultImageComplete");
+				imageArr[currLoadImageId][1]=(imageLoader.content as Bitmap).bitmapData;
+				loadNextDefaultImage();
+			}
+			
+			private function init():void{
+				SLArea.init(stage,initSLAreaComplete);
+			}
+			private function initSLAreaComplete():void{
+				
+				selectsAndItems=new Dictionary();
+				items=new Array();
+				addItems(itemArea,optionsXML.items[0],null);
+				
+				connectPane.init();
+				var particleEmitterConfigXML:XML=so.data.particleEmitterConfigXML;
+				settingPane.init(changeSetting);
+				if(particleEmitterConfigXML){
+					so.data.particleEmitterConfigXML=particleEmitterConfigXML;
+				}
+				texturePane.init(update);
+				configPane.init();
+				
+				if(so.data.particleEmitterConfigXML){
+					setItemsByParticleEmitterConfigXML(so.data.particleEmitterConfigXML);
+				}
+				if(so.data.hasOwnProperty("emitterX")){
+				}else{
+					so.data.emitterX=mouseArea.x+mouseArea.width*0.5;
+				}
+				if(so.data.hasOwnProperty("emitterY")){
+				}else{
+					so.data.emitterY=mouseArea.y+mouseArea.height*0.7;
+				}
+				
+				update();
+				
+				mouseArea.addEventListener(MouseEvent.MOUSE_DOWN,mouseDown);
+				
+				if(so.data.hasOwnProperty("bgColor")){
+				}else{
+					so.data.bgColor=0x333333;
+				}
+				bgColorCp.selectedColor=so.data.bgColor;
+				changeBgColorCp();
+				
+				this.visible=true;
+				
+			}
+			private function addItems(container:*,xml:XML,mark:Object):void{
+				container.gap=-1;
+				for each(var node:XML in xml.children()){
+					switch(node.name().toString()){
+						case "connectPane":
+							container.addElement(connectPane=new ConnectPane());
+							break;
+						case "settingPane":
+							container.addElement(settingPane=new SettingPane());
+							break;
+						case "texturePane":
+							container.addElement(texturePane=new TexturePane());
+							break;
+						case "configPane":
+							container.addElement(configPane=new ConfigPane());
+							break;
+						case "items":
+							var vGroup:VGroup=new VGroup();
+							container.addElement(vGroup);
+							vGroup.paddingLeft=5;
+							vGroup.paddingTop=5;
+							vGroup.paddingRight=4;
+							vGroup.paddingBottom=5;
+							if(node.@cn.toString()){
+								var label:Label=new Label();
+								vGroup.addElement(label);
+								label.setStyle("color",0x0000ff);
+								label.text=node.@cn.toString();
+							}
+							addItems(vGroup,node,null);
+							if(mark){
+								mark[node.@data.toString()]=vGroup;
+							}
+							break;
+						case "item":
+							switch(node.@type.toString()){
+								case "number":
+								case "int":
+									var numBar:NumBar=new NumBar();
+									container.addElement(numBar);
+									numBar.init(node.@cn.toString(),node.@type.toString()=="int",Number(node.@min.toString()),Number(node.@max.toString()),Number(node.@default.toString()),update);
+										items.push([node,numBar]);
+										break;
+										case "color":
+											var colorBar:ColorBar=new ColorBar();
+											container.addElement(colorBar);
+											colorBar.init(node.@cn.toString(),uint(node.@default.toString()),update);
+												items.push([node,colorBar]);
+												break;
+												case "select":
+													var selectBar:SelectBar=new SelectBar();
+													container.addElement(selectBar);
+													selectBar.init(node.@cn.toString(),JSON.parse(node.@dataProvider.toString()) as Array,int(node.@default.toString()),update);
+														items.push([node,selectBar]);
+														if(node.items.length()){
+															selectsAndItems[selectBar]=new Object();
+															addItems(container,node,selectsAndItems[selectBar]);
+														}
+														break;
+														default:
+															throw "未知 type："+node.toXMLString();
+															break;
+														}
+							break;
+					}
+				}
+			}
+			
+			private function getParticleEmitterConfigXML():XML{
+				var particleEmitterConfigXML:XML=<particleEmitterConfig/>;
+				for each(var item:Array in items){
+					var nameArr:Array=item[0].@name.toString().split(".");
+					if(nameArr.length==2){
+						var nodeName:String=nameArr[0];
+						var attName:String=nameArr[1];
+					}else{
+						nodeName=nameArr[0];
+						attName="value";
+					}
+					var node:XML=particleEmitterConfigXML[nodeName][0];
+					if(node){
+					}else{
+						node=<{nodeName}/>;
+						particleEmitterConfigXML.appendChild(node);
+					}
+					switch(item[0].@type.toString()){
+						case "number":
+						case "int":
+							node["@"+attName]=(item[1] as NumBar).getValue();
+							break;
+						case "color":
+							var color:uint=(item[1] as ColorBar).getValue();
+							node.@alpha=int((color>>>24)/255*100)/100;
+							node.@red=int(((color>>16)&0xff)/255*100)/100;
+							node.@green=int(((color>>8)&0xff)/255*100)/100;
+							node.@blue=int((color&0xff)/255*100)/100;
+							break;
+						case "select":
+							node["@"+attName]=(item[1] as SelectBar).getValue();
+							break;
+					}
+				}
+				return particleEmitterConfigXML;
+			}
+			private function setItemsByParticleEmitterConfigXML(particleEmitterConfigXML:XML):void{
+				for each(var item:Array in items){
+					var nameArr:Array=item[0].@name.toString().split(".");
+					if(nameArr.length==2){
+						var nodeName:String=nameArr[0];
+						var attName:String=nameArr[1];
+					}else{
+						nodeName=nameArr[0];
+						attName="value";
+					}
+					var node:XML=particleEmitterConfigXML[nodeName][0];
+					if(node){
+						switch(item[0].@type.toString()){
+							case "number":
+							case "int":
+								(item[1] as NumBar).setValue(Number(node["@"+attName].toString()));
+								break;
+							case "color":
+								(item[1] as ColorBar).setValue(
+									(int(Number(node.@alpha.toString())*255)<<24)
+									|
+									(int(Number(node.@red.toString())*255)<<16)
+									|
+									(int(Number(node.@green.toString())*255)<<8)
+									|
+									int(Number(node.@blue.toString())*255)
+								);
+								break;
+							case "select":
+								(item[1] as SelectBar).setValue(int(node["@"+attName].toString()));
+								break;
+						}
+					}
+				}
+			}
+			private function changeSetting():void{
+				texturePane.selectTexture();
+				setItemsByParticleEmitterConfigXML(so.data.particleEmitterConfigXML);
+				update();
+			}
+			private function update():void{
+				for(var _selectBar:* in selectsAndItems){
+					var selectBar:SelectBar=_selectBar;
+					var mark:Object=selectsAndItems[_selectBar];
+					for(var data:String in mark){
+						var vGroup:VGroup=mark[data];
+						if(int(data)==selectBar.getValue()){
+							(selectBar.parent as VGroup).addElement(vGroup);
+						}else{
+							if(vGroup.parent){
+								(vGroup.parent as VGroup).removeElement(vGroup);
+							}
+						}
+					}
+				}
+				so.data.particleEmitterConfigXML=getParticleEmitterConfigXML();
+				configPane.update();
+				so.data.texture=texturePane.getValue()[0].@cn.toString();
+				SLArea.update(so.data.particleEmitterConfigXML,so.data.emitterX,so.data.emitterY,texturePane.getValue());
+				connectPane.update();
+			}
+			
+			private function changeBgColorCp():void{
+				so.data.bgColor=bgColorCp.selectedColor;
+				creditTxt.setStyle("color",so.data.bgColor);
+				SLArea.changeBgColor(so.data.bgColor);
+			}
+			
+			private function mouseDown(...args):void{
+				stage.addEventListener(MouseEvent.MOUSE_UP,mouseUp);
+				mouseArea.addEventListener(MouseEvent.MOUSE_MOVE,mouseMove);
+				mouseMove();
+			}
+			private function mouseUp(...args):void{
+				stage.removeEventListener(MouseEvent.MOUSE_UP,mouseUp);
+				mouseArea.removeEventListener(MouseEvent.MOUSE_MOVE,mouseMove);
+			}
+			private function mouseMove(...args):void{
+				so.data.emitterX=stage.mouseX;
+				so.data.emitterY=stage.mouseY;
+				update();
+			}
+			
+		]]>
+	</fx:Script>
+</s:WindowedApplication>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+/***
+SelectBar
+创建人：ZЁЯ¤　身高：168cm+；体重：57kg+；已婚（单身美女们没机会了~~）；最爱的运动：睡觉；格言：路见不平，拔腿就跑。QQ：358315553。
+创建时间：2013年07月18日 09:27:45
+简要说明：这家伙很懒什么都没写。
+用法举例：这家伙还是很懒什么都没写。
+*/
+-->
+
+<bars:BaseBar
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:bars="zero.bars.*"
+>
+	<s:HGroup verticalAlign="middle" left="1" top="1" right="1" bottom="1">
+		<mx:ComboBox id="cb" change="change(event)"/>
+	</s:HGroup>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			public function init(name:String,dataProvider:Array,defaultData:int,_onChange:Function):void{
+				_init(name,_onChange);
+				cb.dataProvider=dataProvider;
+				cb.rowCount=dataProvider.length;
+				setValue(defaultData);
+			}
+			override protected function change(event:Event):void{
+				super.change(event);
+			}
+			public function getValue():int{
+				return cb.selectedItem.data;
+			}
+			public function setValue(_value:int):void{
+				for each(var item:Object in cb.dataProvider){
+					if(item.data==_value){
+						cb.selectedItem=item;
+						break;
+					}
+				}
+			}
+		]]>
+	</fx:Script>
+	
+</bars:BaseBar>

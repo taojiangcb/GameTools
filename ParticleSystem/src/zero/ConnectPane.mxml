@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+/***
+ConnectPane
+创建人：ZЁЯ¤　身高：168cm+；体重：57kg+；已婚（单身美女们没机会了~~）；最爱的运动：睡觉；格言：路见不平，拔腿就跑。QQ：358315553。
+创建时间：2013年07月18日 16:31:41
+简要说明：这家伙很懒什么都没写。
+用法举例：这家伙还是很懒什么都没写。
+*/
+-->
+
+<s:VGroup
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	paddingTop="5"
+>
+	
+	<s:HGroup verticalAlign="middle">
+		<s:Label text="连接方式："/>
+		<mx:ComboBox id="cb" dataProvider='{["不连接","LocalConnection","JavaScript"]}' change="change()"/>
+	</s:HGroup>
+	<s:Group id="areaContainer">
+		<s:Group id="area0">
+			<s:Label text="不作任何连接" color="0xff0000"/>
+		</s:Group>
+		<s:Group id="area1">
+			<s:VGroup>
+				<s:HGroup verticalAlign="middle">
+					<s:Label text="更新时发送到连接名："/>
+					<mx:TextInput text="_lcsendname12345" id="lcSendNameTxt" change="changeUI()" restrict="0-9a-zA-Z_"/>
+				</s:HGroup>
+				<s:HGroup verticalAlign="middle">
+					<s:Button label="发送" width="60" click="clickUpdate()"/>
+					<s:CheckBox label="自动发送" id="autoLCSendCb" change="changeAutoLCSendCb()"/>
+					<s:Label id="lcStatusTxt" color="0xff0000"/>
+				</s:HGroup>
+			</s:VGroup>
+		</s:Group>
+		<s:Group id="area2">
+			<s:Label id="jsStatusTxt" color="0xff0000"/>
+			<s:VGroup id="jsGroup">
+				<s:HGroup verticalAlign="middle">
+					<s:Label text="更新时运行JS："/>
+					<mx:TextInput text="updateConfig('$\{config\}');" id="jsCodeTxt" change="changeUI()"/>
+				</s:HGroup>
+				<s:HGroup verticalAlign="middle">
+					<s:Button label="运行" width="60" click="clickUpdate()"/>
+					<s:CheckBox label="自动运行" id="autoRunJSCb" change="changeAutoRunJSCb()"/>
+				</s:HGroup>
+			</s:VGroup>
+		</s:Group>
+	</s:Group>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			private var _update:Function;
+			
+			private var lc:LocalConnection;
+			
+			public function init():void{
+				if(so.data.connectType){
+					cb.selectedItem=so.data.connectType;
+				}
+				if(so.data.connects){
+					lcSendNameTxt.text=so.data.connects.lcSendName;
+					jsCodeTxt.text=so.data.connects.jsCode;
+					autoRunJSCb.selected=autoLCSendCb.selected=so.data.connects.autoRun;
+				}else{
+					so.data.connects=new Object();
+					changeUI();
+				}
+				change();
+			}
+			
+			private function change():void{
+				so.data.connectType=cb.selectedItem;
+				
+				lcStatusTxt.text="";
+				jsStatusTxt.text="";
+				
+				_update=null;
+				var i:int=-1;
+				for each(var item:String in cb.dataProvider){
+					i++;
+					var area:Group=this["area"+i];
+					if(item==so.data.connectType){
+						if(area.parent==areaContainer){
+						}else{
+							areaContainer.addElement(area);
+						}
+					}else{
+						if(area.parent==areaContainer){
+							areaContainer.removeElement(area);
+						}
+					}
+				}
+				
+				switch(so.data.connectType){
+					case "不连接":
+						//
+					break;
+					case "LocalConnection":
+						if(lc){
+						}else{
+							lc=new LocalConnection();
+							lc.allowDomain("*");
+							lc.allowInsecureDomain("*");
+							lc.addEventListener(SecurityErrorEvent.SECURITY_ERROR,lcError);
+							lc.addEventListener(StatusEvent.STATUS,lcStatus);
+						}
+						_update=lc_update;
+					break;
+					case "JavaScript":
+						if(ExternalInterface.available){
+							jsStatusTxt.visible=false;
+							jsGroup.visible=true;
+							_update=js_update;
+						}else{
+							jsStatusTxt.text="当前环境不支持运行JavaScript。";
+							jsStatusTxt.visible=true;
+							jsGroup.visible=false;
+						}
+					break;
+				}
+			}
+			
+			private function changeAutoLCSendCb():void{
+				autoRunJSCb.selected=so.data.connects.autoRun=autoLCSendCb.selected;
+			}
+			private function changeAutoRunJSCb():void{
+				autoLCSendCb.selected=so.data.connects.autoRun=autoRunJSCb.selected;
+			}
+			private function changeUI():void{
+				so.data.connects.lcSendName=lcSendNameTxt.text;
+				so.data.connects.jsCode=jsCodeTxt.text;
+				so.data.connects.autoRun=autoRunJSCb.selected;
+			}
+			
+			public function update():void{
+				if(_update==null){
+				}else{
+					if(so.data.connects.autoRun){
+						_update();
+					}
+				}
+			}
+			
+			private function clickUpdate():void{
+				if(_update==null){
+				}else{
+					_update();
+				}
+			}
+			
+			private function lc_update():void{
+				lc.send(lcSendNameTxt.text,"updateConfig",so.data.particleEmitterConfigXML.toXMLString());
+			}
+			
+			private function js_update():void{
+				ExternalInterface.call("eval",jsCodeTxt.text.replace(/\$\{config\}/g,so.data.particleEmitterConfigXML.toXMLString().replace(/\s*[\r\n]\s*/g,"")));
+			}
+			
+			private function lcError(...args):void{
+				lcStatusTxt.text="发送失败";
+			}
+			private function lcStatus(event:StatusEvent):void{
+				if(event.level=="status"){
+					lcStatusTxt.text="";
+				}else{
+					lcStatusTxt.text="发送失败，event.level="+event.level;
+				}
+			}
+			
+		]]>
+	</fx:Script>
+</s:VGroup>

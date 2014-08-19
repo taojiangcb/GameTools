@@ -1,8 +1,5 @@
 package application.comps
 {
-	import application.STLConstant;
-	import application.STLRootClass;
-	
 	import com.frameWork.gestures.DragGestures;
 	import com.frameWork.swf.Swf;
 	
@@ -14,6 +11,13 @@ package application.comps
 	
 	import mx.core.UIComponent;
 	
+	import application.STLConstant;
+	import application.STLRootClass;
+	
+	import feathers.controls.text.TextFieldTextRenderer;
+	import feathers.core.FeathersControl;
+	import feathers.core.ITextRenderer;
+	
 	import starling.core.Starling;
 	import starling.events.Event;
 	import starling.utils.HAlign;
@@ -21,12 +25,15 @@ package application.comps
 	public class RootStage extends UIComponent
 	{
 		
+		/**
+		 * 零时空间 
+		 */		
 		public static var tempContent:Sprite = new Sprite();
+		
 		/**
 		 * 中心点 
 		 */		
 		public var centerPt:Point;
-		
 		
 		public static const STL_WIDTH:int = 2096 * 2;
 		public static const STL_HEIGHT:int = 1280 * 2;
@@ -49,10 +56,13 @@ package application.comps
 		protected override function createChildren():void
 		{
 			super.createChildren();
+			initStarling();
 			drawLine();
 		}
 		
-		
+		/**
+		 * 初始化starling() 
+		 */		
 		private function initStarling():void
 		{
 			mStarling = new Starling(STLRootClass, stage, null,null,"auto","baseline");
@@ -67,27 +77,29 @@ package application.comps
 		private function rootCreateComp(event:starling.events.Event,app:STLRootClass):void
 		{
 			STLConstant.currnetAppRoot = app;
-			
 			mStarling.removeEventListener(starling.events.Event.ROOT_CREATED, rootCreateComp);
 			mStarling.start();
 			mStarling.showStatsAt(HAlign.LEFT);
-			
 			Swf.init(app);
 			
-			//				lineShape = new Shape();
-			//				app.addChild(lineShape);
-			//				drawLine();
+			FeathersControl.defaultTextRendererFactory = function():ITextRenderer
+			{
+				return new TextFieldTextRenderer();
+			};
 			
-			//				contentSprite = new Sprite();
-			//				app.addChild(contentSprite);
-			
-			//				Swf.init(contentSprite);
-			
-			//				setTimeout(function():void{
-			//					dragGestures = new DragGestures(app,onDrag);
-			//				},300);
+//				lineShape = new Shape();
+//				app.addChild(lineShape);
+//				drawLine();
+
+//				contentSprite = new Sprite();
+//				app.addChild(contentSprite);
+
+//				Swf.init(contentSprite);
+
+//				setTimeout(function():void{
+//					dragGestures = new DragGestures(app,onDrag);
+//				},300);
 		}
-		
 		
 		public override function addChild(child:DisplayObject):DisplayObject
 		{

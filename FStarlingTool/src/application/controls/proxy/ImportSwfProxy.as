@@ -1,15 +1,6 @@
 package application.controls.proxy
 {
-	import application.AppUI;
-	import application.ui.MainUIPanel;
-	
-	import assets.Assets;
-	
 	import com.frameWork.swf.Swf;
-	
-	import feathers.controls.text.TextFieldTextRenderer;
-	import feathers.core.FeathersControl;
-	import feathers.core.ITextRenderer;
 	
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
@@ -26,11 +17,20 @@ package application.controls.proxy
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
 	
-	import gframeWork.JT_IDisposable;
-	import gframeWork.uiController.JT_UserInterfaceManager;
-	
 	import mx.collections.ArrayCollection;
 	import mx.core.UIComponent;
+	
+	import application.AppUI;
+	import application.ui.MainUIPanel;
+	
+	import assets.Assets;
+	
+	import feathers.controls.text.TextFieldTextRenderer;
+	import feathers.core.FeathersControl;
+	import feathers.core.ITextRenderer;
+	
+	import gframeWork.JT_IDisposable;
+	import gframeWork.uiController.JT_UserInterfaceManager;
 	
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
@@ -104,91 +104,96 @@ package application.controls.proxy
 		private function analysisSWF():void
 		{
 			Util.swfScale = 1;
-			
-			FeathersControl.defaultTextRendererFactory = function():ITextRenderer
-			{
-				return new TextFieldTextRenderer();
-			};
-			
 			var loaderinfo:LoaderInfo = fileLoad.contentLoaderInfo;
 			Assets.init();
 			Assets.swfUtil.parse(loaderinfo.content.loaderInfo.applicationDomain);
 			Assets.swf = new Swf(Assets.swfUtil.getSwfData(),Assets.asset);
-			Assets.swf.swfData[Swf.dataKey_MovieBatchEffect]=Assets.swfUtil.effectDatas;
+			//Assets.swf.swfData[Swf.dataKey_MovieBatchEffect]=Assets.swfUtil.effectDatas;
 			var len:int = Assets.swfUtil.exportImages.length;
 			var imageName:String;
-			for (var i:int = 0; i < len; i++) {
+			for (var i:int = 0; i < len; i++) 
+			{
 				imageName = Assets.swfUtil.exportImages[i];
 				Assets.asset.addTexture(imageName,Texture.fromBitmapData(ImageUtil.getBitmapdata(Assets.swfUtil.getClass(imageName),1)));
 			}
-			len = Assets.swfUtil.effectNames.length;
+			len = Assets.swfUtil.typeData.imageNames.length;
 			var exp:ExportUtil = new ExportUtil();
 			exp.padding = 2;
 			exp.isMerger = true;
 			exp.exportScale = 1;
 			exp.isMergerBigImage = true;
-			for ( i = 0; i < len; i++) {
-				imageName = Assets.swfUtil.effectNames[i];
+			for ( i = 0; i < len; i++) 
+			{
+				imageName = Assets.swfUtil.typeData.imageNames[i];
 				var datarr:Array = exp.getbitmapdataXml(Assets.swfUtil,imageName,MovieBatchUtil.getMovieBatchImageNames(Assets.swfUtil.effectDatas[imageName]));
 				var textureAtlas:TextureAtlas = new TextureAtlas(Texture.fromBitmapData(datarr[0]),datarr[1])
 				Assets.asset.addTextureAtlas(imageName,textureAtlas);
 			}
 			
-			if(Assets.swfUtil.typeData.imageNames.length > 0){
+			if(Assets.swfUtil.typeData.imageNames.length > 0)
+			{
 				gui.imageDownList.dataProvider = new ArrayCollection(Assets.swfUtil.typeData.imageNames.concat().sort());
 				gui.imageDownList.enabled = true;
-			}else{
+			}
+			else
+			{
 				gui.imageDownList.dataProvider = null;
 				gui.imageDownList.enabled = false;
 			}
 			
-//			if(Assets.swfUtil.typeData.spriteNames.length > 0){
-//				_spriteComboBox.items = Assets.swfUtil.typeData.spriteNames.concat().sort();
-//				_spriteComboBox.enabled = true;
-//			}else{
-//				_spriteComboBox.items = [];
-//				_spriteComboBox.enabled = false;
-//			}
-//			
-//			if(Assets.swfUtil.typeData.movieClipNames.length > 0){
-//				_movieClipComboBox.items = Assets.swfUtil.typeData.movieClipNames.concat().sort();
-//				_movieClipComboBox.enabled = true;
-//			}else{
-//				_movieClipComboBox.items = [];
-//				_movieClipComboBox.enabled = false;
-//			}
-//			
-//			if(Assets.swfUtil.typeData.buttonNames.length > 0){
-//				_buttonComboBox.items = Assets.swfUtil.typeData.buttonNames.concat().sort();
-//				_buttonComboBox.enabled = true;
-//			}else{
-//				_buttonComboBox.items = [];
-//				_buttonComboBox.enabled = false;
-//			}
-//			
-//			if(Assets.swfUtil.typeData.s9Names.length > 0){
-//				_s9ComboBox.items = Assets.swfUtil.typeData.s9Names.concat().sort();
-//				_s9ComboBox.enabled = true;
-//			}else{
-//				_s9ComboBox.items = [];
-//				_s9ComboBox.enabled = false;
-//			}
-//			
-//			if(Assets.swfUtil.typeData.shapeImgNames.length > 0){
-//				_shapeComboBox.items = Assets.swfUtil.typeData.shapeImgNames.concat().sort();
-//				_shapeComboBox.enabled = true;
-//			}else{
-//				_shapeComboBox.items = [];
-//				_shapeComboBox.enabled = false;
-//			}
-//			
-//			if(Assets.swfUtil.typeData.componentNames.length > 0){
-//				_componentsComboBox.items =Assets.swfUtil.typeData.componentNames.concat().sort();
-//				_componentsComboBox.enabled = true;
-//			}else{
-//				_componentsComboBox.items = [];
-//				_componentsComboBox.enabled = false;
-//			}
+			if(Assets.swfUtil.typeData.spriteNames.length > 0)
+			{
+				gui.sprDownList.dataProvider = new ArrayCollection(Assets.swfUtil.typeData.spriteNames.concat().sort());
+				gui.sprDownList.enabled = true;
+			}
+			else
+			{
+				gui.sprDownList.dataProvider = null;
+				gui.sprDownList.enabled = false;
+			}
+			
+			if(Assets.swfUtil.typeData.buttonNames.length > 0)
+			{
+				gui.btnDownList.dataProvider = new ArrayCollection(Assets.swfUtil.typeData.spriteNames.concat().sort());
+				gui.btnDownList.enabled = true;
+			}
+			else
+			{
+				gui.btnDownList.dataProvider = new ArrayCollection(Assets.swfUtil.typeData.spriteNames.concat().sort());
+				gui.btnDownList.enabled = false;
+			}
+			
+			if(Assets.swfUtil.typeData.s9Names.length > 0)
+			{
+				gui.btnDownList.dataProvider = new ArrayCollection(Assets.swfUtil.typeData.buttonNames.concat().sort());
+				gui.btnDownList.enabled = true;
+			}
+			else
+			{
+				gui.btnDownList.dataProvider = null;
+				gui.btnDownList.enabled = false;
+			}
+			if(Assets.swfUtil.typeData.shapeImgNames.length > 0)
+			{
+				gui.shapeDownList.dataProvider = new ArrayCollection(Assets.swfUtil.typeData.shapeImgNames.concat().sort());
+				gui.shapeDownList.enabled = true;
+			}
+			else
+			{
+				gui.btnDownList.dataProvider = null;
+				gui.btnDownList.enabled = false;
+			}
+			if(Assets.swfUtil.typeData.componentNames.length > 0)
+			{
+				gui.compsDownList.dataProvider = new ArrayCollection(Assets.swfUtil.typeData.componentNames.concat().sort());
+				gui.compsDownList.enabled = true;
+			}
+			else
+			{
+				gui.compsDownList.dataProvider = null;
+				gui.compsDownList.enabled = false;
+			}
+			
 //			if(Assets.swfUtil.effectNames.length>0){
 //				_batcheffectComboBox.items = Assets.swfUtil.effectNames
 //				_batcheffectComboBox.enabled = true;
@@ -197,8 +202,6 @@ package application.controls.proxy
 //				_batcheffectComboBox.items = [];
 //				_batcheffectComboBox.enabled = false;
 //			}
-			
-			
 		}
 		
 		public function dispose():void

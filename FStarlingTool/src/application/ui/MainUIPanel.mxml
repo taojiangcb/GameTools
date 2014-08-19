@@ -23,37 +23,37 @@
 		<s:HGroup width="100%" verticalAlign="middle">
 			<s:HGroup verticalAlign="middle" horizontalAlign="left">
 				<s:Label text="image:"/>
-				<s:DropDownList id="imageDownList"/>
+				<s:DropDownList id="imageDownList" width="150"/>
 			</s:HGroup>
 			<s:HGroup verticalAlign="middle" horizontalAlign="left">
 				<s:Label text="scale9image:"/>
-				<s:DropDownList id="s9DownList"/>
+				<s:DropDownList id="s9DownList" width="150"/>
 			</s:HGroup>
 			<s:HGroup verticalAlign="middle" horizontalAlign="left">
 				<s:Label text="shapeImage:"/>
-				<s:DropDownList id="shapeDownList"/>
+				<s:DropDownList id="shapeDownList" width="150"/>
 			</s:HGroup>
 			<s:HGroup verticalAlign="middle" horizontalAlign="left">
 				<s:Label text="swfSprite:"/>
-				<s:DropDownList id="sprDownList"/>
-			</s:HGroup>
-			<s:HGroup verticalAlign="middle" horizontalAlign="left">
-				<s:Label text="swfMovie:"/>
-				<s:DropDownList id="movieDownList"/>
-			</s:HGroup>
-			<s:HGroup verticalAlign="middle" horizontalAlign="left">
-				<s:Label text="swfQuadBatch:"/>
-				<s:DropDownList id="qbDownList"/>
+				<s:DropDownList id="sprDownList" width="150"/>
 			</s:HGroup>
 		</s:HGroup>
 		<s:HGroup width="100%" verticalAlign="middle">
 			<s:HGroup verticalAlign="middle" horizontalAlign="left">
 				<s:Label text="compoents:"/>
-				<s:DropDownList id="compsDownList"/>
+				<s:DropDownList id="compsDownList" width="150"/>
 			</s:HGroup>
 			<s:HGroup verticalAlign="middle" horizontalAlign="left">
 				<s:Label text="buttons:"/>
-				<s:DropDownList id="btnDownList"/>
+				<s:DropDownList id="btnDownList" width="150"/>
+			</s:HGroup>
+			<s:HGroup verticalAlign="middle" horizontalAlign="left">
+				<s:Label text="swfQuadBatch:"/>
+				<s:DropDownList id="qbDownList" width="150"/>
+			</s:HGroup>
+			<s:HGroup verticalAlign="middle" horizontalAlign="left">
+				<s:Label text="swfMovie:"/>
+				<s:DropDownList id="movieDownList" width="150"/>
 			</s:HGroup>
 		</s:HGroup>
 		<mx:Spacer width="100%" height="10"/>

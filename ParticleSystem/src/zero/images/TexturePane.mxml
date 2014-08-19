@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+/***
+TexturePane
+创建人：ZЁЯ¤　身高：168cm+；体重：57kg+；已婚（单身美女们没机会了~~）；最爱的运动：睡觉；格言：路见不平，拔腿就跑。QQ：358315553。
+创建时间：2013年07月18日 11:40:55
+简要说明：这家伙很懒什么都没写。
+用法举例：这家伙还是很懒什么都没写。
+*/
+-->
+
+<s:VGroup
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	paddingTop="5"
+>
+	
+	<s:HGroup>
+		<mx:ComboBox id="cb" change="change()" rowCount="20"/>
+		<s:Button label="另存为" click="saveAs()" width="60"/>
+	</s:HGroup>
+	<s:BorderContainer width="130" height="60" backgroundAlpha="0" id="imgContainer">
+		<mx:UIComponent id="img"/>
+	</s:BorderContainer>
+	
+	<fx:Script>
+		<![CDATA[
+			import zero.images.imageArr;
+			import zero.so;
+			
+			private var bmp:Bitmap;
+			private var onChange:Function;
+			private var fr:FileReference;
+			
+			public function init(_onChange:Function):void{
+				var dataProvider:Array=new Array();
+				for each(var image:Array in imageArr){
+					dataProvider.push({label:image[0].@cn.toString(),data:image});
+				}
+				cb.dataProvider=dataProvider;
+				img.addChild(bmp=new Bitmap());
+				selectTexture();
+				fr=new FileReference();
+				onChange=_onChange;
+			}
+			public function selectTexture():void{
+				if(so.data.texture){
+					for each(var image:Array in imageArr){
+						if(image[0].@cn.toString()==so.data.texture){
+							setValue(image);
+							break;
+						}
+					}
+				}
+			}
+			private function change():void{
+				updateBmp();
+				if(onChange==null){
+				}else{
+					onChange();
+				}
+			}
+			public function getValue():Array{
+				return cb.selectedItem.data;
+			}
+			public function setValue(_value:Array):void{
+				for each(var item:Object in cb.dataProvider){
+					if(item.data==_value){
+						cb.selectedItem=item;
+						updateBmp();
+						break;
+					}
+				}
+			}
+			
+			private function updateBmp():void{
+				bmp.bitmapData=cb.selectedItem.data[1];
+				bmp.x=(imgContainer.width-bmp.width)/2;
+				bmp.y=(imgContainer.height-bmp.height)/2;
+			}
+			
+			private function saveAs():void{
+				fr.save(cb.selectedItem.data[2],cb.selectedItem.data[0].@cn.toString()+cb.selectedItem.data[0].@src.toString().replace(/^.*(\.[^\.]+)$/,"$1"));
+			}
+			
+		]]>
+	</fx:Script>
+</s:VGroup>

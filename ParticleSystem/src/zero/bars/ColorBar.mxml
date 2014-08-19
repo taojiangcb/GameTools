@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+/***
+ColorBar
+创建人：ZЁЯ¤　身高：168cm+；体重：57kg+；未婚（已有女友）；最爱的运动：睡觉；格言：路见不平，拔腿就跑。QQ：358315553。
+创建时间：2012年11月09日 09:22:26
+简要说明：这家伙很懒什么都没写。
+用法举例：这家伙还是很懒什么都没写。
+*/
+-->
+
+<bars:BaseBar
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:bars="zero.bars.*"
+>
+	<s:HGroup verticalAlign="middle" left="2" top="2" right="2" bottom="2">
+		<s:Label text="0x"/>
+		<mx:TextInput id="valueTxt" width="80" restrict="0-9a-fA-F" maxChars="8" change="change(event)"/>
+		<s:HSlider id="alphaBar" width="40" change="change(event)"/>
+		<mx:ColorPicker id="cp" change="change(event)"/>
+	</s:HGroup>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			public function init(name:String,color:uint,_onChange:Function):void{
+				_init(name,_onChange);
+				alphaBar.minimum=0x00;
+				alphaBar.maximum=0xff;
+				alphaBar.stepSize=1;
+				setValue(color);
+			}
+			override protected function change(event:Event):void{
+				switch(event.target){
+					case valueTxt:
+						alphaBar.value=int("0x"+valueTxt.text.substr(0,valueTxt.length-6));
+						cp.selectedColor=int("0x"+valueTxt.text.substr(valueTxt.length-6));
+					break;
+					case alphaBar:
+					case cp:
+						valueTxt.text=(0x100+alphaBar.value).toString(16).substr(1)+(0x1000000+cp.selectedColor).toString(16).substr(1);
+					break;
+				}
+				super.change(event);
+			}
+			public function getValue():uint{
+				return uint("0x"+valueTxt.text);
+			}
+			public function setValue(_value:uint):void{
+				valueTxt.text=(0x100000000+_value).toString(16).substr(1);
+				alphaBar.value=_value>>>24;
+				cp.selectedColor=_value&0x00ffffff;
+			}
+		]]>
+	</fx:Script>
+	
+</bars:BaseBar>
