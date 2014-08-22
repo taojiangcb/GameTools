@@ -105,30 +105,24 @@ package application.controls.proxy
 		{
 			Util.swfScale = 1;
 			var loaderinfo:LoaderInfo = fileLoad.contentLoaderInfo;
+			var fileName:String = file.name;
+		
 			Assets.init();
 			Assets.swfUtil.parse(loaderinfo.content.loaderInfo.applicationDomain);
 			Assets.swf = new Swf(Assets.swfUtil.getSwfData(),Assets.asset);
-			//Assets.swf.swfData[Swf.dataKey_MovieBatchEffect]=Assets.swfUtil.effectDatas;
-			var len:int = Assets.swfUtil.exportImages.length;
-			var imageName:String;
-			for (var i:int = 0; i < len; i++) 
-			{
-				imageName = Assets.swfUtil.exportImages[i];
-				Assets.asset.addTexture(imageName,Texture.fromBitmapData(ImageUtil.getBitmapdata(Assets.swfUtil.getClass(imageName),1)));
-			}
-			len = Assets.swfUtil.typeData.imageNames.length;
-			var exp:ExportUtil = new ExportUtil();
-			exp.padding = 2;
-			exp.isMerger = true;
-			exp.exportScale = 1;
-			exp.isMergerBigImage = true;
-			for ( i = 0; i < len; i++) 
-			{
-				imageName = Assets.swfUtil.typeData.imageNames[i];
-				var datarr:Array = exp.getbitmapdataXml(Assets.swfUtil,imageName,MovieBatchUtil.getMovieBatchImageNames(Assets.swfUtil.effectDatas[imageName]));
-				var textureAtlas:TextureAtlas = new TextureAtlas(Texture.fromBitmapData(datarr[0]),datarr[1])
-				Assets.asset.addTextureAtlas(imageName,textureAtlas);
-			}
+			
+			var exportUitls:ExportUtil = new ExportUtil();
+			exportUitls.isMerger = true;
+			exportUitls.isMergerBigImage = true;
+			exportUitls.padding = 2;
+			exportUitls.exportScale = 1;
+			
+			var swfName:String = fileName.split(".")[0];
+			var data:Array = exportUitls.getbitmapdataXml(Assets.swfUtil,swfName);
+			var texture:Texture = Texture.fromBitmapData(data[0],false);
+			var textureAtls:TextureAtlas = new TextureAtlas(texture,data[1]);
+			var atlsName:String = XML(data[1]).@imagePath;
+			Assets.asset.addTextureAtlas(atlsName,textureAtls);
 			
 			if(Assets.swfUtil.typeData.imageNames.length > 0)
 			{
@@ -165,13 +159,13 @@ package application.controls.proxy
 			
 			if(Assets.swfUtil.typeData.s9Names.length > 0)
 			{
-				gui.btnDownList.dataProvider = new ArrayCollection(Assets.swfUtil.typeData.buttonNames.concat().sort());
-				gui.btnDownList.enabled = true;
+				gui.s9DownList.dataProvider = new ArrayCollection(Assets.swfUtil.typeData.buttonNames.concat().sort());
+				gui.s9DownList.enabled = true;
 			}
 			else
 			{
-				gui.btnDownList.dataProvider = null;
-				gui.btnDownList.enabled = false;
+				gui.s9DownList.dataProvider = null;
+				gui.s9DownList.enabled = false;
 			}
 			if(Assets.swfUtil.typeData.shapeImgNames.length > 0)
 			{
@@ -193,15 +187,6 @@ package application.controls.proxy
 				gui.compsDownList.dataProvider = null;
 				gui.compsDownList.enabled = false;
 			}
-			
-//			if(Assets.swfUtil.effectNames.length>0){
-//				_batcheffectComboBox.items = Assets.swfUtil.effectNames
-//				_batcheffectComboBox.enabled = true;
-//			}else
-//			{
-//				_batcheffectComboBox.items = [];
-//				_batcheffectComboBox.enabled = false;
-//			}
 		}
 		
 		public function dispose():void

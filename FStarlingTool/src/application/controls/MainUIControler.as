@@ -5,15 +5,18 @@ package application.controls
 	
 	import mx.events.FlexEvent;
 	
+	import application.controls.proxy.ImportSwfProxy;
+	import application.controls.proxy.UIchrooseProxy;
 	import application.ui.MainUIPanel;
 	
 	import gframeWork.uiController.JT_MainUIControllerBase;
-	import application.controls.proxy.ImportSwfProxy;
 	
 	public class MainUIControler extends JT_MainUIControllerBase
 	{
 		
-		private var chrooseFile:ImportSwfProxy;
+		private var importFileProxy:ImportSwfProxy;
+		
+		private var uiOperation:UIchrooseProxy;
 		
 		public function MainUIControler()
 		{
@@ -23,7 +26,8 @@ package application.controls
 		protected override function uiCreateComplete(event:FlexEvent):void
 		{
 			super.uiCreateComplete(event);
-			chrooseFile = new ImportSwfProxy();
+			importFileProxy = new ImportSwfProxy();
+			uiOperation = new UIchrooseProxy();
 		}
 		
 		private function listener():void

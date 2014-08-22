@@ -106,21 +106,22 @@ SettingPane
 			}
 			private function confirmSaveCurr(settingName:String):void{
 				var newSettingXML:XML=<setting name={settingName} texture={so.data.texture} emitterX={so.data.emitterX} emitterY={so.data.emitterY}/>;
-				so.data.setting=settingName;
-				newSettingXML.appendChild(so.data.particleEmitterConfigXML);
+				var soData:Object = so.data;
+				soData.setting=settingName;
+				newSettingXML.appendChild(soData.particleEmitterConfigXML);
 				var i:int=-1;
-				for each(var settingXML:XML in so.data.customSettingArr){
+				for each(var settingXML:XML in soData.customSettingArr){
 					i++;
-					if(so.data.setting==settingName){
+					if(settingXML.@name == settingName){
 						//替换
-						so.data.customSettingArr[i]=newSettingXML;
+						soData.customSettingArr[i]=newSettingXML;
 						newSettingXML=null;
 						break;
 					}
 				}
 				if(newSettingXML){
 					//新增
-					so.data.customSettingArr.push(newSettingXML);
+					soData.customSettingArr.push(newSettingXML);
 				}
 				so.flush();
 				updateItems();

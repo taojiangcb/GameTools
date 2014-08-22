@@ -59,7 +59,6 @@ package utils
 						continue;
 					}
 					
-					
 					//子级的详细信息
 					childInfo =new BatchImageVO();
 					childInfo.name = childName;
@@ -122,21 +121,15 @@ package utils
 				}
 			}
 			
-			
-		  var movieClipVO:BatchVO = new BatchVO();
-		  movieClipVO.fps = 24;
-		  movieClipVO.frames = frameInfos;
-		  movieClipVO.scale = Util.swfScale.toString();
-		  movieClipVO.frameLabels = labels;
-		  RootStage.tempContent.removeChild(mc);
+			var movieClipVO:BatchVO = new BatchVO();
+			movieClipVO.fps = 24;
+			movieClipVO.frames = frameInfos;
+			movieClipVO.scale = Util.swfScale.toString();
+			movieClipVO.frameLabels = labels;
+			RootStage.tempContent.removeChild(mc);
 			return movieClipVO;
-//			{
-//				frames:frameInfos,
-//				labels:labels,
-//				objCount:objectCount,
-//				loop:((Assets.getTempData(clazzName) == null) ? true : Assets.getTempData(clazzName))
-//			};
 		}
+		
 		public static function getMovieBatchImageNames(movieClipVO:BatchVO):Array
 		{
 			var arr:Array = [];

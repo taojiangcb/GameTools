@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
 					   xmlns:s="library://ns.adobe.com/flex/spark"
-					   xmlns:mx="library://ns.adobe.com/flex/mx" backgroundColor="0x999999"
-					   showStatusBar="false" minWidth="1024" minHeight="600" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   showStatusBar="false" minWidth="1024" minHeight="600" backgroundAlpha="0" backgroundColor="0"
 					   maxWidth="2096" maxHeight="1280" applicationComplete="appInit()">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<fx:Style>
 		@namespace s "library://ns.adobe.com/flex/spark";
-		
 		@namespace mx "library://ns.adobe.com/flex/mx";
 		s|WindowedApplication
 		{
-			backgroundColor: #333333;
-			backgroundAlpha: 1;
 			resizeAffordanceWidth: 6;
 			fontSize:12;
 			fontFamily:"宋体";
@@ -22,13 +19,18 @@
 	</fx:Style>
 	<fx:Script>
 		<![CDATA[
+			import com.frameWork.gestures.DragGestures;
+			import com.frameWork.swf.Swf;
+			
 			import application.AppUI;
 			import application.STLConstant;
 			import application.STLRootClass;
 			import application.comps.RootStage;
 			import application.mediator.AppMediator;
 			
-			import com.frameWork.gestures.DragGestures;
+			import feathers.controls.text.TextFieldTextRenderer;
+			import feathers.core.FeathersControl;
+			import feathers.core.ITextRenderer;
 			
 			import gframeWork.JT_FrameWork;
 			import gframeWork.uiController.JT_UserInterfaceManager;
@@ -40,15 +42,41 @@
 			import starling.utils.HAlign;
 			
 			private var appUI:AppUI;
+			
+			private var mStarling:Starling;
+			
+			public static const STL_WIDTH:int = 2096 * 2;
+			public static const STL_HEIGHT:int = 1280 * 2;
+			
 			public function appInit():void
 			{
 				Facade.getInstance().registerMediator(new AppMediator(AppMediator.NAME));
 				JT_FrameWork.getInstance().setLayout(this,this,this);
 				appUI = new AppUI();
 				JT_UserInterfaceManager.open(AppUI.APP_UI_MAIN);
-				JT_UserInterfaceManager.open(AppUI.APP_ROOT_PANE);
+				//JT_UserInterfaceManager.open(AppUI.APP_ROOT_PANE);
+				
+				mStarling = new Starling(STLRootClass, stage, null,null,"auto","baseline");
+				mStarling.antiAliasing = 0;
+				mStarling.stage.stageWidth  = STL_WIDTH;
+				mStarling.stage.stageHeight = STL_HEIGHT;
+				mStarling.simulateMultitouch  = false;
+				mStarling.enableErrorChecking = Capabilities.isDebugger;
+				mStarling.addEventListener(starling.events.Event.ROOT_CREATED,rootCreateComp);
 			}
 			
+			private function rootCreateComp(event:starling.events.Event,app:STLRootClass):void
+			{
+				STLConstant.currnetAppRoot = app;
+				mStarling.removeEventListener(starling.events.Event.ROOT_CREATED, rootCreateComp);
+				mStarling.start();
+				mStarling.showStatsAt(HAlign.LEFT);
+				Swf.init(app);
+				FeathersControl.defaultTextRendererFactory = function():ITextRenderer
+				{
+					return new TextFieldTextRenderer();
+				};
+			}
 		]]>
 	</fx:Script>
 </s:WindowedApplication>

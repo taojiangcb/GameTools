@@ -36,7 +36,6 @@
 				var pt:Point = new Point(event.localX,event.localY);
 				var toGlobal:Point = localToGlobal(pt);
 				var toContent:Point = childRoot.globalToContent(toGlobal);
-				trace(toContent);
 				childRoot.startDrag(false,new Rectangle(-childRoot.width + width,-childRoot.height + height,childRoot.width - width,childRoot.height - height));
 			}
 			

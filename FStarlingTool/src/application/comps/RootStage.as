@@ -86,19 +86,6 @@ package application.comps
 			{
 				return new TextFieldTextRenderer();
 			};
-			
-//				lineShape = new Shape();
-//				app.addChild(lineShape);
-//				drawLine();
-
-//				contentSprite = new Sprite();
-//				app.addChild(contentSprite);
-
-//				Swf.init(contentSprite);
-
-//				setTimeout(function():void{
-//					dragGestures = new DragGestures(app,onDrag);
-//				},300);
 		}
 		
 		public override function addChild(child:DisplayObject):DisplayObject
