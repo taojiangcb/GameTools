@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
-  <includeClasses/>
+  <includeClasses>
+    <classEntry path="com.frameWork.uiControls.tweens.UITweens"/>
+    <classEntry path="com.frameWork.uiControls.tweens.UIOpenTween"/>
+    <classEntry path="com.frameWork.uiControls.tweens.UICloseTween"/>
+    <classEntry path="com.frameWork.uiControls.UIMoudleManager"/>
+  </includeClasses>
   <includeResources/>
   <namespaceManifests/>
 </flexLibProperties>
