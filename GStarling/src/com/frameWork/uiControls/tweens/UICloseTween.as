@@ -5,6 +5,11 @@ package com.frameWork.uiControls.tweens
 	
 	import starling.display.DisplayObject;
 	
+	/**
+	 * ui关闭的时候默认的动画处理过程 
+	 * @author taojiang
+	 * 
+	 */	
 	public class UICloseTween extends UITweens
 	{
 		public function UICloseTween(display:DisplayObject, dur:Number=1)

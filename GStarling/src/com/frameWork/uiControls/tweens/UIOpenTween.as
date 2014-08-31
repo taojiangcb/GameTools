@@ -6,7 +6,7 @@ package com.frameWork.uiControls.tweens
 	import starling.display.DisplayObject;
 	
 	/**
-	 * ui开启时的动画处理 
+	 * ui开启的时候默认的动画处理过程
 	 * @author taojiang
 	 * 
 	 */	
