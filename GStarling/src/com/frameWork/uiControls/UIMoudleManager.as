@@ -10,6 +10,7 @@ package com.frameWork.uiControls
 }
 import com.frameWork.uiControls.UIConstant;
 import com.frameWork.uiControls.UIMoudle;
+import com.frameWork.utils.ssetInterval;
 
 import flash.geom.Point;
 import flash.system.System;
@@ -38,6 +39,34 @@ class UIManager
 		regMap = new Dictionary();
 		openList = new Vector.<UIMoudle>();
 		gcMap = new Dictionary();
+		
+		/*每隔一秒检测一次gc列表，看看哪些模块是要被gc掉的。 */
+		gcCheckId = ssetInterval(function():void{
+			var clearList:Array = [];
+			var key:String;
+			for(key in gcMap)
+			{
+				var runTime:Number = Starling.juggler.elapsedTime;
+				var gcTime:Number = gcMap[int(key)];
+				if(runTime > gcTime) 
+				{
+					destoryUIMoudle(int(key));
+					clearList.push(int(key))
+				}
+			}
+			
+			while(clearList.length > 0)
+			{
+				var uiId:int = clearList.shift();
+				if(uiMap.hasOwnProperty(uiId)) delete uiMap[uiId];
+				delete gcMap[uiId];
+				if(clearList.length == 0)
+				{
+					System.gc();
+				}
+			}
+		},1000);
+		
 	}
 	
 	/**
@@ -102,7 +131,6 @@ class UIManager
 		
 		//先清除gc标记
 		if(gcMap.hasOwnProperty(uiId)) delete gcMap[uiId];
-		
 		uiMoudle.open(pt,data);
 		openList.push(uiMoudle);
 		return 1;
@@ -123,8 +151,11 @@ class UIManager
 			var findIndex:int = openList.indexOf(uiMoudle);
 			openList.splice(findIndex,1);
 			uiMoudle.close();
-			//gc标记，请除的时间
-			gcMap[uiId] = Starling.juggler.elapsedTime + uiMoudle.gcDelayTime;
+			if(uiMoudle.gcDelayTime > 0)
+			{
+				//gc标记的时间
+				gcMap[uiId] = Starling.juggler.elapsedTime + uiMoudle.gcDelayTime;			
+			}
 			return 1;
 		}
 		return 0;
@@ -144,10 +175,7 @@ class UIManager
 		
 		if(gcTime > nowRunTime && uiMoudle.uiState == UIConstant.HIDE)
 		{
-			if(uiMap.hasOwnProperty(uiId)) delete uiMap[uiId];
-			delete gcMap[uiId];
 			uiMoudle.dispose();
-			System.gc();
 		}
 		
 	}
