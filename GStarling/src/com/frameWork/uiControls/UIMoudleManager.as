@@ -22,24 +22,25 @@ import starling.utils.SystemUtil;
 
 class UIManager
 {
-	/*注册的列表*/
+	/*注册的列表*/ // {uid:UICache}
 	private var regMap:Dictionary;
-	/*当前的ui列表*/
+	/*当前的ui列表*/  //{uid:UIMoudle}
 	private var uiMap:Dictionary;
 	/*开启的ui列表*/
 	private var openList:Vector.<UIMoudle>;
-	//gc列表
+	//gc列表记录每个ui的gc时间 {uid:gctime}
 	private var gcMap:Dictionary;
 	
 	private var gcCheckId:int = 0;
 	
 	public function UIManager():void
 	{
-		uiMap = new Dictionary();
-		regMap = new Dictionary();
-		openList = new Vector.<UIMoudle>();
-		gcMap = new Dictionary();
+		uiMap 		= new Dictionary();
+		regMap 		= new Dictionary();
+		openList 	= new Vector.<UIMoudle>();
+		gcMap 		= new Dictionary();
 		
+		const CHECK_TIME:int = 1000;
 		/*每隔一秒检测一次gc列表，看看哪些模块是要被gc掉的。 */
 		gcCheckId = ssetInterval(function():void{
 			var clearList:Array = [];
@@ -65,7 +66,7 @@ class UIManager
 					System.gc();
 				}
 			}
-		},1000);
+		},CHECK_TIME);
 		
 	}
 	
@@ -164,9 +165,8 @@ class UIManager
 	/**
 	 * gc一个ui模块 
 	 * @param uiId
-	 * 
 	 */	
-	private function destoryUIMoudle(uiId):void
+	private function destoryUIMoudle(uiId:int):void
 	{
 		var uiMoudle:UIMoudle = getUIMoudleById(uiId);
 		if(!uiMoudle) return;
@@ -177,7 +177,6 @@ class UIManager
 		{
 			uiMoudle.dispose();
 		}
-		
 	}
 }
 
