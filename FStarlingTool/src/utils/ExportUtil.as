@@ -381,7 +381,7 @@ package utils
 				byt.writeInt(by.length);
 				byt.writeBytes(by);	
 				saveXml(path+imageName+".xml",str)
-				by =  textureAtlasBitmapData.encode(new Rectangle(0,0,textureAtlasBitmapData.width,textureAtlasBitmapData.height),new PNGEncoderOptions())
+				by =  textureAtlasBitmapData.encode(new Rectangle(0,0,textureAtlasBitmapData.width,textureAtlasBitmapData.height),new PNGEncoderOptions());					
 				by.position = 0;
 				byt.writeInt(by.length);
 				byt.writeBytes(by);

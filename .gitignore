@@ -22,6 +22,8 @@ local.properties
 .classpath
 .settings/
 .loadpath
+.actionScriptProperties
+.DS_Store
 
 # External tool builders
 .externalToolBuilders/

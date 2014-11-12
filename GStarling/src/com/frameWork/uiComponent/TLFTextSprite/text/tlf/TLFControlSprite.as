@@ -360,7 +360,7 @@ package com.frameWork.uiComponent.TLFTextSprite.text.tlf {
 				//使能超链接方式不使用外扩展方法，这里使用name获取实现
 				//hitLinkDetection(touches[0].globalX-txt.x, touches[0].globalY-txt.y);
 				if(e.target is LinkDisPlay){
-					dispatchEvent(new TLFFlowEvent(TLFFlowEvent.LINK_TOUCHED,true,(e.target as LinkDisPlay).linkElem))
+					dispatchEvent(new TLFFlowEvent(TLFFlowEvent.LINK_TOUCHED,true,(e.target as LinkDisPlay).linkElement))
 				}
 			}
 		}
@@ -501,7 +501,7 @@ package com.frameWork.uiComponent.TLFTextSprite.text.tlf {
 				linkDisPlay.alpha = showBoundaries?0.3:0;
 				
 				if(linkClickEnable){//使能超链点击,用linkDisPlay实现
-					linkDisPlay.linkElem=linkObject.linkElem;
+					linkDisPlay.linkElement=linkObject.linkElement;
 				}
 				addChild(linkDisPlay);
 
