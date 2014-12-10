@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+/***
+TexturePane
+创建人：ZЁЯ¤　身高：168cm+；体重：57kg+；已婚（单身美女们没机会了~~）；最爱的运动：睡觉；格言：路见不平，拔腿就跑。QQ：358315553。
+创建时间：2013年07月18日 11:40:55
+简要说明：这家伙很懒什么都没写。
+用法举例：这家伙还是很懒什么都没写。
+*/
+-->
+
+<s:VGroup
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	paddingTop="5"
+>
+	<s:VGroup>
+		<s:HGroup>
+			<mx:ComboBox id="cb" change="change()" rowCount="20" width="60"/>
+			<s:Button label="另存为" click="saveAs()" width="60"/>
+		</s:HGroup>
+		<s:HGroup>
+			<s:Button label="添加纹理" click="addTexture()" width="60"/>
+			<s:Button label="删除纹理" click="delTexture()" width="60"/>
+		</s:HGroup>
+	</s:VGroup>
+	<s:BorderContainer width="130" height="60" backgroundAlpha="0" id="imgContainer">
+		<mx:UIComponent id="img"/>
+	</s:BorderContainer>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			
+			import zero.images.imageArr;
+			private var bmp:Bitmap;
+			private var onChange:Function;
+			private var fr:FileReference;
+			private var  imgLoader:Loader = null;
+			
+			public function init(_onChange:Function):void{
+				var dataProvider:Array=new Array();
+				for each(var image:Array in imageArr){
+					dataProvider.push({label:image[0].@cn.toString(),data:image});
+				}
+				
+				cb.dataProvider = dataProvider;
+				img.addChild(bmp=new Bitmap());
+				selectTexture();
+				fr=new FileReference();
+				onChange=_onChange;
+			}
+			
+			public function selectTexture():void{
+				if(so.data.texture){
+					for each(var image:Array in imageArr){
+						if(image[0].@cn.toString()==so.data.texture){
+							setValue(image);
+							break;
+						}
+					}
+				}
+			}
+			private function change():void{
+				updateBmp();
+				if(onChange==null){
+				}else{
+					onChange();
+				}
+			}
+			public function getValue():Array{
+				return cb.selectedItem.data;
+			}
+			
+			private function setValue(_value:Array):void{
+				for each(var item:Object in cb.dataProvider){
+					if(item.data==_value){
+						cb.selectedItem=item;
+						updateBmp();
+						break;
+					}
+				}
+			}
+			
+			private function updateBmp():void{
+				bmp.bitmapData=cb.selectedItem.data[1];
+				bmp.x=(imgContainer.width-bmp.width)/2;
+				bmp.y=(imgContainer.height-bmp.height)/2;
+			}
+			
+			private function saveAs():void{
+				fr.save(cb.selectedItem.data[2],cb.selectedItem.data[0].@cn.toString()+cb.selectedItem.data[0].@src.toString().replace(/^.*(\.[^\.]+)$/,"$1"));
+			}
+			
+			//删除纹理
+			public function delTexture():void
+			{
+				var chroose:String = so.data.texture;
+				var image:Object
+				
+				var soCache:Array = so.data.customArrayTextures;
+				var index:int = 0;
+				var isDel:Boolean = false;
+				for each(image in soCache) {
+					if(image.label == chroose){
+						soCache.splice(index,1);
+						isDel = true;
+						break;
+					}
+					index++;
+				}
+				
+				if(!isDel) {
+					Alert.show("没有纹理可以删除，系统纹理不能删。");
+					return;
+				}
+				
+				var chrooseIndex:int = cb.selectedIndex;
+				ArrayCollection(cb.dataProvider).removeItemAt(chrooseIndex);
+				
+				setValue(imageArr[0]);
+				change();
+				
+				so.data.customArrayTextures = soCache;
+				so.flush();
+			}
+			
+			//添加纹理
+			private function addTexture():void
+			{
+				var frloadComp:Function = function(event:Event):void{
+					var fileName:String = fr.name.substr(0,fr.name.indexOf("."));
+					var fileData:ByteArray = fr.data;
+					if(!imgLoader) imgLoader = new Loader();
+					
+					for each(var chk:Object in so.data.customArrayTextures)
+					{
+						if(chk.label == fileName) {
+							Alert.show("有重复的纹理名称，不能添加！");
+							return;
+						}
+					}
+					
+					var loaderComplete:Function = function(event:Event):void {
+						var imgXml:XMLNode = new XMLNode(XMLNodeType.ELEMENT_NODE,"image");
+						imgXml.attributes = {cn:fileName,src:fileName + "." + fr.extension};
+						
+						var xmlElement:XML = new XML(imgXml);
+						var imgData:Array = [xmlElement,Object(imgLoader.content).bitmapData,fr.data,false];
+						if(so.data.customArrayTextures) {
+							
+							var dataProvider:ArrayCollection = cb.dataProvider as ArrayCollection;
+							dataProvider.addItem({label:imgData[0].@cn.toString(),data:imgData,isDefault:false});
+							cb.dataProvider = dataProvider;
+							setValue(imgData);
+							change();
+							
+							so.data.customArrayTextures.push({label:imgData[0].@cn.toString(),data:fr.data,xml:xmlElement});
+							so.flush();
+						}
+					
+						imgLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE,loaderComplete);
+						imgLoader.unloadAndStop();
+						
+					};
+					imgLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,loaderComplete);
+					imgLoader.loadBytes(fileData);
+					
+					fr.removeEventListener(Event.SELECT,frLoad);
+					fr.removeEventListener(Event.COMPLETE,frloadComp);
+				}
+				
+				var frLoad:Function = function(event:Event):void  {
+					fr.removeEventListener(Event.SELECT,frLoad);
+					fr.load();
+				};
+				
+				fr.addEventListener(Event.COMPLETE,frloadComp);
+				fr.addEventListener(Event.SELECT,frLoad);
+				fr.browse([new FileFilter("*.png","*.png")]);
+			}
+		]]>
+	</fx:Script>
+</s:VGroup>

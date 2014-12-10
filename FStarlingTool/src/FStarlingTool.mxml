@@ -2,7 +2,8 @@
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
 					   xmlns:s="library://ns.adobe.com/flex/spark"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   showStatusBar="false" minWidth="1024" minHeight="600" backgroundAlpha="0" backgroundColor="0"
+					   showStatusBar="false" minWidth="1024" minHeight="600"
+					   backgroundAlpha="0" 
 					   maxWidth="2096" maxHeight="1280" applicationComplete="appInit()">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->

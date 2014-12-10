@@ -26,9 +26,22 @@
 		<![CDATA[
 			import spark.components.VGroup;
 			
-			import zero.*;
-			import zero.bars.*;
-			import zero.images.*;
+			import zero.ConfigPane;
+			import zero.ConnectPane;
+			import zero.SLArea;
+			import zero.SettingPane;
+			import zero.TexturePane;
+			import zero.optionsXML;
+			import zero.so;
+			import zero.bars.ColorBar;
+			import zero.bars.NumBar;
+			import zero.bars.SelectBar;
+			import zero.images.BlobBmpData;
+			import zero.images.CircleBmpData;
+			import zero.images.HeartBmpData;
+			import zero.images.StarBmpData;
+			import zero.images.TextBmpData;
+			import zero.images.imageArr;
 			
 			private var optionsXMLLoader:URLLoader;
 			
@@ -44,7 +57,12 @@
 			private var texturePane:TexturePane;
 			private var configPane:ConfigPane;
 			
+			private var isLoadCache:Boolean = false;
 			private function applicationComplete():void{
+				
+				//so.data.customArrayTextures = [];
+				//so.flush();
+				
 				optionsXMLLoader=new URLLoader();
 				optionsXMLLoader.addEventListener(Event.COMPLETE,loadOptionsComplete);
 				optionsXMLLoader.addEventListener(IOErrorEvent.IO_ERROR,loadOptionsError);
@@ -52,7 +70,7 @@
 				optionsXMLLoader.load(new URLRequest("options.xml"));
 			}
 			private function loadOptionsComplete(...args):void{
-				//trace("loadOptionsComplete");
+				trace("loadOptionsComplete");
 				optionsXML=new XML(optionsXMLLoader.data);
 				optionsXMLLoader.removeEventListener(Event.COMPLETE,loadOptionsComplete);
 				optionsXMLLoader.removeEventListener(IOErrorEvent.IO_ERROR,loadOptionsError);
@@ -61,7 +79,7 @@
 				loadImages();
 			}
 			private function loadOptionsError(...args):void{
-				//trace("loadOptionsError");
+				trace("loadOptionsError");
 				optionsXMLLoader.removeEventListener(Event.COMPLETE,loadOptionsComplete);
 				optionsXMLLoader.removeEventListener(IOErrorEvent.IO_ERROR,loadOptionsError);
 				optionsXMLLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR,loadOptionsError);
@@ -81,16 +99,23 @@
 				loadNextImage();
 			}
 			private function loadNextImage():void{
-				if(++currLoadImageId>=optionsXML.images[0].image.length()){
+				if(++currLoadImageId>=optionsXML.images[0].image.length())
+				{
 					imageDataLoader.removeEventListener(Event.COMPLETE,loadImageDataComplete);
 					imageDataLoader.removeEventListener(IOErrorEvent.IO_ERROR,loadImageDataError);
 					imageDataLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR,loadImageDataError);
 					imageDataLoader=null;
-					imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE,loadImageComplete);
-					imageLoader=null
-					if(imageArr.length){
-						init();
-					}else{
+//					imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE,loadImageComplete);
+//					imageLoader=null;
+					if(imageArr.length)
+					{
+						currLoadImageId = -1;
+						loadCustomTextures();
+						isLoadCache = true;
+//						init();
+					}
+					else
+					{
 						imageLoader=new Loader();
 						imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,loadDefaultImageComplete);
 						imageArr.push([<image cn="圆形" src="image/circle.png"/>,null,new CircleBmpData()]);
@@ -105,24 +130,48 @@
 				}
 				imageDataLoader.load(new URLRequest(optionsXML.images[0].image[currLoadImageId].@src.toString()));
 			}
+			
+			private function loadCustomTextures():void
+			{
+				var soCacheArray:Array = so.data.customArrayTextures;
+				if(soCacheArray && ++currLoadImageId >= soCacheArray.length) {
+					imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE,loadImageComplete);
+					imageLoader=null;
+					init();
+					return;
+				}
+				imageLoader.loadBytes(soCacheArray[currLoadImageId].data);
+			}
+			
 			private function loadImageDataComplete(...args):void{
-				//trace("loadImageDataComplete");
+				trace("loadImageDataComplete");
 				imageLoader.loadBytes(imageDataLoader.data);
 			}
 			private function loadImageComplete(...args):void{
-				//trace("loadImageComplete");
-				imageArr.push([optionsXML.images[0].image[currLoadImageId],(imageLoader.content as Bitmap).bitmapData,imageDataLoader.data]);
-				loadNextImage();
+				trace("loadImageComplete");
+				if(isLoadCache) {
+					imageArr.push([so.data.customArrayTextures[currLoadImageId].xml,(imageLoader.content as Bitmap).bitmapData,so.data.customArrayTextures[currLoadImageId].data,false]);
+					loadCustomTextures();
+				} else {
+					imageArr.push([optionsXML.images[0].image[currLoadImageId],(imageLoader.content as Bitmap).bitmapData,imageDataLoader.data,true]);
+					loadNextImage();
+				}
 			}
 			private function loadImageDataError(...args):void{
-				//trace("loadImageDataError");
+				trace("loadImageDataError");
+				trace(args);
 				loadNextImage();
 			}
 			private function loadNextDefaultImage():void{
 				if(++currLoadImageId>=imageArr.length){
 					imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE,loadImageComplete);
 					imageLoader=null;
-					init();
+					
+					//init();
+					
+					currLoadImageId = -1;
+					loadCustomTextures();
+					isLoadCache = true;
 					return;
 				}
 				imageLoader.loadBytes(imageArr[currLoadImageId][2]);
@@ -338,7 +387,7 @@
 				}
 				so.data.particleEmitterConfigXML=getParticleEmitterConfigXML();
 				configPane.update();
-				so.data.texture=texturePane.getValue()[0].@cn.toString();
+				so.data.texture = texturePane.getValue()[0].@cn.toString();
 				SLArea.update(so.data.particleEmitterConfigXML,so.data.emitterX,so.data.emitterY,texturePane.getValue());
 				connectPane.update();
 			}

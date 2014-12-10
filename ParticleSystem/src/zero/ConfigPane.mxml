@@ -20,7 +20,7 @@ ConfigPane
 		<s:Button label="复制到剪贴板" click="copy()" id="copyBtn"/>
 		<s:Button label="另存为" click="saveAs()" width="60"/>
 	</s:HGroup>
-	<mx:TextArea width="200" height="310" id="configTxt" editable="false" wordWrap="false"/>
+	<mx:TextArea width="200" height="280" id="configTxt" editable="false" wordWrap="false"/>
 	
 	<fx:Script>
 		<![CDATA[
