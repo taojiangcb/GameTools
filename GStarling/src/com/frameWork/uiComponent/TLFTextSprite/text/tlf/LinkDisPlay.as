@@ -25,7 +25,7 @@ package com.frameWork.uiComponent.TLFTextSprite.text.tlf
 			super(width, height, color, premultipliedAlpha);
 		}
 		
-		public var linkElem:LinkElement;
+		public var linkElement:LinkElement;
 
 		
 		
