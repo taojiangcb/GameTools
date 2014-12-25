@@ -9,10 +9,10 @@ package gframeWork.uiController
 	import flash.utils.clearTimeout;
 	import flash.utils.setTimeout;
 	
-	import gframeWork.JT_FrameWork;
-	import gframeWork.JT_IDisposable;
+	import gframeWork.FrameWork;
+	import gframeWork.IDisposable;
 	import gframeWork.JT_internal;
-	import gframeWork.cfg.JT_Configure;
+	import gframeWork.cfg.Configure;
 	
 	import mx.core.EventPriority;
 	import mx.core.IUIComponent;
@@ -27,7 +27,7 @@ package gframeWork.uiController
 	
 	use namespace JT_internal;
 
-	public class JT_UIControllerBase extends EventDispatcher
+	public class UIControllerBase extends EventDispatcher
 	{
 		/**
 		 * 标识ID  
@@ -57,7 +57,7 @@ package gframeWork.uiController
 		/**
 		 * 窗口当前的状态
 		 */		
-		public var state:uint = JT_UI_States.NORMAL;
+		public var state:uint = UIStates.NORMAL;
 		
 		
 		/**
@@ -76,9 +76,9 @@ package gframeWork.uiController
 		JT_internal var mCanUse:Boolean = false;
 		
 		
-		public function JT_UIControllerBase()
+		public function UIControllerBase()
 		{
-			if(JT_Configure.DEBUG)
+			if(Configure.DEBUG)
 			{
 				mDieTime = 5000;
 			}
@@ -119,7 +119,7 @@ package gframeWork.uiController
 				{
 					UIComponent(getSpace()).addChild(mGUI);
 				}
-				state = JT_UI_States.SHOW;
+				state = UIStates.SHOW;
 			}
 		}
 		
@@ -157,7 +157,7 @@ package gframeWork.uiController
 			{
 				if(!mGUI.hitTestPoint(event.stageX,event.stageY))
 				{
-					JT_UserInterfaceManager.close(mGUI_ID);
+					UserInterfaceManager.close(mGUI_ID);
 				}
 			}
 		}
@@ -279,9 +279,9 @@ package gframeWork.uiController
 		 */		
 		private function validateDieUI():void
 		{
-			if(state == JT_UI_States.HIDE)
+			if(state == UIStates.HIDE)
 			{
-				JT_UserInterfaceManager.retireUI(mGUI_ID);
+				UserInterfaceManager.retireUI(mGUI_ID);
 			}
 		}
 		
@@ -316,11 +316,11 @@ package gframeWork.uiController
 			if(child)
 			{
 				var displayObject:DisplayObject = null;
-				if(child is JT_IDisposable)
+				if(child is IDisposable)
 				{
 					try
 					{
-						JT_IDisposable(child).dispose();
+						IDisposable(child).dispose();
 					}
 					catch(e:Error){}
 				}
@@ -441,12 +441,12 @@ package gframeWork.uiController
 		
 		public function getSpace():UIComponent
 		{
-			return JT_FrameWork.getInstance().mRoot;	
+			return FrameWork.getInstance().mRoot;	
 		}
 		
 		protected function getRoot():UIComponent
 		{
-			return JT_FrameWork.getInstance().mRoot;
+			return FrameWork.getInstance().mRoot;
 		}
 	}
 }

@@ -19,7 +19,7 @@ package gframeWork.url
 	[Event(name="progress",type="flash.events.ProgressEvent")]
 	[Event(name="securityErrorEvent",type="flash.events.SecurityErrorEvent")]
 	
-	public class JT_URLStreamLoader extends EventDispatcher
+	public class URLStreamLoader extends EventDispatcher
 	{
 		
 		/**
@@ -47,7 +47,7 @@ package gframeWork.url
 		 */		
 		private var _fileByteArray:ByteArray;
 		
-		public function JT_URLStreamLoader(url:URLRequest = null)
+		public function URLStreamLoader(url:URLRequest = null)
 		{
 			_url = url;
 		}

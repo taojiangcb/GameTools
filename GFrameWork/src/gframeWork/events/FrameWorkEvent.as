@@ -2,7 +2,7 @@ package gframeWork.events
 {
 	import flash.events.Event;
 	
-	public class JT_Event extends Event
+	public class FrameWorkEvent extends Event
 	{
 
 		/**
@@ -25,7 +25,7 @@ package gframeWork.events
 		 */		
 		public static const MOVIE_PLAYER:String = "moviePlayer";
 		
-		public function JT_Event(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function FrameWorkEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 		}

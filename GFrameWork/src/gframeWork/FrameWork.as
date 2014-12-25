@@ -4,15 +4,15 @@ package gframeWork
 	
 	import flash.display.DisplayObject;
 	
-	import gframeWork.thread.JT_ThreadMgr;
+	import gframeWork.thread.FWThreadMgr;
 	
 	import mx.core.IUIComponent;
 	import mx.core.UIComponent;
 
-	public class JT_FrameWork
+	public class FrameWork
 	{
 		
-		private static var mInstance:JT_FrameWork;
+		private static var mInstance:FrameWork;
 		
 		private static var mInternalCall:Boolean = false;
 		
@@ -29,7 +29,7 @@ package gframeWork
 		
 		public var mRoot:UIComponent;
 		
-		public function JT_FrameWork()
+		public function FrameWork()
 		{
 			if(!mInternalCall)
 			{
@@ -37,12 +37,12 @@ package gframeWork
 			}
 		}
 		
-		public static function getInstance():JT_FrameWork
+		public static function getInstance():FrameWork
 		{
 			if(!mInstance)
 			{
 				mInternalCall = true;
-				mInstance = new JT_FrameWork();
+				mInstance = new FrameWork();
 				mInternalCall = false;
 			}
 			return mInstance;

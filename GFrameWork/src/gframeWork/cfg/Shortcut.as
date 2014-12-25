@@ -5,7 +5,7 @@ package gframeWork.cfg
 	import flash.events.KeyboardEvent;
 	import flash.utils.Dictionary;
 
-	public class JT_Shortcut
+	public class Shortcut
 	{
 		
 		private static const ADD:int = 1, DEL:int = -1;
@@ -40,7 +40,7 @@ package gframeWork.cfg
 		 * 快捷键的管理
 		 * 
 		 */
-		public function JT_Shortcut()
+		public function Shortcut()
 		{
 			
 		}

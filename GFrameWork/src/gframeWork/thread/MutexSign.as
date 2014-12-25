@@ -7,12 +7,12 @@
 
 package gframeWork.thread
 {
-	public class JT_MutexSign implements I_JT_Sign
+	public class MutexSign implements ISign
 	{
 		
 		private var mLock:Boolean = false;
 		
-		public function JT_MutexSign()
+		public function MutexSign()
 		{
 						
 		}

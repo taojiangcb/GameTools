@@ -8,26 +8,26 @@ package gframeWork.resouce
 	import flash.events.SecurityErrorEvent;
 	import flash.net.URLRequest;
 	
-	import gframeWork.JT_IDisposable;
+	import gframeWork.IDisposable;
 	import gframeWork.collection.HashTable;
-	import gframeWork.url.JT_URLFileReference;
+	import gframeWork.url.URLFileReference;
 	import gframeWork.utils.ObjectConvert;
 	
 	import mx.events.Request;
 	import mx.utils.StringUtil;
 
-	public class JT_AssetsFileListLoader extends EventDispatcher implements JT_IDisposable
+	public class AssetsFileListLoader extends EventDispatcher implements IDisposable
 	{
 		
 		/**
 		 * 当前加载的列表 
 		 */		
-		private var mList:Vector.<JT_AssetsFileLoader>;
+		private var mList:Vector.<AssetsFileLoader>;
 		
 		/**
 		 * 列表的引导文件 
 		 */		
-		private var mProfile:JT_URLFileReference;
+		private var mProfile:URLFileReference;
 		
 		/**
 		 * 引导文件的址址 
@@ -69,7 +69,7 @@ package gframeWork.resouce
 		/**
 		 * 当前正在下载的资源 
 		 */		
-		private var mCurrentLoadAsset:JT_AssetsFileLoader;
+		private var mCurrentLoadAsset:AssetsFileLoader;
 		
 		
 		[Event(name="change",type="flash.events.Event")]
@@ -79,10 +79,10 @@ package gframeWork.resouce
 		 * 按照资源清单文件下载网络资源
 		 *  
 		 */
-		public function JT_AssetsFileListLoader(profile:URLRequest=null)
+		public function AssetsFileListLoader(profile:URLRequest=null)
 		{
 			mProfileRequest = profile;
-			mList = new Vector.<JT_AssetsFileLoader>();
+			mList = new Vector.<AssetsFileLoader>();
 		}
 		
 		/**
@@ -119,7 +119,7 @@ package gframeWork.resouce
 				mProfile = null;
 			}
 			
-			mProfile = new JT_URLFileReference(mProfileRequest);
+			mProfile = new URLFileReference(mProfileRequest);
 			mProfile.openFile(openProfileSucceed,openProfileFault,openProfileProgress);
 			
 		}
@@ -130,14 +130,14 @@ package gframeWork.resouce
 			
 			var lines:Vector.<String> = ObjectConvert.profileToArray(profile);
 			
-			var assets:JT_AssetsFileLoader = null;
+			var assets:AssetsFileLoader = null;
 			
 			if(mList)
 			{
 				while(mList.length > 0)
 				{
 					assets = mList.shift();
-					JT_ResouceManager.clearAssets(new URLRequest(assets.fileUrl));
+					ResouceManager.clearAssets(new URLRequest(assets.fileUrl));
 				}
 			}
 			
@@ -147,7 +147,7 @@ package gframeWork.resouce
 				var request:URLRequest = new URLRequest(url);
 				
 				//获取当前要下载的资源
-				assets = JT_ResouceManager.getAssetsFile(request);
+				assets = ResouceManager.getAssetsFile(request);
 				mList.push(assets);
 			}
 			
@@ -295,8 +295,8 @@ package gframeWork.resouce
 			{
 				while(mList.length > 0)
 				{
-					var assets:JT_AssetsFileLoader = mList.shift();
-					JT_ResouceManager.clearAssets(new URLRequest(assets.fileUrl));
+					var assets:AssetsFileLoader = mList.shift();
+					ResouceManager.clearAssets(new URLRequest(assets.fileUrl));
 				}
 			}
 		}

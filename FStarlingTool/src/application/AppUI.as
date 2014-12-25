@@ -6,8 +6,8 @@ package application
 	import application.ui.RootStateUIPanel;
 	import application.comps.RootStage;
 	
-	import gframeWork.JT_FrameWork;
-	import gframeWork.uiController.JT_UserInterfaceManager;
+	import gframeWork.FrameWork;
+	import gframeWork.uiController.UserInterfaceManager;
 
 	public class AppUI
 	{
@@ -19,8 +19,8 @@ package application
 		
 		public function AppUI()
 		{
-			JT_UserInterfaceManager.registerGUI(APP_UI_MAIN,MainUIPanel,MainUIControler);
-			JT_UserInterfaceManager.registerGUI(APP_ROOT_PANE,RootStateUIPanel,RootUIPanelControler);
+			UserInterfaceManager.registerGUI(APP_UI_MAIN,MainUIPanel,MainUIControler);
+			UserInterfaceManager.registerGUI(APP_ROOT_PANE,RootStateUIPanel,RootUIPanelControler);
 		}
 	}
 }

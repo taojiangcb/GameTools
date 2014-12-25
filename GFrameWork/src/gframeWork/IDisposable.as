@@ -1,6 +1,6 @@
 package gframeWork
 {
-	public interface JT_IDisposable
+	public interface IDisposable
 	{
 		function dispose():void
 	}

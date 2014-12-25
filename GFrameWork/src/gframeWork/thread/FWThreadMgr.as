@@ -9,12 +9,12 @@ package gframeWork.thread
 	import flash.utils.clearInterval;
 	import flash.utils.setInterval;
 	
-	import gframeWork.JT_FrameWork;
+	import gframeWork.FrameWork;
 	import gframeWork.JT_internal;
 	
 	use namespace JT_internal;
 
-	public class JT_ThreadMgr
+	public class FWThreadMgr
 	{
 		
 		
@@ -30,7 +30,7 @@ package gframeWork.thread
 		
 		private static var interID:uint = 0;
 		
-		public function JT_ThreadMgr()
+		public function FWThreadMgr()
 		{
 			
 		}
@@ -41,7 +41,7 @@ package gframeWork.thread
 		 * @param sign
 		 * 
 		 */		
-		public static function semPost(sign:JT_SemSign):void
+		public static function semPost(sign:SemSign):void
 		{
 			sign.semPost();
 		}
@@ -51,7 +51,7 @@ package gframeWork.thread
 		 * @param sign
 		 * 
 		 */		
-		public static function semWait(sign:JT_SemSign):void
+		public static function semWait(sign:SemSign):void
 		{
 			sign.semWath();
 		}
@@ -60,7 +60,7 @@ package gframeWork.thread
 		 * @param sign
 		 * 
 		 */		
-		public static function mutexLock(sign:JT_MutexSign):void
+		public static function mutexLock(sign:MutexSign):void
 		{
 			sign.lock();
 		}
@@ -70,7 +70,7 @@ package gframeWork.thread
 		 * @param sign
 		 * 
 		 */		
-		public static function mutexUnLock(sign:JT_MutexSign):void
+		public static function mutexUnLock(sign:MutexSign):void
 		{
 //			var threads:Vector.<JT_Thread> = getThreads(sign);
 //			if(threads.length > 0)
@@ -87,7 +87,7 @@ package gframeWork.thread
 		 * @return 
 		 * 
 		 */		
-		public static function destorySign(sign:I_JT_Sign):void
+		public static function destorySign(sign:ISign):void
 		{
 			
 			if(mSignMap && mSignMap[sign])
@@ -102,9 +102,9 @@ package gframeWork.thread
 		 * @return 
 		 * 
 		 */		
-		public static function getThreads(sign:I_JT_Sign):Vector.<JT_Thread>
+		public static function getThreads(sign:ISign):Vector.<FWThread>
 		{
-			return mSignMap[sign] as Vector.<JT_Thread>
+			return mSignMap[sign] as Vector.<FWThread>
 		}
 		
 		/**
@@ -112,23 +112,23 @@ package gframeWork.thread
 		 * @param thread
 		 * 
 		 */		
-		JT_internal static function threadEnd(thread:JT_Thread):void
+		JT_internal static function threadEnd(thread:FWThread):void
 		{
 			if(mSignMap[thread.getSign()])
 			{
-				var threadList:Vector.<JT_Thread> = mSignMap[thread.getSign()];
+				var threadList:Vector.<FWThread> = mSignMap[thread.getSign()];
 				if(threadList && threadList.length > 0)
 				{
 					var index:int = threadList.indexOf(thread);
 					if(index > -1)
 					{
-						threadList.splice(index,1) as JT_Thread;
+						threadList.splice(index,1) as FWThread;
 					}
 				}
 			}
 		}
 		
-		JT_internal static function join(thread:JT_Thread):void
+		JT_internal static function join(thread:FWThread):void
 		{
 			if(!mSignMap)
 			{
@@ -141,7 +141,7 @@ package gframeWork.thread
 			}
 			else
 			{
-				mSignMap[thread.getSign()] = new Vector.<JT_Thread>();
+				mSignMap[thread.getSign()] = new Vector.<FWThread>();
 				mSignMap[thread.getSign()].push(thread);
 			}
 			
@@ -164,9 +164,9 @@ package gframeWork.thread
 		JT_internal static function inetRun():void
 		{
 			var count:uint = 5;
-			var ths:Vector.<JT_Thread>;
+			var ths:Vector.<FWThread>;
 			
-			var canExe:Vector.<JT_Thread> = null;
+			var canExe:Vector.<FWThread> = null;
 			
 			for each(ths in mSignMap)
 			{
@@ -176,7 +176,7 @@ package gframeWork.thread
 					{
 						if(!canExe)
 						{
-							canExe = new Vector.<JT_Thread>();
+							canExe = new Vector.<FWThread>();
 						}
 						canExe.push(ths[i]);
 					}

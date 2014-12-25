@@ -33,8 +33,8 @@
 			import feathers.core.FeathersControl;
 			import feathers.core.ITextRenderer;
 			
-			import gframeWork.JT_FrameWork;
-			import gframeWork.uiController.JT_UserInterfaceManager;
+			import gframeWork.FrameWork;
+			import gframeWork.uiController.UserInterfaceManager;
 			
 			import org.puremvc.as3.patterns.facade.Facade;
 			
@@ -43,7 +43,6 @@
 			import starling.utils.HAlign;
 			
 			private var appUI:AppUI;
-			
 			private var mStarling:Starling;
 			
 			public static const STL_WIDTH:int = 2096 * 2;
@@ -52,11 +51,10 @@
 			public function appInit():void
 			{
 				Facade.getInstance().registerMediator(new AppMediator(AppMediator.NAME));
-				JT_FrameWork.getInstance().setLayout(this,this,this);
+				FrameWork.getInstance().setLayout(this,this,this);
 				appUI = new AppUI();
-				JT_UserInterfaceManager.open(AppUI.APP_UI_MAIN);
+				UserInterfaceManager.open(AppUI.APP_UI_MAIN);
 				//JT_UserInterfaceManager.open(AppUI.APP_ROOT_PANE);
-				
 				mStarling = new Starling(STLRootClass, stage, null,null,"auto","baseline");
 				mStarling.antiAliasing = 0;
 				mStarling.stage.stageWidth  = STL_WIDTH;

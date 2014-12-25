@@ -5,7 +5,7 @@
  */
 package gframeWork.thread
 {
-	public interface I_JT_Sign
+	public interface ISign
 	{
 		function canRun():Boolean;
 	}

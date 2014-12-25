@@ -9,9 +9,9 @@ package application.controls
 	import application.controls.proxy.UIchrooseProxy;
 	import application.ui.MainUIPanel;
 	
-	import gframeWork.uiController.JT_MainUIControllerBase;
+	import gframeWork.uiController.MainUIControllerBase;
 	
-	public class MainUIControler extends JT_MainUIControllerBase
+	public class MainUIControler extends MainUIControllerBase
 	{
 		
 		private var importFileProxy:ImportSwfProxy;

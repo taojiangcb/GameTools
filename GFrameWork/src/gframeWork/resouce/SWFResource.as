@@ -10,18 +10,18 @@ package gframeWork.resouce
 	import flash.system.LoaderContext;
 	import flash.utils.Dictionary;
 
-	public class JT_SWFResource
+	public class SWFResource
 	{
 		
 		/**
 		 * 资源装载器 
 		 */		
-		private var mLoader:JT_AssetsLoader;
+		private var mLoader:AssetsLoader;
 		
 		/**
 		 * 文件的装载 
 		 */		
-		private var mAssetsFile:JT_AssetsFileLoader;
+		private var mAssetsFile:AssetsFileLoader;
 		
 		/**
 		 *装载的应用域 
@@ -55,7 +55,7 @@ package gframeWork.resouce
 		 * 文件加载完成后就装载此文件的数据流内容。使其得到swf资文件里的要关对像。 
 		 * 
 		 */		
-		public function JT_SWFResource(weekkeys:Boolean = true)
+		public function SWFResource(weekkeys:Boolean = true)
 		{
 			mCanDispose = weekkeys;	
 		}
@@ -83,8 +83,8 @@ package gframeWork.resouce
 				mAssetsFile.removeEventListener(IOErrorEvent.IO_ERROR,assetsIOErrorHandler);
 			}
 			
-			mAppDomain = JT_ResouceManager.getAssetsDomain(request);
-			mAssetsFile = JT_ResouceManager.getAssetsFile(request);
+			mAppDomain = ResouceManager.getAssetsDomain(request);
+			mAssetsFile = ResouceManager.getAssetsFile(request);
 
 			/*验证资源文件是否已经被下载完成*/
 			if(mAssetsFile.isComplete)
@@ -116,7 +116,7 @@ package gframeWork.resouce
 				if(mCanDispose)
 				{
 					//销毁当前使用的资源
-					JT_ResouceManager.destoryAssetsLoader(mRequest);
+					ResouceManager.destoryAssetsLoader(mRequest);
 				}
 			}
 			
@@ -155,11 +155,11 @@ package gframeWork.resouce
 				if(mCanDispose)
 				{
 					//销毁当前使用的资源
-					JT_ResouceManager.destoryAssetsLoader(mRequest);
+					ResouceManager.destoryAssetsLoader(mRequest);
 				}
 			}
 			
-			mLoader = JT_ResouceManager.getAssetsLoader(mRequest);
+			mLoader = ResouceManager.getAssetsLoader(mRequest);
 			
 			if(mLoader)
 			{
@@ -206,7 +206,7 @@ package gframeWork.resouce
 		 * 获取加载的资源文件 
 		 * @return 
 		 */		
-		public function getAssetsFile():JT_AssetsFileLoader
+		public function getAssetsFile():AssetsFileLoader
 		{
 			return mAssetsFile;
 		}

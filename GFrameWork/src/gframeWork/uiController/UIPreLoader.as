@@ -14,8 +14,8 @@ package gframeWork.uiController
 	import flash.events.ProgressEvent;
 	import flash.net.URLRequest;
 	
-	import gframeWork.resouce.JT_AssetsFileLoader;
-	import gframeWork.resouce.JT_ResouceManager;
+	import gframeWork.resouce.AssetsFileLoader;
+	import gframeWork.resouce.ResouceManager;
 	
 	import mx.utils.StringUtil;
 
@@ -33,7 +33,7 @@ package gframeWork.uiController
 		/**
 		 * 当前加载的资源文件列表 
 		 */		
-		private var mAssetsList:Vector.<JT_AssetsFileLoader>;
+		private var mAssetsList:Vector.<AssetsFileLoader>;
 		
 		/**
 		 * 标记是否正在清除中 
@@ -52,13 +52,13 @@ package gframeWork.uiController
 		 * 当前下载的资源
 		 *  
 		 */		
-		protected var mCurAssets:JT_AssetsFileLoader;
+		protected var mCurAssets:AssetsFileLoader;
 		
 		
 		public function UIPreLoader()
 		{
 			mLoadList = new Vector.<String>(); 
-			mAssetsList = new Vector.<JT_AssetsFileLoader>();
+			mAssetsList = new Vector.<AssetsFileLoader>();
 			registerToLoaded();
 		}
 		
@@ -191,7 +191,7 @@ package gframeWork.uiController
 			{
 				for(var i:int = 0; i < loadCount; i++)
 				{
-					mAssetsList.push(JT_ResouceManager.getAssetsFile(new URLRequest(mLoadList[i])));
+					mAssetsList.push(ResouceManager.getAssetsFile(new URLRequest(mLoadList[i])));
 				}
 				if(mAssetsList.length > 0)
 				{

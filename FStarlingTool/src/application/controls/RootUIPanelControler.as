@@ -8,14 +8,14 @@ package application.controls
 	
 	import flash.system.Capabilities;
 	
-	import gframeWork.uiController.JT_MainUIControllerBase;
+	import gframeWork.uiController.MainUIControllerBase;
 	
 	import mx.events.FlexEvent;
 	
 	import starling.core.Starling;
 	import starling.utils.HAlign;
 	
-	public class RootUIPanelControler extends JT_MainUIControllerBase
+	public class RootUIPanelControler extends MainUIControllerBase
 	{
 		
 		public function RootUIPanelControler()

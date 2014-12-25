@@ -5,12 +5,12 @@
  */
 package gframeWork.thread
 {
-	public class JT_SemSign implements I_JT_Sign
+	public class SemSign implements ISign
 	{
 		
 		private var mSem:int = 0;
 		
-		public function JT_SemSign()
+		public function SemSign()
 		{
 			
 		}

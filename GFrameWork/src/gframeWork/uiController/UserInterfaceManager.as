@@ -14,7 +14,7 @@ package gframeWork.uiController
 	import mx.core.UIComponent;
 
 	use namespace JT_internal;
-	public class JT_UserInterfaceManager
+	public class UserInterfaceManager
 	{
 		
 		/**
@@ -90,7 +90,7 @@ package gframeWork.uiController
 		 * @return 
 		 * 
 		 */		
-		public static function getUIByID(ui_id:uint):JT_UIControllerBase
+		public static function getUIByID(ui_id:uint):UIControllerBase
 		{
 			return instance.getUIByID(ui_id);
 		}
@@ -138,7 +138,7 @@ package gframeWork.uiController
 			return mInstance;
 		}
 		
-		public function JT_UserInterfaceManager()
+		public function UserInterfaceManager()
 		{
 			
 		}
@@ -156,13 +156,13 @@ import flash.utils.Dictionary;
 import flash.utils.clearTimeout;
 import flash.utils.setTimeout;
 
-import gframeWork.JT_FrameWork;
+import gframeWork.FrameWork;
 import gframeWork.JT_internal;
 import gframeWork.collection.HashTable;
-import gframeWork.uiController.JT_UIControllerBase;
-import gframeWork.uiController.JT_UI_States;
-import gframeWork.uiController.JT_UserInterfaceManager;
-import gframeWork.uiController.JT_WindowUIControllerBase;
+import gframeWork.uiController.UIControllerBase;
+import gframeWork.uiController.UIStates;
+import gframeWork.uiController.UserInterfaceManager;
+import gframeWork.uiController.WindowUIControllerBase;
 
 import mx.core.IVisualElementContainer;
 import mx.core.UIComponent;
@@ -304,27 +304,27 @@ class UserInternalManager
 	JT_internal function openComplete(ui_id:int,isPop:Boolean = false,point:Point=null):Boolean
 	{
 		var gui:GUI = retrievUIControlByID(ui_id);
-		if(gui.mUI_Control.state != JT_UI_States.SHOW)
+		if(gui.mUI_Control.state != UIStates.SHOW)
 		{
 			//排斥关闭不相关的窗口
-			if(gui.mUI_Control is JT_WindowUIControllerBase)
+			if(gui.mUI_Control is WindowUIControllerBase)
 			{
-				var index:int = JT_WindowUIControllerBase(gui.mUI_Control).uiMutualGroup.indexOf(mCurUIMutualID);
+				var index:int = WindowUIControllerBase(gui.mUI_Control).uiMutualGroup.indexOf(mCurUIMutualID);
 				if(index <= -1)
 				{
 					closeByMutualID(mCurUIMutualID);
-					mCurUIMutualID =  JT_WindowUIControllerBase(gui.mUI_Control).uiMutualID;
+					mCurUIMutualID =  WindowUIControllerBase(gui.mUI_Control).uiMutualID;
 				}
 				
-				if(!JT_UserInterfaceManager.openWindows[gui.mUI_ID])
+				if(!UserInterfaceManager.openWindows[gui.mUI_ID])
 				{
-					JT_UserInterfaceManager.openWindows.add(gui.mUI_ID,gui.mUI_Control)
+					UserInterfaceManager.openWindows.add(gui.mUI_ID,gui.mUI_Control)
 				}
 			}
 			
 			gui.mUI_Control.mCanUse = true;
 			gui.mUI_Control.show(isPop,point);
-			gui.mUI_Control.state = JT_UI_States.SHOW;
+			gui.mUI_Control.state = UIStates.SHOW;
 			gui.mUI_Control.mCanUse = false;
 			
 			//windowLayout();
@@ -336,9 +336,9 @@ class UserInternalManager
 			{
 				close(ui_id);
 			}
-			if(gui.mUI_Control is JT_WindowUIControllerBase)
+			if(gui.mUI_Control is WindowUIControllerBase)
 			{
-				JT_WindowUIControllerBase(gui.mUI_Control).hotDisplay();
+				WindowUIControllerBase(gui.mUI_Control).hotDisplay();
 			}
 			return false;
 		}
@@ -356,17 +356,17 @@ class UserInternalManager
 		var gui:GUI = guiTable[ui_id];
 		if(gui)
 		{
-			if(gui.mUI_Control.state == JT_UI_States.SHOW)
+			if(gui.mUI_Control.state == UIStates.SHOW)
 			{
 				gui.mUI_Control.mCanUse = true;
 				gui.mUI_Control.hide();
-				gui.mUI_Control.state = JT_UI_States.HIDE;
+				gui.mUI_Control.state = UIStates.HIDE;
 				gui.mUI_Control.mCanUse = false;
 			}
 			
-			if(JT_UserInterfaceManager.openWindows[gui.mUI_ID])
+			if(UserInterfaceManager.openWindows[gui.mUI_ID])
 			{
-				JT_UserInterfaceManager.openWindows.remove(gui.mUI_ID)
+				UserInterfaceManager.openWindows.remove(gui.mUI_ID)
 			}
 			
 			return true;
@@ -382,19 +382,19 @@ class UserInternalManager
 	public function closeAllWindow():void
 	{
 		var ids:Array = [];
-		var win:JT_WindowUIControllerBase;
-		for each(win in JT_UserInterfaceManager.openWindows)
+		var win:WindowUIControllerBase;
+		for each(win in UserInterfaceManager.openWindows)
 		{
 			win.mCanUse = true;
 			win.hide();
-			win.state = JT_UI_States.HIDE;
+			win.state = UIStates.HIDE;
 			win.mCanUse = false;
 			ids.push(win.mGUI_ID);
 		}
 		
 		while(ids.length > 0)
 		{
-			JT_UserInterfaceManager.openWindows.remove(ids[0]);
+			UserInterfaceManager.openWindows.remove(ids[0]);
 			ids.shift();
 		}
 	}
@@ -413,7 +413,7 @@ class UserInternalManager
 		{
 			for(i = 0; i < args.length; i++)
 			{
-				var window:JT_UIControllerBase = args[i] as JT_UIControllerBase;
+				var window:UIControllerBase = args[i] as UIControllerBase;
 				rect.width += window.getGui().width;
 				rect.height = window.getGui().height > rect.height ? window.getGui().height : rect.height;
 			}
@@ -452,7 +452,7 @@ class UserInternalManager
 	 * @return 
 	 * 
 	 */
-	public function getUIByID(ui_id:uint):JT_UIControllerBase
+	public function getUIByID(ui_id:uint):UIControllerBase
 	{
 		var gui:GUI = retrievUIControlByID(ui_id);
 		if(gui)
@@ -476,9 +476,9 @@ class UserInternalManager
 		var gui:GUI;
 		for each(gui in guiTable)
 		{
-			if(gui.mUI_Control is JT_WindowUIControllerBase)
+			if(gui.mUI_Control is WindowUIControllerBase)
 			{
-				var index:int = JT_WindowUIControllerBase(gui.mUI_Control).uiMutualGroup.indexOf(id);
+				var index:int = WindowUIControllerBase(gui.mUI_Control).uiMutualGroup.indexOf(id);
 				if(index > -1)
 				{
 					close(gui.mUI_ID);
@@ -540,14 +540,14 @@ class UserInternalManager
 	 */	
 	private function getSpace():UIComponent
 	{
-		return JT_FrameWork.getInstance().mWindowSpace;
+		return FrameWork.getInstance().mWindowSpace;
 	}
 }
 
 class GUI
 {
 	public var mUI_ID:uint = 0;
-	public var mUI_Control:JT_UIControllerBase;
+	public var mUI_Control:UIControllerBase;
 }
 
 class UIRegister

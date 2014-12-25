@@ -29,8 +29,8 @@ package application.controls.proxy
 	import feathers.core.FeathersControl;
 	import feathers.core.ITextRenderer;
 	
-	import gframeWork.JT_IDisposable;
-	import gframeWork.uiController.JT_UserInterfaceManager;
+	import gframeWork.IDisposable;
+	import gframeWork.uiController.UserInterfaceManager;
 	
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
@@ -45,7 +45,7 @@ package application.controls.proxy
 	 * 导入swf文件的相关处理,选择文件，刷新当前文件
 	 * @author JiangTao
 	 */	
-	public class ImportSwfProxy implements JT_IDisposable
+	public class ImportSwfProxy implements IDisposable
 	{
 		private const SWF:String = "*.swf";
 		/*文件*/
@@ -200,7 +200,7 @@ package application.controls.proxy
 		
 		private function get gui():MainUIPanel
 		{
-			return JT_UserInterfaceManager.getUIByID(AppUI.APP_UI_MAIN).getGui() as MainUIPanel;
+			return UserInterfaceManager.getUIByID(AppUI.APP_UI_MAIN).getGui() as MainUIPanel;
 		}
 	}
 }

@@ -8,7 +8,7 @@ package gframeWork.valueObject
 	
 	import mx.events.FlexEvent;
 
-	public class JT_ValueStruct implements I_JT_ValueStruct
+	public class ValueStruct implements IValueStruct
 	{
 		//-------------------------------------------
 		//

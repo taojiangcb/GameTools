@@ -5,7 +5,7 @@
  */
 package gframeWork.uiController
 {
-	public class JT_UI_States
+	public class UIStates
 	{
 		public static const NORMAL:uint = 0x000000;
 		public static const SHOW:uint = 0x01;				//打开

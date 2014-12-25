@@ -1,6 +1,6 @@
 package gframeWork.cfg
 {
-	public class JT_Configure
+	public class Configure
 	{
 		
 		//------------------------------------------------------------------------------------

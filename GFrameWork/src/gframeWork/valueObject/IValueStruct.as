@@ -4,7 +4,7 @@
  */
 package gframeWork.valueObject
 {
-	public interface I_JT_ValueStruct 
+	public interface IValueStruct 
 	{
 		/**
 		 * 克隆数据复本 

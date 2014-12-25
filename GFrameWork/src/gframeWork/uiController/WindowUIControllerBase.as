@@ -21,10 +21,10 @@ package gframeWork.uiController
 	import flash.utils.clearTimeout;
 	import flash.utils.setTimeout;
 	
-	import gframeWork.JT_FrameWork;
-	import gframeWork.JT_IDisposable;
+	import gframeWork.FrameWork;
+	import gframeWork.IDisposable;
 	import gframeWork.JT_internal;
-	import gframeWork.cfg.JT_Configure;
+	import gframeWork.cfg.Configure;
 	
 	import mx.core.EventPriority;
 	import mx.core.FlexGlobals;
@@ -37,7 +37,7 @@ package gframeWork.uiController
 	
 	use namespace JT_internal;
 
-	public class JT_WindowUIControllerBase extends JT_UIControllerBase implements JT_IDisposable
+	public class WindowUIControllerBase extends UIControllerBase implements IDisposable
 	{
 		
 		/**
@@ -90,7 +90,7 @@ package gframeWork.uiController
 		 */		
 		private var toHotID:int = 0;
 		
-		public function JT_WindowUIControllerBase()
+		public function WindowUIControllerBase()
 		{
 			super();
 			mUIMutualID = DEFAULT_GROUP_ID;
@@ -148,7 +148,7 @@ package gframeWork.uiController
 				{
 					mGUI.visible = true;
 				}
-				state = JT_UI_States.SHOW;
+				state = UIStates.SHOW;
 			}
 			invalidteDrag();
 			mGUI.alpha = 1;
@@ -199,7 +199,7 @@ package gframeWork.uiController
 		 */		
 		private function hideEffect():void
 		{
-			if(state == JT_UI_States.SHOW)
+			if(state == UIStates.SHOW)
 			{
 				if(mGTween)
 				{
@@ -273,7 +273,7 @@ package gframeWork.uiController
 		 */		
 		protected function theMouseDownHandler(event:MouseEvent):void
 		{
-			if(mCanDrag && mDragArea && mDragArea.hitTestPoint(JT_FrameWork.getInstance().mRoot.mouseX,JT_FrameWork.getInstance().mRoot.mouseY))
+			if(mCanDrag && mDragArea && mDragArea.hitTestPoint(FrameWork.getInstance().mRoot.mouseX,FrameWork.getInstance().mRoot.mouseY))
 			{
 				//拖拽
 				mGUI.stage.removeEventListener(MouseEvent.MOUSE_UP,dragStop);
@@ -335,7 +335,7 @@ package gframeWork.uiController
 		public override function hide():void
 		{
 			super.hide();
-			JT_FrameWork.getInstance().mRoot.setFocus();
+			FrameWork.getInstance().mRoot.setFocus();
 		}
 		
 		/**
@@ -446,7 +446,7 @@ package gframeWork.uiController
 		
 		public override function getSpace():UIComponent
 		{
-			return JT_FrameWork.getInstance().mWindowSpace;
+			return FrameWork.getInstance().mWindowSpace;
 		}
 		
 		private function get container():IVisualElementContainer

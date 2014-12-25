@@ -10,7 +10,7 @@ package gframeWork.resouce
 
 	use namespace JT_internal
 	
-	public class JT_ResouceManager
+	public class ResouceManager
 	{
 		
 		private static var mInstance:_ResourceManager
@@ -20,7 +20,7 @@ package gframeWork.resouce
 		 * 下载资源文件管理，如果碰到相同的文件加载会合并到同一个进程中处理。
 		 *  
 		 */
-		public function JT_ResouceManager()
+		public function ResouceManager()
 		{
 			
 		}
@@ -31,7 +31,7 @@ package gframeWork.resouce
 		 * @return 
 		 * 
 		 */		
-		public static function getAssetsFile(request:URLRequest):JT_AssetsFileLoader
+		public static function getAssetsFile(request:URLRequest):AssetsFileLoader
 		{
 			return instance.getAssetsFile(request);
 		}
@@ -42,7 +42,7 @@ package gframeWork.resouce
 		 * @return 
 		 * 
 		 */		
-		public static function getAssetsLoader(request:URLRequest):JT_AssetsLoader
+		public static function getAssetsLoader(request:URLRequest):AssetsLoader
 		{
 			return instance.getAssetsLoader(request);
 		}
@@ -96,8 +96,8 @@ import flash.utils.Dictionary;
 import flash.utils.setTimeout;
 
 import gframeWork.JT_internal;
-import gframeWork.resouce.JT_AssetsFileLoader;
-import gframeWork.resouce.JT_AssetsLoader;
+import gframeWork.resouce.AssetsFileLoader;
+import gframeWork.resouce.AssetsLoader;
 
 use namespace JT_internal;
 
@@ -127,7 +127,7 @@ class _ResourceManager
 		
 	}
 	
-	public function getAssetsFile(request:URLRequest):JT_AssetsFileLoader
+	public function getAssetsFile(request:URLRequest):AssetsFileLoader
 	{
 		if(request == null)
 		{
@@ -142,7 +142,7 @@ class _ResourceManager
 		}
 		else
 		{
-			var assets:JT_AssetsFileLoader = new JT_AssetsFileLoader(request);
+			var assets:AssetsFileLoader = new AssetsFileLoader(request);
 			assets.addEventListener(Event.COMPLETE,assetsLoadingComplete,false,0,true);
 			mCacheDict[url] = assets;
 			return assets;
@@ -155,7 +155,7 @@ class _ResourceManager
 	 * @return 
 	 * 
 	 */	
-	public function getAssetsLoader(request:URLRequest):JT_AssetsLoader
+	public function getAssetsLoader(request:URLRequest):AssetsLoader
 	{
 		if(request == null)
 		{
@@ -164,7 +164,7 @@ class _ResourceManager
 		
 		var url:String = request.url;
 		
-		var assetsLoader:JT_AssetsLoader;
+		var assetsLoader:AssetsLoader;
 		
 		if(mAssetsLoaderDict[url])
 		{
@@ -172,9 +172,9 @@ class _ResourceManager
 		}
 		else
 		{
-			JT_AssetsLoader.internalCall = true;
-			assetsLoader = new JT_AssetsLoader();
-			JT_AssetsLoader.internalCall = false;
+			AssetsLoader.internalCall = true;
+			assetsLoader = new AssetsLoader();
+			AssetsLoader.internalCall = false;
 			mAssetsLoaderDict[url] = assetsLoader;
 		}
 		assetsLoader.mReferenceCount++;
@@ -189,7 +189,7 @@ class _ResourceManager
 		}
 		
 		var url:String = request.url;
-		var assetsLoader:JT_AssetsLoader = mAssetsLoaderDict[url];
+		var assetsLoader:AssetsLoader = mAssetsLoaderDict[url];
 		
 		if(assetsLoader)
 		{
@@ -225,7 +225,7 @@ class _ResourceManager
 	
 	private function assetsLoadingComplete(event:Event):void
 	{
-		var curAf:JT_AssetsFileLoader = event.currentTarget as JT_AssetsFileLoader;
+		var curAf:AssetsFileLoader = event.currentTarget as AssetsFileLoader;
 		curAf.removeEventListener(Event.COMPLETE,assetsLoadingComplete);
 		delete mCacheDict[curAf.fileUrl];
 	}
@@ -241,7 +241,7 @@ class _ResourceManager
 		
 		if(mCacheDict[url])
 		{
-			var assets:JT_AssetsFileLoader = mCacheDict[url] as JT_AssetsFileLoader;
+			var assets:AssetsFileLoader = mCacheDict[url] as AssetsFileLoader;
 			assets.removeEventListener(Event.COMPLETE,assetsLoadingComplete);
 			assets.dispose();
 			delete mCacheDict[url];

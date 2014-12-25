@@ -10,7 +10,7 @@ package gframeWork.resouce
 	import flash.utils.ByteArray;
 	
 	import gframeWork.JT_internal;
-	import gframeWork.url.JT_URLStreamLoader;
+	import gframeWork.url.URLStreamLoader;
 	
 	[Event(name="complete",type="flash.events.Event")]
 	[Event(name="ioError",type="flash.events.IOErrorEvent")]
@@ -19,13 +19,13 @@ package gframeWork.resouce
 	
 	use namespace JT_internal;
 	
-	public class JT_AssetsFileLoader extends EventDispatcher
+	public class AssetsFileLoader extends EventDispatcher
 	{
 		
 		/**
 		 * 文件流加载 
 		 */		
-		private var mFileStreamLoader:JT_URLStreamLoader;
+		private var mFileStreamLoader:URLStreamLoader;
 		
 		/**
 		 * 文件是否加载完成 
@@ -53,7 +53,7 @@ package gframeWork.resouce
 		 * 资源文件加载,文件加载完成后写入到数据流中然后再到其它相关的应用开发中使用文件流。
 		 *  
 		 */
-		public function JT_AssetsFileLoader(url:URLRequest)
+		public function AssetsFileLoader(url:URLRequest)
 		{
 			mUrlRequest = url;	
 			mLoading = false;
@@ -69,7 +69,7 @@ package gframeWork.resouce
 					mLoading = true;
 					if(!mFileStreamLoader)
 					{
-						mFileStreamLoader = new JT_URLStreamLoader();
+						mFileStreamLoader = new URLStreamLoader();
 					}
 					listener();
 					mFileStreamLoader.loader(mUrlRequest);

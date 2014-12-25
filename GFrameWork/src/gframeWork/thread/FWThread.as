@@ -9,7 +9,7 @@ package gframeWork.thread
 	
 	use namespace JT_internal;
 	
-	public class JT_Thread
+	public class FWThread
 	{
 		/**
 		 * 线程执行的函数 
@@ -24,14 +24,14 @@ package gframeWork.thread
 		/**
 		 * 当前线程的量子信号 
 		 */		
-		private var mSign:I_JT_Sign = null;
+		private var mSign:ISign = null;
 		
 		/**
 		 * 是否正在执行中 
 		 */		
 		private var isRunFag:Boolean = false;
 		
-		public function JT_Thread(func:Function,parm:Array=null,sign:I_JT_Sign=null)
+		public function FWThread(func:Function,parm:Array=null,sign:ISign=null)
 		{
 			mFunc = func;
 			mParameters = parm;
@@ -43,7 +43,7 @@ package gframeWork.thread
 		 */		
 		public function into():void
 		{
-			JT_ThreadMgr.join(this);
+			FWThreadMgr.join(this);
 		}
 		
 		/**
@@ -58,14 +58,14 @@ package gframeWork.thread
 					if(!mSign.canRun()) return;
 					isRunFag = true;
 					mFunc.apply(null,mParameters);
-					JT_ThreadMgr.threadEnd(this);
+					FWThreadMgr.threadEnd(this);
 					
 				}
 				else
 				{
 					isRunFag = true;
 					mFunc.apply(null,mParameters);
-					JT_ThreadMgr.threadEnd(this);
+					FWThreadMgr.threadEnd(this);
 				}
 			}
 		}
@@ -74,7 +74,7 @@ package gframeWork.thread
 		 * 线程信号 
 		 * @return
 		 */		
-		public function getSign():I_JT_Sign
+		public function getSign():ISign
 		{
 			return mSign;
 		}

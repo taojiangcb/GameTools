@@ -12,10 +12,10 @@ package gframeWork.url
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
 
-	public class JT_URLFileReference
+	public class URLFileReference
 	{
 
-		private var mFileStream:JT_URLStreamLoader;
+		private var mFileStream:URLStreamLoader;
 		
 		private var mLoadingCompleteHandler:Function;
 		
@@ -25,7 +25,7 @@ package gframeWork.url
 		
 		private var mUrl:URLRequest;
 		
-		public function JT_URLFileReference(address:URLRequest = null)
+		public function URLFileReference(address:URLRequest = null)
 		{
 			mUrl = address;					
 		}
@@ -53,13 +53,13 @@ package gframeWork.url
 			{
 				if(!mFileStream)
 				{
-					mFileStream = new JT_URLStreamLoader(mUrl);
+					mFileStream = new URLStreamLoader(mUrl);
 				}
 				else
 				{
 					removeListener();
 					mFileStream.dispose();
-					mFileStream = new JT_URLStreamLoader(mUrl);
+					mFileStream = new URLStreamLoader(mUrl);
 				}
 				
 				listener();

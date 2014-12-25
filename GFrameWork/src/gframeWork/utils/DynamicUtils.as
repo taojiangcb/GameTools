@@ -8,10 +8,10 @@ package gframeWork.utils
 {
 	import mx.utils.StringUtil;
 
-	public class JT_DynamicUtils
+	public class DynamicUtils
 	{
 		
-		public function JT_DynamicUtils():void
+		public function DynamicUtils():void
 		{
 			
 		}

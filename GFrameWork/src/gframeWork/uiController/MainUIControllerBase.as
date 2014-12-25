@@ -10,7 +10,7 @@ package gframeWork.uiController
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
-	import gframeWork.JT_FrameWork;
+	import gframeWork.FrameWork;
 	import gframeWork.JT_internal;
 	
 	import mx.core.UIComponent;
@@ -18,9 +18,9 @@ package gframeWork.uiController
 
 	use namespace JT_internal
 	
-	public class JT_MainUIControllerBase extends JT_UIControllerBase
+	public class MainUIControllerBase extends UIControllerBase
 	{
-		public function JT_MainUIControllerBase()
+		public function MainUIControllerBase()
 		{
 			super();
 			mDieTime = 5000;
@@ -75,7 +75,7 @@ package gframeWork.uiController
 		
 		public override function getSpace():UIComponent
 		{
-			return JT_FrameWork.getInstance().mainUISpace;
+			return FrameWork.getInstance().mainUISpace;
 		}
 		
 		

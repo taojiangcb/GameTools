@@ -11,7 +11,7 @@ package application.controls.proxy
 	
 	import assets.Assets;
 	
-	import gframeWork.uiController.JT_UserInterfaceManager;
+	import gframeWork.uiController.UserInterfaceManager;
 	
 	import starling.display.DisplayObject;
 	import starling.display.Image;
@@ -87,12 +87,12 @@ package application.controls.proxy
 		
 		private function get gui():MainUIPanel
 		{
-			return JT_UserInterfaceManager.getUIByID(AppUI.APP_UI_MAIN).getGui() as MainUIPanel;
+			return UserInterfaceManager.getUIByID(AppUI.APP_UI_MAIN).getGui() as MainUIPanel;
 		}
 		
 		private function get rootUI():RootStateUIPanel
 		{
-			return JT_UserInterfaceManager.getUIByID(AppUI.APP_ROOT_PANE).getGui() as RootStateUIPanel;
+			return UserInterfaceManager.getUIByID(AppUI.APP_ROOT_PANE).getGui() as RootStateUIPanel;
 		}
 	}
 }

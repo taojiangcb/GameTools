@@ -13,7 +13,7 @@ package gframeWork.resouce
 	
 	use namespace JT_internal
 	
-	public class JT_AssetsLoader extends Loader
+	public class AssetsLoader extends Loader
 	{
 		/**
 		 * 引用计算 
@@ -52,7 +52,7 @@ package gframeWork.resouce
 		 */		
 		private var isLoading:Boolean = false;
 		
-		public function JT_AssetsLoader()
+		public function AssetsLoader()
 		{
 			super();
 			if(!internalCall)
