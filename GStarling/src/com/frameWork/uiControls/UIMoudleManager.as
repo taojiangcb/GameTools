@@ -1,10 +1,34 @@
 package com.frameWork.uiControls
 {
+	import flash.geom.Point;
+
 	public class UIMoudleManager
 	{
-		public function UIMoudleManager()
-		{
-			
+		private static var $instance:UIManager;
+		
+		public function UIMoudleManager() {}
+		
+		public static function registerUIMoudle(id:int,moudleCls:Class,uiCls:Class):void {
+			instance.registerUIMoudle(id,moudleCls,uiCls);
+		}
+		
+		public static function openUIByid(uiId:int,pt:Point = null,data:Object = null):int {
+			return instance.openUIByid(uiId,pt,data);
+		}
+		
+		public static function getUIMoudleById(id:int):UIMoudle {
+			return instance.getUIMoudleById(id);
+		}
+		
+		public static  function closeUIById(uiId:int):int {
+			return instance.closeUIById(uiId);
+		}
+		
+		private static function get instance():UIManager {
+			if(!$instance) {
+				$instance = new UIManager();
+			}
+			return $instance;
 		}
 	}
 }
