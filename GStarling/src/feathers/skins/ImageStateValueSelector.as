@@ -68,7 +68,7 @@ package feathers.skins
 		 */
 		override public function updateValue(target:Object, state:Object, oldValue:Object = null):Object
 		{
-			const texture:Texture = super.updateValue(target, state) as Texture;
+			var texture:Texture = super.updateValue(target, state) as Texture;
 			if(!texture)
 			{
 				return null;
@@ -87,11 +87,8 @@ package feathers.skins
 
 			for(var propertyName:String in this._imageProperties)
 			{
-				if(image.hasOwnProperty(propertyName))
-				{
-					var propertyValue:Object = this._imageProperties[propertyName];
-					image[propertyName] = propertyValue;
-				}
+				var propertyValue:Object = this._imageProperties[propertyName];
+				image[propertyName] = propertyValue;
 			}
 
 			return image;

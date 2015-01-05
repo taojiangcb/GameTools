@@ -27,6 +27,26 @@ package feathers.display
 	import starling.textures.TextureSmoothing;
 	import starling.utils.MatrixUtil;
 
+	[Exclude(name="numChildren",kind="property")]
+	[Exclude(name="isFlattened",kind="property")]
+	[Exclude(name="addChild",kind="method")]
+	[Exclude(name="addChildAt",kind="method")]
+	[Exclude(name="broadcastEvent",kind="method")]
+	[Exclude(name="broadcastEventWith",kind="method")]
+	[Exclude(name="contains",kind="method")]
+	[Exclude(name="getChildAt",kind="method")]
+	[Exclude(name="getChildByName",kind="method")]
+	[Exclude(name="getChildIndex",kind="method")]
+	[Exclude(name="removeChild",kind="method")]
+	[Exclude(name="removeChildAt",kind="method")]
+	[Exclude(name="removeChildren",kind="method")]
+	[Exclude(name="setChildIndex",kind="method")]
+	[Exclude(name="sortChildren",kind="method")]
+	[Exclude(name="swapChildren",kind="method")]
+	[Exclude(name="swapChildrenAt",kind="method")]
+	[Exclude(name="flatten",kind="method")]
+	[Exclude(name="unflatten",kind="method")]
+
 	/**
 	 * Scales an image with nine regions to maintain the aspect ratio of the
 	 * corners regions. The top and bottom regions stretch horizontally, and the
@@ -473,13 +493,13 @@ package feathers.display
 				helperImage.smoothing = this._smoothing;
 				helperImage.color = this._color;
 
-				const grid:Rectangle = this._textures.scale9Grid;
+				var grid:Rectangle = this._textures.scale9Grid;
 				var scaledLeftWidth:Number = grid.x * this._textureScale;
 				var scaledTopHeight:Number = grid.y * this._textureScale;
 				var scaledRightWidth:Number = (this._frame.width - grid.x - grid.width) * this._textureScale;
 				var scaledBottomHeight:Number = (this._frame.height - grid.y - grid.height) * this._textureScale;
-				const scaledCenterWidth:Number = this._width - scaledLeftWidth - scaledRightWidth;
-				const scaledMiddleHeight:Number = this._height - scaledTopHeight - scaledBottomHeight;
+				var scaledCenterWidth:Number = this._width - scaledLeftWidth - scaledRightWidth;
+				var scaledMiddleHeight:Number = this._height - scaledTopHeight - scaledBottomHeight;
 				if(scaledCenterWidth < 0)
 				{
 					var offset:Number = scaledCenterWidth / 2;

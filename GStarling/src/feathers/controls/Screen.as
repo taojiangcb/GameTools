@@ -8,6 +8,7 @@ accordance with the terms of the accompanying license agreement.
 package feathers.controls
 {
 	import feathers.events.FeathersEventType;
+	import feathers.skins.IStyleProvider;
 	import feathers.system.DeviceCapabilities;
 	import feathers.utils.display.calculateScaleRatioToFit;
 	import feathers.utils.display.getDisplayObjectDepthFromStage;
@@ -56,6 +57,15 @@ package feathers.controls
 	public class Screen extends LayoutGroup implements IScreen
 	{
 		/**
+		 * The default <code>IStyleProvider</code> for all <code>Screen</code>
+		 * components.
+		 *
+		 * @default null
+		 * @see feathers.core.FeathersControl#styleProvider
+		 */
+		public static var styleProvider:IStyleProvider;
+
+		/**
 		 * Constructor.
 		 */
 		public function Screen()
@@ -64,6 +74,14 @@ package feathers.controls
 			this.addEventListener(FeathersEventType.RESIZE, screen_resizeHandler);
 			super();
 			this.originalDPI = DeviceCapabilities.dpi;
+		}
+
+		/**
+		 * @private
+		 */
+		override protected function get defaultStyleProvider():IStyleProvider
+		{
+			return Screen.styleProvider;
 		}
 		
 		/**
@@ -342,7 +360,7 @@ package feathers.controls
 			{
 				return;
 			}
-			const loaderInfo:LoaderInfo = DisplayObjectContainer(Starling.current.nativeStage.root).getChildAt(0).loaderInfo;
+			var loaderInfo:LoaderInfo = DisplayObjectContainer(Starling.current.nativeStage.root).getChildAt(0).loaderInfo;
 			//if originalWidth or originalHeight is NaN, it's because the Screen
 			//has been added to the display list, and we really need values now.
 			if(isNaN(this._originalWidth))

@@ -9,6 +9,7 @@ package feathers.controls.text
 {
 	import feathers.core.FeathersControl;
 	import feathers.core.ITextRenderer;
+	import feathers.skins.IStyleProvider;
 
 	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
@@ -71,25 +72,9 @@ package feathers.controls.text
 		private static const HELPER_RECTANGLE:Rectangle = new Rectangle();
 
 		/**
-		 * The text will be positioned to the left edge.
-		 *
-		 * @see #textAlign
+		 * @private
 		 */
-		public static const TEXT_ALIGN_LEFT:String = "left";
-
-		/**
-		 * The text will be centered horizontally.
-		 *
-		 * @see #textAlign
-		 */
-		public static const TEXT_ALIGN_CENTER:String = "center";
-
-		/**
-		 * The text will be positioned to the right edge.
-		 *
-		 * @see #textAlign
-		 */
-		public static const TEXT_ALIGN_RIGHT:String = "right";
+		private static var HELPER_TEXT_LINES:Vector.<TextLine> = new <TextLine>[];
 
 		/**
 		 * @private
@@ -113,10 +98,41 @@ package feathers.controls.text
 		protected static const FUZZY_TRUNCATION_DIFFERENCE:Number = 0.000001;
 
 		/**
+		 * The text will be positioned to the left edge.
+		 *
+		 * @see #textAlign
+		 */
+		public static const TEXT_ALIGN_LEFT:String = "left";
+
+		/**
+		 * The text will be centered horizontally.
+		 *
+		 * @see #textAlign
+		 */
+		public static const TEXT_ALIGN_CENTER:String = "center";
+
+		/**
+		 * The text will be positioned to the right edge.
+		 *
+		 * @see #textAlign
+		 */
+		public static const TEXT_ALIGN_RIGHT:String = "right";
+
+		/**
+		 * The default <code>IStyleProvider</code> for all <code>TextBlockTextRenderer</code>
+		 * components.
+		 *
+		 * @default null
+		 * @see feathers.core.FeathersControl#styleProvider
+		 */
+		public static var styleProvider:IStyleProvider;
+
+		/**
 		 * Constructor.
 		 */
 		public function TextBlockTextRenderer()
 		{
+			super();
 			this.isQuickHitAreaEnabled = true;
 			this.addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			this.addEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
@@ -194,6 +210,14 @@ package feathers.controls.text
 		 * @private
 		 */
 		protected var _textElement:TextElement;
+
+		/**
+		 * @private
+		 */
+		override protected function get defaultStyleProvider():IStyleProvider
+		{
+			return TextBlockTextRenderer.styleProvider;
+		}
 
 		/**
 		 * @private
@@ -1031,8 +1055,8 @@ package feathers.controls.text
 				return result;
 			}
 
-			const needsWidth:Boolean = isNaN(this.explicitWidth);
-			const needsHeight:Boolean = isNaN(this.explicitHeight);
+			var needsWidth:Boolean = this.explicitWidth != this.explicitWidth; //isNaN
+			var needsHeight:Boolean = this.explicitHeight != this.explicitHeight; //isNaN
 			if(!needsWidth && !needsHeight)
 			{
 				result.x = this.explicitWidth;
@@ -1085,9 +1109,9 @@ package feathers.controls.text
 		 */
 		protected function commit():void
 		{
-			const stylesInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STYLES);
-			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
-			const stateInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STATE);
+			var stylesInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STYLES);
+			var dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
+			var stateInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STATE);
 
 			if(dataInvalid || stylesInvalid || stateInvalid)
 			{
@@ -1133,8 +1157,8 @@ package feathers.controls.text
 				result = new Point();
 			}
 
-			var needsWidth:Boolean = isNaN(this.explicitWidth);
-			var needsHeight:Boolean = isNaN(this.explicitHeight);
+			var needsWidth:Boolean = this.explicitWidth != this.explicitWidth; //isNaN
+			var needsHeight:Boolean = this.explicitHeight != this.explicitHeight; //isNaN
 			var newWidth:Number = this.explicitWidth;
 			var newHeight:Number = this.explicitHeight;
 			if(needsWidth)
@@ -1174,8 +1198,8 @@ package feathers.controls.text
 		 */
 		protected function layout(sizeInvalid:Boolean):void
 		{
-			const stylesInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STYLES);
-			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
+			var stylesInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STYLES);
+			var dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
 
 			if(sizeInvalid)
 			{
@@ -1197,7 +1221,7 @@ package feathers.controls.text
 				{
 					this._snapshotHeight = getNextPowerOfTwo(rectangleSnapshotHeight);
 				}
-				const textureRoot:ConcreteTexture = this.textSnapshot ? this.textSnapshot.texture.root : null;
+				var textureRoot:ConcreteTexture = this.textSnapshot ? this.textSnapshot.texture.root : null;
 				this._needsNewTexture = this._needsNewTexture || !this.textSnapshot || this._snapshotWidth != textureRoot.width || this._snapshotHeight != textureRoot.height;
 			}
 
@@ -1240,8 +1264,8 @@ package feathers.controls.text
 		 */
 		protected function autoSizeIfNeeded():Boolean
 		{
-			const needsWidth:Boolean = isNaN(this.explicitWidth);
-			const needsHeight:Boolean = isNaN(this.explicitHeight);
+			var needsWidth:Boolean = this.explicitWidth != this.explicitWidth; //isNaN
+			var needsHeight:Boolean = this.explicitHeight != this.explicitHeight; //isNaN
 			if(!needsWidth && !needsHeight)
 			{
 				return false;
@@ -1349,7 +1373,7 @@ package feathers.controls.text
 						else
 						{
 							//this is faster, if we haven't resized the bitmapdata
-							const existingTexture:Texture = snapshot.texture;
+							var existingTexture:Texture = snapshot.texture;
 							existingTexture.root.uploadBitmapData(bitmapData);
 						}
 					}
@@ -1440,10 +1464,11 @@ package feathers.controls.text
 				this._textElement.text = this._text;
 				this._truncationOffset = 0;
 			}
-			var textLineCache:Vector.<TextLine>;
+			HELPER_TEXT_LINES.length = 0;
 			var yPosition:Number = 0;
 			var lineCount:int = textLines.length;
 			var lastLine:TextLine;
+			var cacheIndex:int = lineCount;
 			for(var i:int = 0; i < lineCount; i++)
 			{
 				var line:TextLine = textLines[i];
@@ -1451,6 +1476,7 @@ package feathers.controls.text
 				{
 					line.filters = this._nativeFilters;
 					lastLine = line;
+					textLines[i] = line;
 					continue;
 				}
 				else
@@ -1462,17 +1488,24 @@ package feathers.controls.text
 						//we're using this value in the next loop
 						lastLine = null;
 					}
-					textLineCache = textLines.splice(i, lineCount - i);
+					cacheIndex = i;
 					break;
 				}
 			}
+			//copy the invalid text lines over to the helper vector so that we
+			//can reuse them
+			for(; i < lineCount; i++)
+			{
+				HELPER_TEXT_LINES[int(i - cacheIndex)] = textLines[i];
+			}
+			textLines.length = cacheIndex;
 
 			if(width >= 0)
 			{
 				var lineStartIndex:int = 0;
 				var canTruncate:Boolean = this._truncateToFit && this._textElement && !this._wordWrap;
 				var pushIndex:int = textLines.length;
-				var inactiveTextLineCount:int = textLineCache ? textLineCache.length : 0;
+				var inactiveTextLineCount:int = HELPER_TEXT_LINES.length;
 				while(true)
 				{
 					var previousLine:TextLine = line;
@@ -1483,11 +1516,11 @@ package feathers.controls.text
 					}
 					if(inactiveTextLineCount > 0)
 					{
-						var inactiveLine:TextLine = textLineCache[0];
+						var inactiveLine:TextLine = HELPER_TEXT_LINES[0];
 						line = this.textBlock.recreateTextLine(inactiveLine, previousLine, lineWidth, 0, true);
 						if(line)
 						{
-							textLineCache.shift();
+							HELPER_TEXT_LINES.shift();
 							inactiveTextLineCount--;
 						}
 					}
@@ -1536,7 +1569,7 @@ package feathers.controls.text
 							this._textElement.text += this._text.substr(lineBreakIndex);
 						}
 						line = this.textBlock.recreateTextLine(line, null, lineWidth, 0, true);
-						if(truncatedTextLength == 0)
+						if(truncatedTextLength <= 0)
 						{
 							break;
 						}
@@ -1573,17 +1606,13 @@ package feathers.controls.text
 				}
 			}
 
-			if(!textLineCache)
-			{
-				return;
-			}
-
-			inactiveTextLineCount = textLineCache.length;
+			inactiveTextLineCount = HELPER_TEXT_LINES.length;
 			for(i = 0; i < inactiveTextLineCount; i++)
 			{
-				line = textLineCache.shift();
+				line = HELPER_TEXT_LINES[i];
 				textLineParent.removeChild(line);
 			}
+			HELPER_TEXT_LINES.length = 0;
 		}
 
 		/**

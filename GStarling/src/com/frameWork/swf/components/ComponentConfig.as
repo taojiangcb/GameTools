@@ -1,12 +1,9 @@
 package com.frameWork.swf.components
 {
 	import com.frameWork.swf.components.feathers.Comp_BitmapField;
-	import com.frameWork.swf.components.feathers.Comp_convert_solder_btn;
-	import com.frameWork.swf.components.feathers.FeathersButton;
 	import com.frameWork.swf.components.feathers.FeathersCheck;
 	import com.frameWork.swf.components.feathers.FeathersProgressBar;
 	import com.frameWork.swf.components.feathers.FeathersTextInput;
-	import com.frameWork.swf.components.feathers.comp_test_btn_1;
 	import com.frameWork.swf.components.feathers.comp_test_number_input;
 
 	/**
@@ -18,13 +15,10 @@ package com.frameWork.swf.components
 	{
 		
 		private static var componentClass:Object = {
-			"comp_feathers_button":FeathersButton,
 			"comp_feathers_check":FeathersCheck,
 			"comp_feathers_input":FeathersTextInput,
 			"comp_feathers_progressbar":FeathersProgressBar,
-			"comp_test_btn_1":comp_test_btn_1,
 			"comp_test_number_input":comp_test_number_input,
-			"comp_convert_solder_btn":Comp_convert_solder_btn,
 			"comp_bitmap_field":Comp_BitmapField
 		};
 		

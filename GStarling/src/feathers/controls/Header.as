@@ -16,9 +16,16 @@ package feathers.controls
 	import feathers.layout.HorizontalLayout;
 	import feathers.layout.LayoutBoundsResult;
 	import feathers.layout.ViewPortBounds;
+	import feathers.skins.IStyleProvider;
+	import feathers.system.DeviceCapabilities;
 
+	import flash.display.Stage;
+	import flash.display.StageDisplayState;
+	import flash.events.FullScreenEvent;
 	import flash.geom.Point;
+	import flash.system.Capabilities;
 
+	import starling.core.Starling;
 	import starling.display.DisplayObject;
 	import starling.events.Event;
 
@@ -36,7 +43,7 @@ package feathers.controls
 	 * <listing version="3.0">
 	 * var backButton:Button = new Button();
 	 * backButton.label = "Back";
-	 * backButton.nameList.add( Button.ALTERNATE_NAME_BACK_BUTTON );
+	 * backButton.styleNameList.add( Button.ALTERNATE_NAME_BACK_BUTTON );
 	 * backButton.addEventListener( Event.TRIGGERED, backButton_triggeredHandler );
 	 *
 	 * var header:Header = new Header();
@@ -62,6 +69,40 @@ package feathers.controls
 		 * @private
 		 */
 		protected static const INVALIDATION_FLAG_CENTER_CONTENT:String = "centerContent";
+
+		/**
+		 * @private
+		 */
+		protected static const IOS_RETINA_STATUS_BAR_HEIGHT:Number = 40;
+
+		/**
+		 * @private
+		 */
+		protected static const IOS_NON_RETINA_STATUS_BAR_HEIGHT:Number = 20;
+
+		/**
+		 * @private
+		 */
+		protected static const IOS_RETINA_MINIMUM_DPI:Number = 264;
+
+		/**
+		 * @private
+		 */
+		protected static const IOS_NAME_PREFIX:String = "iPhone OS ";
+
+		/**
+		 * @private
+		 */
+		protected static const STATUS_BAR_MIN_IOS_VERSION:int = 7;
+
+		/**
+		 * The default <code>IStyleProvider</code> for all <code>Header</code>
+		 * components.
+		 *
+		 * @default null
+		 * @see feathers.core.FeathersControl#styleProvider
+		 */
+		public static var styleProvider:IStyleProvider;
 
 		/**
 		 * The title will appear in the center of the header.
@@ -146,6 +187,8 @@ package feathers.controls
 		public function Header()
 		{
 			super();
+			this.addEventListener(Event.ADDED_TO_STAGE, header_addedToStageHandler);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, header_removedFromStageHandler);
 		}
 
 		/**
@@ -183,6 +226,14 @@ package feathers.controls
 		 * The layout algorithm. Shared by both sides.
 		 */
 		protected var _layout:HorizontalLayout;
+
+		/**
+		 * @private
+		 */
+		override protected function get defaultStyleProvider():IStyleProvider
+		{
+			return Header.styleProvider;
+		}
 
 		/**
 		 * @private
@@ -307,7 +358,7 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * var backButton:Button = new Button();
 		 * backButton.label = "Back";
-		 * backButton.nameList.add( Button.ALTERNATE_NAME_BACK_BUTTON );
+		 * backButton.styleNameList.add( Button.ALTERNATE_NAME_BACK_BUTTON );
 		 * backButton.addEventListener( Event.TRIGGERED, backButton_triggeredHandler );
 		 * header.leftItems = new &lt;DisplayObject&gt;[ backButton ];</listing>
 		 *
@@ -333,7 +384,7 @@ package feathers.controls
 				{
 					if(item is IFeathersControl)
 					{
-						IFeathersControl(item).nameList.remove(this.itemName);
+						IFeathersControl(item).styleNameList.remove(this.itemName);
 						item.removeEventListener(FeathersEventType.RESIZE, item_resizeHandler);
 					}
 					item.removeFromParent();
@@ -395,7 +446,7 @@ package feathers.controls
 				{
 					if(item is IFeathersControl)
 					{
-						IFeathersControl(item).nameList.remove(this.itemName);
+						IFeathersControl(item).styleNameList.remove(this.itemName);
 						item.removeEventListener(FeathersEventType.RESIZE, item_resizeHandler);
 					}
 					item.removeFromParent();
@@ -454,7 +505,7 @@ package feathers.controls
 				{
 					if(item is IFeathersControl)
 					{
-						IFeathersControl(item).nameList.remove(this.itemName);
+						IFeathersControl(item).styleNameList.remove(this.itemName);
 						item.removeEventListener(FeathersEventType.RESIZE, item_resizeHandler);
 					}
 					item.removeFromParent();
@@ -725,6 +776,48 @@ package feathers.controls
 				return;
 			}
 			this._titleGap = value;
+			this.invalidate(INVALIDATION_FLAG_STYLES);
+		}
+
+		/**
+		 * @private
+		 */
+		protected var _useExtraPaddingForOSStatusBar:Boolean = false;
+
+		/**
+		 * If enabled, the header's top padding will be increased to account for
+		 * the height of the OS status bar when the app is rendered under the OS
+		 * status bar. The header will not add extra padding to apps that aren't
+		 * rendered under the OS status bar.
+		 *
+		 * <p>iOS started rendering apps that aren't full screen under the OS
+		 * status bar in version 7.</p>
+		 *
+		 * <p>In the following example, the header's padding will account for
+		 * the iOS status bar height:</p>
+		 *
+		 * <listing version="3.0">
+		 * header.useExtraPaddingForOSStatusBar = true;</listing>
+		 *
+		 * @default false;
+		 *
+		 * @see #paddingTop
+		 */
+		public function get useExtraPaddingForOSStatusBar():Boolean
+		{
+			return this._useExtraPaddingForOSStatusBar;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set useExtraPaddingForOSStatusBar(value:Boolean):void
+		{
+			if(this._useExtraPaddingForOSStatusBar == value)
+			{
+				return;
+			}
+			this._useExtraPaddingForOSStatusBar = value;
 			this.invalidate(INVALIDATION_FLAG_STYLES);
 		}
 
@@ -1017,13 +1110,13 @@ package feathers.controls
 		override protected function draw():void
 		{
 			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
-			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
-			const stylesInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STYLES);
-			const stateInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STATE);
-			const leftContentInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_LEFT_CONTENT);
-			const rightContentInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_RIGHT_CONTENT);
-			const centerContentInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_CENTER_CONTENT);
-			const textRendererInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_TEXT_RENDERER);
+			var dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
+			var stylesInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STYLES);
+			var stateInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STATE);
+			var leftContentInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_LEFT_CONTENT);
+			var rightContentInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_RIGHT_CONTENT);
+			var centerContentInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_CENTER_CONTENT);
+			var textRendererInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_TEXT_RENDERER);
 
 			if(textRendererInvalid)
 			{
@@ -1040,9 +1133,12 @@ package feathers.controls
 				this.refreshBackground();
 			}
 
-			if(textRendererInvalid || stylesInvalid)
+			if(textRendererInvalid || stylesInvalid || sizeInvalid)
 			{
 				this.refreshLayout();
+			}
+			if(textRendererInvalid || stylesInvalid)
+			{
 				this.refreshTitleStyles();
 			}
 
@@ -1054,7 +1150,7 @@ package feathers.controls
 					{
 						if(item is IFeathersControl)
 						{
-							IFeathersControl(item).nameList.add(this.itemName);
+							IFeathersControl(item).styleNameList.add(this.itemName);
 						}
 						this.addChild(item);
 					}
@@ -1069,7 +1165,7 @@ package feathers.controls
 					{
 						if(item is IFeathersControl)
 						{
-							IFeathersControl(item).nameList.add(this.itemName);
+							IFeathersControl(item).styleNameList.add(this.itemName);
 						}
 						this.addChild(item);
 					}
@@ -1084,7 +1180,7 @@ package feathers.controls
 					{
 						if(item is IFeathersControl)
 						{
-							IFeathersControl(item).nameList.add(this.itemName);
+							IFeathersControl(item).styleNameList.add(this.itemName);
 						}
 						this.addChild(item);
 					}
@@ -1141,8 +1237,8 @@ package feathers.controls
 		 */
 		protected function autoSizeIfNeeded():Boolean
 		{
-			const needsWidth:Boolean = isNaN(this.explicitWidth);
-			const needsHeight:Boolean = isNaN(this.explicitHeight);
+			var needsWidth:Boolean = isNaN(this.explicitWidth);
+			var needsHeight:Boolean = isNaN(this.explicitHeight);
 			if(!needsWidth && !needsHeight)
 			{
 				return false;
@@ -1151,7 +1247,7 @@ package feathers.controls
 			var newHeight:Number = needsHeight ? 0 : this.explicitHeight;
 
 			var totalItemWidth:Number = 0;
-			const leftItemCount:int = this._leftItems ? this._leftItems.length : 0;
+			var leftItemCount:int = this._leftItems ? this._leftItems.length : 0;
 			for(var i:int = 0; i < leftItemCount; i++)
 			{
 				var item:DisplayObject = this._leftItems[i];
@@ -1176,7 +1272,7 @@ package feathers.controls
 					}
 				}
 			}
-			const centerItemCount:int = this._centerItems ? this._centerItems.length : 0;
+			var centerItemCount:int = this._centerItems ? this._centerItems.length : 0;
 			for(i = 0; i < centerItemCount; i++)
 			{
 				item = this._centerItems[i];
@@ -1201,7 +1297,7 @@ package feathers.controls
 					}
 				}
 			}
-			const rightItemCount:int = this._rightItems ? this._rightItems.length : 0;
+			var rightItemCount:int = this._rightItems ? this._rightItems.length : 0;
 			for(i = 0; i < rightItemCount; i++)
 			{
 				item = this._rightItems[i];
@@ -1230,7 +1326,7 @@ package feathers.controls
 
 			if(this._title && !(this._titleAlign == TITLE_ALIGN_CENTER && this._centerItems))
 			{
-				const calculatedTitleGap:Number = isNaN(this._titleGap) ? this._gap : this._titleGap;
+				var calculatedTitleGap:Number = isNaN(this._titleGap) ? this._gap : this._titleGap;
 				newWidth += 2 * calculatedTitleGap;
 				var maxTitleWidth:Number = (needsWidth ? this._maxWidth : this.explicitWidth) - totalItemWidth;
 				if(leftItemCount > 0)
@@ -1247,8 +1343,8 @@ package feathers.controls
 				}
 				this.titleTextRenderer.maxWidth = maxTitleWidth;
 				this.titleTextRenderer.measureText(HELPER_POINT);
-				const measuredTitleWidth:Number = HELPER_POINT.x;
-				const measuredTitleHeight:Number = HELPER_POINT.y;
+				var measuredTitleWidth:Number = HELPER_POINT.x;
+				var measuredTitleHeight:Number = HELPER_POINT.y;
 				if(needsWidth && !isNaN(measuredTitleWidth))
 				{
 					newWidth += measuredTitleWidth;
@@ -1272,6 +1368,16 @@ package feathers.controls
 			if(needsHeight)
 			{
 				newHeight += this._paddingTop + this._paddingBottom;
+				var extraPaddingTop:Number = this.calculateExtraOSStatusBarPadding();
+				if(extraPaddingTop > 0)
+				{
+					//account for the minimum height before adding the padding
+					if(newHeight < this._minHeight)
+					{
+						newHeight = this._minHeight;
+					}
+					newHeight += extraPaddingTop;
+				}
 			}
 			if(needsWidth && !isNaN(this.originalBackgroundWidth))
 			{
@@ -1310,10 +1416,10 @@ package feathers.controls
 				this.titleTextRenderer = null;
 			}
 
-			const factory:Function = this._titleFactory != null ? this._titleFactory : FeathersControl.defaultTextRendererFactory;
+			var factory:Function = this._titleFactory != null ? this._titleFactory : FeathersControl.defaultTextRendererFactory;
 			this.titleTextRenderer = ITextRenderer(factory());
-			const uiTitleRenderer:IFeathersControl = IFeathersControl(this.titleTextRenderer);
-			uiTitleRenderer.nameList.add(this.titleName);
+			var uiTitleRenderer:IFeathersControl = IFeathersControl(this.titleTextRenderer);
+			uiTitleRenderer.styleNameList.add(this.titleName);
 			uiTitleRenderer.touchable = false;
 			this.addChild(DisplayObject(uiTitleRenderer));
 		}
@@ -1357,7 +1463,7 @@ package feathers.controls
 		protected function refreshLayout():void
 		{
 			this._layout.gap = this._gap;
-			this._layout.paddingTop = this._paddingTop;
+			this._layout.paddingTop = this._paddingTop + this.calculateExtraOSStatusBarPadding();
 			this._layout.paddingBottom = this._paddingBottom;
 			this._layout.verticalAlign = this._verticalAlign;
 		}
@@ -1367,15 +1473,37 @@ package feathers.controls
 		 */
 		protected function refreshTitleStyles():void
 		{
-			const displayTitleRenderer:DisplayObject = DisplayObject(this.titleTextRenderer);
 			for(var propertyName:String in this._titleProperties)
 			{
-				if(displayTitleRenderer.hasOwnProperty(propertyName))
-				{
-					var propertyValue:Object = this._titleProperties[propertyName];
-					displayTitleRenderer[propertyName] = propertyValue;
-				}
+				var propertyValue:Object = this._titleProperties[propertyName];
+				this.titleTextRenderer[propertyName] = propertyValue;
 			}
+		}
+
+		/**
+		 * @private
+		 */
+		protected function calculateExtraOSStatusBarPadding():Number
+		{
+			if(!this._useExtraPaddingForOSStatusBar)
+			{
+				return 0;
+			}
+			var os:String = Capabilities.os;
+			if(os.indexOf(IOS_NAME_PREFIX) != 0 || parseInt(os.substr(IOS_NAME_PREFIX.length, 1), 10) < STATUS_BAR_MIN_IOS_VERSION)
+			{
+				return 0;
+			}
+			var nativeStage:Stage = Starling.current.nativeStage;
+			if(nativeStage.displayState != StageDisplayState.NORMAL)
+			{
+				return 0;
+			}
+			if(DeviceCapabilities.dpi >= IOS_RETINA_MINIMUM_DPI)
+			{
+				return IOS_RETINA_STATUS_BAR_HEIGHT;
+			}
+			return IOS_NON_RETINA_STATUS_BAR_HEIGHT;
 		}
 
 		/**
@@ -1479,10 +1607,10 @@ package feathers.controls
 				return;
 			}
 			this.titleTextRenderer.visible = true;
-			const calculatedTitleGap:Number = isNaN(this._titleGap) ? this._gap : this._titleGap;
+			var calculatedTitleGap:Number = isNaN(this._titleGap) ? this._gap : this._titleGap;
 			//left and right offsets already include padding
-			const leftOffset:Number = (this._leftItems && this._leftItems.length > 0) ? (this.leftItemsWidth + calculatedTitleGap) : 0;
-			const rightOffset:Number = (this._rightItems && this._rightItems.length > 0) ? (this.rightItemsWidth + calculatedTitleGap) : 0;
+			var leftOffset:Number = (this._leftItems && this._leftItems.length > 0) ? (this.leftItemsWidth + calculatedTitleGap) : 0;
+			var rightOffset:Number = (this._rightItems && this._rightItems.length > 0) ? (this.rightItemsWidth + calculatedTitleGap) : 0;
 			if(this._titleAlign == TITLE_ALIGN_PREFER_LEFT && (!this._leftItems || this._leftItems.length == 0))
 			{
 				this.titleTextRenderer.maxWidth = this.actualWidth - this._paddingLeft - rightOffset;
@@ -1497,11 +1625,11 @@ package feathers.controls
 			}
 			else
 			{
-				const actualWidthMinusPadding:Number = this.actualWidth - this._paddingLeft - this._paddingRight;
-				const actualWidthMinusOffsets:Number = this.actualWidth - leftOffset - rightOffset;
+				var actualWidthMinusPadding:Number = this.actualWidth - this._paddingLeft - this._paddingRight;
+				var actualWidthMinusOffsets:Number = this.actualWidth - leftOffset - rightOffset;
 				this.titleTextRenderer.maxWidth = actualWidthMinusOffsets;
 				this.titleTextRenderer.validate();
-				const idealTitlePosition:Number = this._paddingLeft + (actualWidthMinusPadding - this.titleTextRenderer.width) / 2;
+				var idealTitlePosition:Number = this._paddingLeft + (actualWidthMinusPadding - this.titleTextRenderer.width) / 2;
 				if(leftOffset > idealTitlePosition ||
 					(idealTitlePosition + this.titleTextRenderer.width) > (this.actualWidth - rightOffset))
 				{
@@ -1512,9 +1640,10 @@ package feathers.controls
 					this.titleTextRenderer.x = idealTitlePosition;
 				}
 			}
+			var paddingTop:Number = this._paddingTop + this.calculateExtraOSStatusBarPadding();
 			if(this._verticalAlign == VERTICAL_ALIGN_TOP)
 			{
-				this.titleTextRenderer.y = this._paddingTop;
+				this.titleTextRenderer.y = paddingTop;
 			}
 			else if(this._verticalAlign == VERTICAL_ALIGN_BOTTOM)
 			{
@@ -1522,8 +1651,32 @@ package feathers.controls
 			}
 			else
 			{
-				this.titleTextRenderer.y = this._paddingTop + (this.actualHeight - this._paddingTop - this._paddingBottom - this.titleTextRenderer.height) / 2;
+				this.titleTextRenderer.y = paddingTop + (this.actualHeight - paddingTop - this._paddingBottom - this.titleTextRenderer.height) / 2;
 			}
+		}
+
+		/**
+		 * @private
+		 */
+		protected function header_addedToStageHandler(event:Event):void
+		{
+			Starling.current.nativeStage.addEventListener("fullScreen", nativeStage_fullScreenHandler);
+		}
+
+		/**
+		 * @private
+		 */
+		protected function header_removedFromStageHandler(event:Event):void
+		{
+			Starling.current.nativeStage.removeEventListener("fullScreen", nativeStage_fullScreenHandler);
+		}
+
+		/**
+		 * @private
+		 */
+		protected function nativeStage_fullScreenHandler(event:FullScreenEvent):void
+		{
+			this.invalidate(INVALIDATION_FLAG_SIZE);
 		}
 
 		/**

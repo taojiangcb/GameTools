@@ -197,7 +197,7 @@ class UIManager
 		var gcTime:Number = gcMap[uiId] ? gcMap[uiId] : 0;
 		var nowRunTime:Number = Starling.juggler.elapsedTime;
 		
-		if(gcTime > nowRunTime && uiMoudle.uiState == UIConstant.HIDE)
+		if(nowRunTime > gcTime && uiMoudle.uiState == UIConstant.HIDE)
 		{
 			uiMoudle.dispose();
 		}

@@ -9,6 +9,7 @@ package feathers.controls.text
 {
 	import feathers.core.FeathersControl;
 	import feathers.core.ITextRenderer;
+	import feathers.skins.IStyleProvider;
 	import feathers.text.BitmapFontTextFormat;
 
 	import flash.geom.Matrix;
@@ -81,10 +82,20 @@ package feathers.controls.text
 		private static const FUZZY_MAX_WIDTH_PADDING:Number = 0.000001;
 
 		/**
+		 * The default <code>IStyleProvider</code> for all <code>BitmapFontTextRenderer</code>
+		 * components.
+		 *
+		 * @default null
+		 * @see feathers.core.FeathersControl#styleProvider
+		 */
+		public static var styleProvider:IStyleProvider;
+
+		/**
 		 * Constructor.
 		 */
 		public function BitmapFontTextRenderer()
 		{
+			super();
 			if(!CHAR_LOCATION_POOL)
 			{
 				//compiler doesn't like referencing CharLocation class in a
@@ -112,6 +123,14 @@ package feathers.controls.text
 		 * @private
 		 */
 		protected var currentTextFormat:BitmapFontTextFormat;
+
+		/**
+		 * @private
+		 */
+		override protected function get defaultStyleProvider():IStyleProvider
+		{
+			return BitmapFontTextRenderer.styleProvider;
+		}
 		
 		/**
 		 * @private
@@ -396,14 +415,19 @@ package feathers.controls.text
 			{
 				return 0;
 			}
-			const font:BitmapFont = this._textFormat.font;
-			const formatSize:Number = this._textFormat.size;
-			const fontSizeScale:Number = isNaN(formatSize) ? 1 : (formatSize / font.size);
-			if(isNaN(font.baseline))
+			var font:BitmapFont = this._textFormat.font;
+			var formatSize:Number = this._textFormat.size;
+			var fontSizeScale:Number = formatSize / font.size;
+			if(fontSizeScale != fontSizeScale) //isNaN
+			{
+				fontSizeScale = 1;
+			}
+			var baseline:Number = font.baseline;
+			if(baseline != baseline) //isNaN
 			{
 				return font.lineHeight * fontSizeScale;
 			}
-			return font.baseline * fontSizeScale;
+			return baseline * fontSizeScale;
 		}
 
 		/**
@@ -446,13 +470,21 @@ package feathers.controls.text
 			{
 				return result;
 			}
-			const font:BitmapFont = this.currentTextFormat.font;
-			const customSize:Number = this.currentTextFormat.size;
-			const customLetterSpacing:Number = this.currentTextFormat.letterSpacing;
-			const isKerningEnabled:Boolean = this.currentTextFormat.isKerningEnabled;
-			const scale:Number = isNaN(customSize) ? 1 : (customSize / font.size);
-			const lineHeight:Number = font.lineHeight * scale;
-			const maxLineWidth:Number = !isNaN(this.explicitWidth) ? this.explicitWidth : this._maxWidth;
+			var font:BitmapFont = this.currentTextFormat.font;
+			var customSize:Number = this.currentTextFormat.size;
+			var customLetterSpacing:Number = this.currentTextFormat.letterSpacing;
+			var isKerningEnabled:Boolean = this.currentTextFormat.isKerningEnabled;
+			var scale:Number = customSize / font.size;
+			if(scale != scale) //isNaN
+			{
+				scale = 1;
+			}
+			var lineHeight:Number = font.lineHeight * scale;
+			var maxLineWidth:Number = this.explicitWidth;
+			if(maxLineWidth != maxLineWidth) //isNaN
+			{
+				maxLineWidth = this._maxWidth;
+			}
 
 			var maxX:Number = 0;
 			var currentX:Number = 0;
@@ -487,7 +519,8 @@ package feathers.controls.text
 					continue;
 				}
 
-				if(isKerningEnabled && !isNaN(previousCharID))
+				if(isKerningEnabled &&
+					previousCharID == previousCharID) //!isNaN
 				{
 					currentX += charData.getKerning(previousCharID) * scale;
 				}
@@ -554,17 +587,17 @@ package feathers.controls.text
 		 */
 		override protected function draw():void
 		{
-			const dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
-			const stylesInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STYLES);
-			const sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
-			const stateInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STATE);
+			var dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
+			var stylesInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STYLES);
+			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
+			var stateInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STATE);
 
 			if(stylesInvalid || stateInvalid)
 			{
 				this.refreshTextFormat();
 			}
 
-			if(dataInvalid || stylesInvalid || sizeInvalid)
+			if(dataInvalid || stylesInvalid || sizeInvalid || stateInvalid)
 			{
 				this._characterBatch.batchable = !this._useSeparateBatch;
 				this._characterBatch.reset();
@@ -599,10 +632,14 @@ package feathers.controls.text
 			var customSize:Number = this.currentTextFormat.size;
 			var customLetterSpacing:Number = this.currentTextFormat.letterSpacing;
 			var isKerningEnabled:Boolean = this.currentTextFormat.isKerningEnabled;
-			var scale:Number = isNaN(customSize) ? 1 : (customSize / font.size);
+			var scale:Number = customSize / font.size;
+			if(scale != scale) //isNaN
+			{
+				scale = 1;
+			}
 			var lineHeight:Number = font.lineHeight * scale;
 
-			var hasExplicitWidth:Boolean = !isNaN(this.explicitWidth);
+			var hasExplicitWidth:Boolean = this.explicitWidth == this.explicitWidth; //!isNaN
 			var isAligned:Boolean = this.currentTextFormat.align != TextFormatAlign.LEFT;
 			var maxLineWidth:Number = hasExplicitWidth ? this.explicitWidth : this._maxWidth;
 			if(isAligned && maxLineWidth == Number.POSITIVE_INFINITY)
@@ -655,7 +692,8 @@ package feathers.controls.text
 					continue;
 				}
 
-				if(isKerningEnabled && !isNaN(previousCharID))
+				if(isKerningEnabled &&
+					previousCharID == previousCharID) //!isNaN
 				{
 					currentX += charData.getKerning(previousCharID) * scale;
 				}
@@ -764,7 +802,7 @@ package feathers.controls.text
 		protected function trimBuffer(skipCount:int):void
 		{
 			var countToRemove:int = 0;
-			const charCount:int = CHARACTER_BUFFER.length - skipCount;
+			var charCount:int = CHARACTER_BUFFER.length - skipCount;
 			for(var i:int = charCount - 1; i >= 0; i--)
 			{
 				var charLocation:CharLocation = CHARACTER_BUFFER[i];
@@ -790,7 +828,7 @@ package feathers.controls.text
 		 */
 		protected function alignBuffer(maxLineWidth:Number, currentLineWidth:Number, skipCount:int):void
 		{
-			const align:String = this.currentTextFormat.align;
+			var align:String = this.currentTextFormat.align;
 			if(align == TextFormatAlign.CENTER)
 			{
 				this.moveBufferedCharacters(Math.round((maxLineWidth - currentLineWidth) / 2), 0, skipCount);
@@ -806,7 +844,7 @@ package feathers.controls.text
 		 */
 		protected function addBufferToBatch(skipCount:int):void
 		{
-			const charCount:int = CHARACTER_BUFFER.length - skipCount;
+			var charCount:int = CHARACTER_BUFFER.length - skipCount;
 			var pushIndex:int = CHAR_LOCATION_POOL.length;
 			for(var i:int = 0; i < charCount; i++)
 			{
@@ -823,7 +861,7 @@ package feathers.controls.text
 		 */
 		protected function moveBufferedCharacters(xOffset:Number, yOffset:Number, skipCount:int):void
 		{
-			const charCount:int = CHARACTER_BUFFER.length - skipCount;
+			var charCount:int = CHARACTER_BUFFER.length - skipCount;
 			for(var i:int = 0; i < charCount; i++)
 			{
 				var charLocation:CharLocation = CHARACTER_BUFFER[i];
@@ -901,7 +939,11 @@ package feathers.controls.text
 			var customSize:Number = this.currentTextFormat.size;
 			var customLetterSpacing:Number = this.currentTextFormat.letterSpacing;
 			var isKerningEnabled:Boolean = this.currentTextFormat.isKerningEnabled;
-			var scale:Number = isNaN(customSize) ? 1 : (customSize / font.size);
+			var scale:Number = customSize / font.size;
+			if(scale != scale) //isNaN
+			{
+				scale = 1;
+			}
 			var currentX:Number = 0;
 			var previousCharID:Number = NaN;
 			var charCount:int = this._text.length;
@@ -915,7 +957,8 @@ package feathers.controls.text
 					continue;
 				}
 				var currentKerning:Number = 0;
-				if(isKerningEnabled && !isNaN(previousCharID))
+				if(isKerningEnabled &&
+					previousCharID == previousCharID) //!isNaN
 				{
 					currentKerning = charData.getKerning(previousCharID) * scale;
 				}
@@ -949,7 +992,8 @@ package feathers.controls.text
 						continue;
 					}
 					currentKerning = 0;
-					if(isKerningEnabled && !isNaN(previousCharID))
+					if(isKerningEnabled &&
+						previousCharID == previousCharID) //!isNaN
 					{
 						currentKerning = charData.getKerning(previousCharID) * scale;
 					}
@@ -969,7 +1013,8 @@ package feathers.controls.text
 						continue;
 					}
 					currentKerning = 0;
-					if(isKerningEnabled && !isNaN(previousCharID))
+					if(isKerningEnabled &&
+						previousCharID == previousCharID) //!isNaN
 					{
 						currentKerning = charData.getKerning(previousCharID) * scale;
 					}

@@ -7,13 +7,13 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.skins
 {
+	import flash.utils.Dictionary;
+	
 	import feathers.display.Scale3Image;
 	import feathers.display.Scale9Image;
 	import feathers.textures.Scale3Textures;
 	import feathers.textures.Scale9Textures;
-
-	import flash.utils.Dictionary;
-
+	
 	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.Quad;
@@ -159,7 +159,7 @@ package feathers.skins
 		 */
 		override public function setValueForState(value:Object, state:Object, isSelected:Boolean = false):void
 		{
-			const type:Class = Class(value.constructor);
+			var type:Class = Class(value.constructor);
 			if(this._handlers[type] == null)
 			{
 				throw new ArgumentError("Handler for value type " + type + " has not been set.");
@@ -172,16 +172,16 @@ package feathers.skins
 		 */
 		override public function updateValue(target:Object, state:Object, oldValue:Object = null):Object
 		{
-			const value:Object = super.updateValue(target, state);
+			var value:Object = super.updateValue(target, state);
 			if(value === null)
 			{
 				return null;
 			}
 
-			const typeHandler:Function = this.valueToValueTypeHandler(value);
+			var typeHandler:Function = this.valueToValueTypeHandler(value);
 			if(typeHandler != null)
 			{
-				const displayObject:DisplayObject = typeHandler(value, oldValue);
+				var displayObject:DisplayObject = typeHandler(value, oldValue);
 			}
 			else
 			{
@@ -190,11 +190,8 @@ package feathers.skins
 
 			for(var propertyName:String in this._displayObjectProperties)
 			{
-				if(displayObject.hasOwnProperty(propertyName))
-				{
-					var propertyValue:Object = this._displayObjectProperties[propertyName];
-					displayObject[propertyName] = propertyValue;
-				}
+				var propertyValue:Object = this._displayObjectProperties[propertyName];
+				displayObject[propertyName] = propertyValue;
 			}
 
 			return displayObject;
@@ -237,7 +234,7 @@ package feathers.skins
 		 */
 		protected function valueToValueTypeHandler(value:Object):Function
 		{
-			const type:Class = Class(value.constructor);
+			var type:Class = Class(value.constructor);
 			return this._handlers[type] as Function;
 		}
 	}
