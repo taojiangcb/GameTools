@@ -24,6 +24,10 @@ package com.frameWork.uiControls
 			return instance.closeUIById(uiId);
 		}
 		
+		public static function getUIMoudleStateById(uiId:int):int {
+			return instance.getUIMoudleStateById(uiId);
+		}
+		
 		private static function get instance():UIManager {
 			if(!$instance) {
 				$instance = new UIManager();
@@ -85,8 +89,7 @@ class UIManager
 				var uiId:int = clearList.shift();
 				if(uiMap.hasOwnProperty(uiId)) delete uiMap[uiId];
 				delete gcMap[uiId];
-				if(clearList.length == 0)
-				{
+				if(clearList.length == 0) {
 					System.gc();
 				}
 			}
@@ -117,7 +120,6 @@ class UIManager
 	 * 根据一个id获取一个uiMoudle 
 	 * @param id
 	 * @return 
-	 * 
 	 */	
 	public function getUIMoudleById(id:int):UIMoudle
 	{
@@ -125,7 +127,7 @@ class UIManager
 		var uiCache:UICache = regMap[id];
 		var uiMoudle:UIMoudle;
 		var uiDisplay:DisplayObject;
-		if(uiCache)
+		if(uiCache) 
 		{
 			uiMoudle = new uiCache.moudleCls();
 			uiDisplay = new uiCache.uiCls();
@@ -134,6 +136,17 @@ class UIManager
 			return uiMoudle;
 		}
 		return null;
+	}
+	
+	/**
+	 * 根据uid返回一个窗口状态 
+	 * @param id
+	 * @return 
+	 */	
+	public function getUIMoudleStateById(id:int):int {
+		var uiModel:UIMoudle = getUIMoudleById(id);
+		if(uiModel)	return uiModel.uiState;
+		else		return  -1;
 	}
 	
 	/**
