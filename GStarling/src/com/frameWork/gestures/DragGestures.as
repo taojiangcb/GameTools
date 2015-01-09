@@ -36,15 +36,11 @@ package com.frameWork.gestures
 				_target.x += movePoint.x - _downPoint.x;
 				_target.y += movePoint.y - _downPoint.y;
 				_downPoint = movePoint;
-				
 				if(_dragRect) checkTargetPosition();
-				
 				if(_callBack) _callBack();
-				
 				_isDrag = true;
 			}else if(touch.phase == TouchPhase.ENDED){
 				_downPoint = null;
-				
 				_isDrag = false;
 			}
 		}

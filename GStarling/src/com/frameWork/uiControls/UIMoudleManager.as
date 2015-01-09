@@ -16,8 +16,12 @@ package com.frameWork.uiControls
 			return instance.openUIByid(uiId,pt,data);
 		}
 		
-		public static function getUIMoudleById(id:int):UIMoudle {
-			return instance.getUIMoudleById(id);
+		public static function createOrgetUIMoudleById(id:int):UIMoudle {
+			return instance.createOrgetUIMoudleById(id);
+		}
+		
+		public static function getUIMoudleByOpenId(id:int):UIMoudle {
+			return instance.getUIMoudleByOpenId(id);
 		}
 		
 		public static  function closeUIById(uiId:int):int {
@@ -121,7 +125,7 @@ class UIManager
 	 * @param id
 	 * @return 
 	 */	
-	public function getUIMoudleById(id:int):UIMoudle
+	public function createOrgetUIMoudleById(id:int):UIMoudle
 	{
 		if(uiMap.hasOwnProperty(id)) return uiMap[id];
 		var uiCache:UICache = regMap[id];
@@ -132,9 +136,20 @@ class UIManager
 			uiMoudle = new uiCache.moudleCls();
 			uiDisplay = new uiCache.uiCls();
 			uiMoudle.internalInit(uiDisplay);
+			uiMoudle.uiId = id;
 			uiMap[id] = uiMoudle;
 			return uiMoudle;
 		}
+		return null;
+	}
+	
+	public function getUIMoudleByOpenId(id:int):UIMoudle {
+		var i:int = openList.length;
+		while(--i > -1) {
+			if(openList[i].uiId == id) {
+				return openList[i];
+			}
+		} 
 		return null;
 	}
 	
@@ -144,7 +159,7 @@ class UIManager
 	 * @return 
 	 */	
 	public function getUIMoudleStateById(id:int):int {
-		var uiModel:UIMoudle = getUIMoudleById(id);
+		var uiModel:UIMoudle = getUIMoudleByOpenId(id);
 		if(uiModel)	return uiModel.uiState;
 		else		return  -1;
 	}
@@ -159,20 +174,32 @@ class UIManager
 	 */	
 	public function openUIByid(uiId:int,pt:Point = null,data:Object = null):int
 	{
-		var uiMoudle:UIMoudle = getUIMoudleById(uiId);
+		var uiMoudle:UIMoudle = createOrgetUIMoudleById(uiId);
 		if(!uiMoudle) return 0;
-		if(uiMoudle.uiState == UIConstant.OPEN)
-		{
+		if(uiMoudle.uiState == UIConstant.OPEN) {
 			if(uiMoudle.smartClose) uiMoudle.close();
 			return 0;
 		}
-		
 		//先清除gc标记
 		if(gcMap.hasOwnProperty(uiId)) delete gcMap[uiId];
 		uiMoudle.open(pt,data);
-		openList.push(uiMoudle);
+		putToOpenList(uiMoudle);
 		return 1;
 	}
+	
+	
+	private function putToOpenList(uiMoudle:UIMoudle):void {
+		var existIndex:int = openList.indexOf(uiMoudle);
+		if(existIndex == -1) {
+			openList.push(uiMoudle);
+		}
+	}
+	
+	private function removeFromOpenList(uiMoudle:UIMoudle):void {
+		var index:int = openList.indexOf(uiMoudle);
+		if(index > -1) openList.splice(index,1);
+	}
+	
 	
 	/**
 	 * 关闭某个ui模块,返回1关闭成功，返回0关闭失败 
@@ -182,15 +209,13 @@ class UIManager
 	 */	
 	public function closeUIById(uiId:int):int
 	{
-		var uiMoudle:UIMoudle = getUIMoudleById(uiId);
+		var uiMoudle:UIMoudle = getUIMoudleByOpenId(uiId);
 		if(!uiMoudle) return 0;
+		removeFromOpenList(uiMoudle);
 		if(uiMoudle.uiState == UIConstant.OPEN)
 		{
-			var findIndex:int = openList.indexOf(uiMoudle);
-			openList.splice(findIndex,1);
 			uiMoudle.close();
-			if(uiMoudle.gcDelayTime > 0)
-			{
+			if(uiMoudle.gcDelayTime > 0) {
 				//gc标记的时间
 				gcMap[uiId] = Starling.juggler.elapsedTime + uiMoudle.gcDelayTime;			
 			}
@@ -205,7 +230,7 @@ class UIManager
 	 */	
 	private function destoryUIMoudle(uiId:int):void
 	{
-		var uiMoudle:UIMoudle = getUIMoudleById(uiId);
+		var uiMoudle:UIMoudle = createOrgetUIMoudleById(uiId);
 		if(!uiMoudle) return;
 		var gcTime:Number = gcMap[uiId] ? gcMap[uiId] : 0;
 		var nowRunTime:Number = Starling.juggler.elapsedTime;

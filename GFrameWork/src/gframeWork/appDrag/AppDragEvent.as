@@ -41,28 +41,31 @@ package gframeWork.appDrag
 		 */		
 		private var mHitPoint:Point = null;
 		
+		private var mOffPoint:Point = null;
 		
-		public function AppDragEvent(type:String,targetObj:DisplayObject,itemObj:Object,hitPoint:Point,bubbles:Boolean=false, cancelable:Boolean=false)
+		public function AppDragEvent(type:String,targetObj:DisplayObject,itemObj:Object,hitPoint:Point,offPoint:Point,bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 			mTargetObj = targetObj;
 			mItemObj = itemObj;
 			mHitPoint = hitPoint;
+			mOffPoint = offPoint;
 		}
 		
-		public function get targetObj():DisplayObject
-		{
+		public function get targetObj():DisplayObject {
 			return mTargetObj;
 		}
 		
-		public function get itemData():Object
-		{
+		public function get itemData():Object {
 			return mItemObj;
 		}
 		
-		public function get hitPoint():Point
-		{
+		public function get hitPoint():Point {
 			return mHitPoint;
+		}
+		
+		public function get offPoint():Point {
+			return mOffPoint;
 		}
 		
 	}

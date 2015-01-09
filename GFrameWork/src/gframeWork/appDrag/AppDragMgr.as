@@ -255,7 +255,9 @@ class AppDragManager
 	{
 		var appDragEvent:AppDragEvent = new AppDragEvent(AppDragEvent.CLINGY,
 			mClingyDisplay,
-			mItemData,new Point(event.stageX,event.stageY));
+			mItemData,
+			new Point(event.stageX,event.stageY),
+			new Point(mDrawClingy.width >> 1,mDrawClingy.height >> 1));
 		
 		AppDragMgr.dispatchEvent(appDragEvent);
 		
@@ -280,10 +282,11 @@ class AppDragManager
 	{
 		var appDragEvent:AppDragEvent = new AppDragEvent(AppDragEvent.DRAG,
 			mClingyDisplay,
-			mItemData,new Point(event.stageX,event.stageY));
+			mItemData,
+			new Point(event.stageX,event.stageY),
+			new Point(mDrawClingy.width >> 1,mDrawClingy.height >> 1));
 		
-		if(mDrawClingy)
-		{
+		if(mDrawClingy) {
 			appMain.removeChild(mDrawClingy);
 			mDrawClingy = null;
 		}

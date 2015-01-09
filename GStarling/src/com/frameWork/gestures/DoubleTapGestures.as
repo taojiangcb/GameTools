@@ -21,8 +21,7 @@ package com.frameWork.gestures
 		public override function checkGestures(touch:Touch):void
 		{
 			if(touch.phase == TouchPhase.ENDED && touch.tapCount == 2){
-				
-				var buttonRect:Rectangle = _target.getBounds(_target.stage);
+				var buttonRect:Rectangle = new Rectangle(touch.globalX,touch.globalY,_target.width,_target.height);
 				if (touch.globalX < buttonRect.x ||
 					touch.globalY < buttonRect.y ||
 					touch.globalX > buttonRect.x + buttonRect.width ||

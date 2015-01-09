@@ -59,7 +59,7 @@ package com.frameWork.gestures
 				}
 				
 				
-				var buttonRect:Rectangle = _target.getBounds(_target.stage);
+				var buttonRect:Rectangle = new Rectangle(touch.globalX,touch.globalY,_target.width,_target.height);
 				if (touch.globalX < buttonRect.x ||
 					touch.globalY < buttonRect.y ||
 					touch.globalX > buttonRect.x + buttonRect.width ||
