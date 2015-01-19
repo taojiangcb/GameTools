@@ -215,9 +215,11 @@ class UIManager
 		if(uiMoudle.uiState == UIConstant.OPEN)
 		{
 			uiMoudle.close();
-			if(uiMoudle.gcDelayTime > 0) {
-				//gc标记的时间
+			if(uiMoudle.gcDelayTime > 0) {		//gc标记的时间
 				gcMap[uiId] = Starling.juggler.elapsedTime + uiMoudle.gcDelayTime;			
+			} else if(uiMoudle.gcDelayTime == -1) {
+				destoryUIMoudle(uiId);
+				if(uiMap[uiId]) delete uiMap[uiId];
 			}
 			return 1;
 		}
@@ -230,11 +232,10 @@ class UIManager
 	 */	
 	private function destoryUIMoudle(uiId:int):void
 	{
-		var uiMoudle:UIMoudle = createOrgetUIMoudleById(uiId);
+		var uiMoudle:UIMoudle = uiMap[uiId];
 		if(!uiMoudle) return;
 		var gcTime:Number = gcMap[uiId] ? gcMap[uiId] : 0;
 		var nowRunTime:Number = Starling.juggler.elapsedTime;
-		
 		if(nowRunTime > gcTime && uiMoudle.uiState == UIConstant.HIDE)
 		{
 			uiMoudle.dispose();

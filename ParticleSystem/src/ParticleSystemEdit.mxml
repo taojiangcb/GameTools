@@ -60,8 +60,8 @@
 			private var isLoadCache:Boolean = false;
 			private function applicationComplete():void{
 				
-				//so.data.customArrayTextures = [];
-				//so.flush();
+//				so.data.customArrayTextures = [];
+//				so.flush();
 				
 				optionsXMLLoader=new URLLoader();
 				optionsXMLLoader.addEventListener(Event.COMPLETE,loadOptionsComplete);
