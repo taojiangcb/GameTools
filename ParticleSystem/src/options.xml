@@ -69,11 +69,11 @@
 		</items>
 	</items>
 	<images>
-		<image cn="圆形(系统)" src="/assets/image/circle.png"/>
-		<image cn="星形(系统)" src="/assets/image/star.png"/>
-		<image cn="斑点(系统)" src="/assets/image/blob.png"/>
-		<image cn="心形(系统)" src="/assets/image/heart.png"/>
-		<image cn="文字(系统)" src="/assets/image/text.png"/>
+		<image cn="圆形(系统)" src="assets/image/circle.png"/>
+		<image cn="星形(系统)" src="assets/image/star.png"/>
+		<image cn="斑点(系统)" src="assets/image/blob.png"/>
+		<image cn="心形(系统)" src="assets/image/heart.png"/>
+		<image cn="文字(系统)" src="assets/image/text.png"/>
 	</images>
 	<settings>
 		<setting name="默认" texture="圆形" emitterX="150" emitterY="343">
