@@ -43,10 +43,10 @@
 			import zero.images.TextBmpData;
 			import zero.images.imageArr;
 			
-			private var optionsXMLLoader:URLLoader;
+			private var optionsXMLLoader:FileStream;
 			
 			private var currLoadImageId:int;
-			private var imageDataLoader:URLLoader;
+			private var imageDataLoader:FileStream;
 			private var imageLoader:Loader;
 			
 			private var selectsAndItems:Dictionary;
@@ -59,40 +59,27 @@
 			
 			private var isLoadCache:Boolean = false;
 			private function applicationComplete():void{
-				
 //				so.data.customArrayTextures = [];
 //				so.flush();
 				
-				optionsXMLLoader=new URLLoader();
-				optionsXMLLoader.addEventListener(Event.COMPLETE,loadOptionsComplete);
-				optionsXMLLoader.addEventListener(IOErrorEvent.IO_ERROR,loadOptionsError);
-				optionsXMLLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR,loadOptionsError);
-				optionsXMLLoader.load(new URLRequest("options.xml"));
-			}
-			private function loadOptionsComplete(...args):void{
-				trace("loadOptionsComplete");
-				optionsXML=new XML(optionsXMLLoader.data);
-				optionsXMLLoader.removeEventListener(Event.COMPLETE,loadOptionsComplete);
-				optionsXMLLoader.removeEventListener(IOErrorEvent.IO_ERROR,loadOptionsError);
-				optionsXMLLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR,loadOptionsError);
-				optionsXMLLoader=null;
-				loadImages();
-			}
-			private function loadOptionsError(...args):void{
-				trace("loadOptionsError");
-				optionsXMLLoader.removeEventListener(Event.COMPLETE,loadOptionsComplete);
-				optionsXMLLoader.removeEventListener(IOErrorEvent.IO_ERROR,loadOptionsError);
-				optionsXMLLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR,loadOptionsError);
-				optionsXMLLoader=null;
+				var nativeFile:File = new File(File.applicationDirectory.nativePath + "/options.xml");
+				optionsXMLLoader= new FileStream();
+				optionsXMLLoader.open(nativeFile,FileMode.READ);
+				
+				var fileByte:ByteArray = new ByteArray();
+				optionsXMLLoader.readBytes(fileByte);
+				var str_:String = String(fileByte);
+				optionsXML = new XML(str_);
 				loadImages();
 			}
 			
 			private function loadImages():void{
-				imageDataLoader=new URLLoader();
-				imageDataLoader.dataFormat=URLLoaderDataFormat.BINARY;
-				imageDataLoader.addEventListener(Event.COMPLETE,loadImageDataComplete);
-				imageDataLoader.addEventListener(IOErrorEvent.IO_ERROR,loadImageDataError);
-				imageDataLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR,loadImageDataError);
+//				imageDataLoader=new URLLoader();
+//				imageDataLoader.dataFormat=URLLoaderDataFormat.BINARY;
+//				imageDataLoader.addEventListener(Event.COMPLETE,loadImageDataComplete);
+//				imageDataLoader.addEventListener(IOErrorEvent.IO_ERROR,loadImageDataError);
+//				imageDataLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR,loadImageDataError);
+				
 				imageLoader=new Loader();
 				imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,loadImageComplete);
 				currLoadImageId=-1;
@@ -101,10 +88,11 @@
 			private function loadNextImage():void{
 				if(++currLoadImageId>=optionsXML.images[0].image.length())
 				{
-					imageDataLoader.removeEventListener(Event.COMPLETE,loadImageDataComplete);
-					imageDataLoader.removeEventListener(IOErrorEvent.IO_ERROR,loadImageDataError);
-					imageDataLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR,loadImageDataError);
-					imageDataLoader=null;
+//					imageDataLoader.removeEventListener(Event.COMPLETE,loadImageDataComplete);
+//					imageDataLoader.removeEventListener(IOErrorEvent.IO_ERROR,loadImageDataError);
+//					imageDataLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR,loadImageDataError);
+//					imageDataLoader=null;
+					
 //					imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE,loadImageComplete);
 //					imageLoader=null;
 					if(imageArr.length)
@@ -128,7 +116,13 @@
 					}
 					return;
 				}
-				imageDataLoader.load(new URLRequest(optionsXML.images[0].image[currLoadImageId].@src.toString()));
+				
+				var imgStr:String = File.applicationDirectory.nativePath + "/" + optionsXML.images[0].image[currLoadImageId].@src.toString();
+				imageDataLoader = new FileStream();
+				imageDataLoader.open(new File(imgStr),FileMode.READ);
+				var fileBytes:ByteArray = new ByteArray();
+				imageDataLoader.readBytes(fileBytes);
+				imageLoader.loadBytes(fileBytes);
 			}
 			
 			private function loadCustomTextures():void
@@ -143,17 +137,18 @@
 				imageLoader.loadBytes(soCacheArray[currLoadImageId].data);
 			}
 			
-			private function loadImageDataComplete(...args):void{
-				trace("loadImageDataComplete");
-				imageLoader.loadBytes(imageDataLoader.data);
-			}
+//			private function loadImageDataComplete(...args):void{
+//				trace("loadImageDataComplete");
+//				imageLoader.loadBytes(imageDataLoader.data);
+//			}
+			
 			private function loadImageComplete(...args):void{
 				trace("loadImageComplete");
 				if(isLoadCache) {
 					imageArr.push([so.data.customArrayTextures[currLoadImageId].xml,(imageLoader.content as Bitmap).bitmapData,so.data.customArrayTextures[currLoadImageId].data,false]);
 					loadCustomTextures();
 				} else {
-					imageArr.push([optionsXML.images[0].image[currLoadImageId],(imageLoader.content as Bitmap).bitmapData,imageDataLoader.data,true]);
+					imageArr.push([optionsXML.images[0].image[currLoadImageId],(imageLoader.content as Bitmap).bitmapData,imageDataLoader,true]);
 					loadNextImage();
 				}
 			}
@@ -166,9 +161,7 @@
 				if(++currLoadImageId>=imageArr.length){
 					imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE,loadImageComplete);
 					imageLoader=null;
-					
 					//init();
-					
 					currLoadImageId = -1;
 					loadCustomTextures();
 					isLoadCache = true;

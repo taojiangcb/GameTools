@@ -183,5 +183,17 @@ package gframeWork.utils
 			return true;
 		}
 		
+		/**
+		 * 将分支数组合并到主数组里面去，添加到主数组的结尾 
+		 * @param master
+		 * @param branch
+		 * 
+		 */		
+		public static function mergerArray(master:Array,branch:Array):void {
+			var len:int = branch.length;
+			for(var i:int = 0; i != len; i++) {
+				master.push(branch[i]);
+			}
+		}
 	}
 }

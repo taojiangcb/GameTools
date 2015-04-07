@@ -15,7 +15,6 @@ package gframeWork.appDrag.utils
 
 	public class DragBinds
 	{
-		
 		private var bindTarget:DisplayObject;
 		public var dragData:Object;
 		private var dragMode:int = AppDragMgr.DRAG;
@@ -26,7 +25,7 @@ package gframeWork.appDrag.utils
 			
 		}
 		
-		public function bind(tag:DisplayObject,data:Object,mode:int = AppDragMgr.DRAG):void {
+		public function bind(tag:DisplayObject,data:Object,mode:int = 2):void {
 			if(!tag) return;
 			bindTarget = tag;
 			dragData = data;

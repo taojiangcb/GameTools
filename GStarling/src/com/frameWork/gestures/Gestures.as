@@ -19,7 +19,6 @@ package com.frameWork.gestures
 		{
 			_target = target;
 			_callBack = callBack;
-			
 			_target.addEventListener(TouchEvent.TOUCH,onTouch);
 		}
 		
@@ -64,7 +63,7 @@ package com.frameWork.gestures
 		
 		public function dispose():void
 		{
-			_target.removeEventListener(TouchEvent.TOUCH,onTouch);
+			if(_target) _target.removeEventListener(TouchEvent.TOUCH,onTouch);
 			_target = null;
 			_callBack = null;
 		}
